@@ -1,0 +1,2 @@
+	
+It would have been preferred, if you implemented the MST algorithm yourselves, but I do understand if you currently have enough to think about :)

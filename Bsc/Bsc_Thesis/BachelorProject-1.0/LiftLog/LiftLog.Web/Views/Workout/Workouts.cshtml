@@ -1,0 +1,61 @@
+﻿<!-- This view represents the workout page from which the user can create workouts in a table -->
+@model IEnumerable<LiftLog.Web.ViewModels.WorkoutViewModels.WorkoutViewModel>
+
+@{
+    ViewBag.Title = "Workouts";
+}
+
+<h2> Workouts </h2>
+
+<div div style="height: 350px; overflow: auto">
+    <table class="table">
+
+        <!-- Column titles -->
+        <tr>
+            <th> Workout </th>
+            <th> Created </th>
+            <th> Action </th>
+        </tr>
+
+        @foreach (var workout in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => workout.Name)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => workout.CreationDate)
+                </td>
+                <td>
+                    <a asp-controller="Workout"
+                       asp-action="EditWorkout"
+                       asp-route-id="@workout.Id"
+                       class="btn btn-info">
+                        Edit
+                    </a>
+                    <a asp-controller="Workout"
+                       asp-action="DeleteWorkout"
+                       asp-route-id="@workout.Id"
+                       class="btn btn-danger">
+                        Delete
+                    </a>
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+
+</div>
+<div>
+    <p>
+        <a asp-controller="Workout"
+           asp-action="AddWorkout"
+           class="btn btn-success">
+            Create New
+        </a>
+    </p>
+
+</div>

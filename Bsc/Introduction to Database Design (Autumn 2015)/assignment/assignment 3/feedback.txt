@@ -1,0 +1,27 @@
+ER
+
+Good ER, although month could've been an attribute and not an entity.
+
+Index
+
+Good. (Side note, duplicates are a bit tricky as it depends on the implementation , see page section 10.7 page 356-358 in the book)
+
+SQL
+
+a) Missing airline = 'SAS'
+
+b) Should be Count(Distinct ..)
+
+c) Good
+
+d) Good
+
+Normalization
+
+a)
+
+Correct
+
+b)
+
+Correct, although your argument is qutie messy. Try to be more precise.

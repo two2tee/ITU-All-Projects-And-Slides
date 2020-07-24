@@ -1,0 +1,41 @@
+V0.2
+Vi har valgt, at benytte os af Swing i stedet for JavaFX, da vi havde for mange udfordringer med implementeringen af pan/zoom. 
+Vi har derfor brugt en del mandetimer på, at skifte vores filer ud og få det hele sat op på ny. 
+
+
+Bugs/manglende features:  
+Zoom - kun ind mod midten og ikke mod musen
+Nogle dele af kortet bliver ikke farvelagt
+Nogle bygninger med baggårde bliver overmalet (benytter ikke winding)
+
+
+Features:  
+Pan/zoom med mousedrag og scroll. 
+Små iconer på bestemte koordinater i kortet (restauranter og caféer)
+Filechooser til at loade et bestemt kort. (Programmet tager imod bin, zip og osm filer)
+Programmet kan gemme indlæst kort til bin fil
+
+
+Wish list for v0.3:
+Pan og zoom mod mouse
+Søgebar
+Flere elementer malet på kortet
+Vej typer opdelt efter farver og lister
+Iconer af restauranter, parkerings pladser mm. tegnes på kort
+Scalerings linje
+
+Feedback request:
+Hvorvidt vores kode kan refaktoreres bedre - om der er overflødige klasser. 
+Strukturen og overholder vi MVC
+
+Time usage in man hours:
+ 4 hours: JavaFX og swing konvertering
+ 6 hours: group meeting (4 personer)
+ 8 hours:  filechooser (1 person)
+ 8 hours: test af model (1 person)
+ 4 hours: bin load and save funktion (1 person)
+
+
+
+Cumulative cost so far: (1h = DKK 625)
+Total : 29.375 + 30.000 = 59.375,-

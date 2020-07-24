@@ -1,0 +1,371 @@
+## Assignment 1
+1.5 0 doesn't equal 1, it's f(0) that does. 1.7 The 0 case should return m. 1.8 power and fact are not evaluated in the fourth case, so they are functions with function types. fact is type int->int for instance, so what is the tuple type? 1.9 It's important to note that there are different unrelated a's in play here. Your environment doesn't show that. It's not clear if you understand which a's are which, since you haven't shown the derivation of f(3) and g(3). 1.16 f is a function, it has a function type, not a tuple type. 1.17 test also has a function type. Have you tried evaluating test(false, fact -1) for real? The point was that fact -1 doesn't return anything, but causes an infinite loop. It should give an overflow, because fact -1 is always evaluated before it is passed as argument. In contrast, the expression never gets to evaluate fact -1, and can return 0 without problem. The two cases are functionally identical.
+
+## Assignment 2
+Generel kommentar:
+
+
+
+    Hvis i arbejder sammen må i meget gerne aflevere den samme fil.
+
+    
+
+    Jeg har hovedsageligt taget udgangspunkt i Thors aflevering under disse rettelser.
+
+    
+
+    I tilfælde af fejl har jeg også kigget i Dennis aflevering, og evt. forholdt mig
+
+    til hans besvarelse istedet, hvis det giver et bedre udfald.
+
+    
+
+    Næste gang må I meget gerne aflevere identiske afleveringer hvis i arbejder sammen,
+
+    eller arbejde individuelt. 
+
+    Det andet er lidt noget rod og vil ikke blive accepteret næste gang...
+
+
+
+Exercise 2.4:
+
+
+
+    Opgaven beder om følgende:
+
+    
+
+        Declare functions to add and subtract two amount, represented by triples 
+
+            (pounds, shillings, pence)
+
+        of integers, and declare the functions when a representation by records is used.
+
+        
+
+    Jeres løsning er et mix a tripler og records, frem for én implementation med tripler og en anden med records.
+
+        
+
+Exercise 2.5:
+
+
+
+    I opgaven står følgende 
+
+    
+
+        "The set of complex numbers is the set of pairs of real numbers."
+
+        
+
+    Jeres addition og subtraction arbejder dog med heltal.
+
+    
+
+    Jeres division ser ud til at fungere bagvendt (I har implementeret y/x frem for x/y).
+
+    Herudover har I ikke elimineret de "identical sub-expressions" som der nævnes i opgaven. 
+
+     
+
+    I bør også håndtere tilfælde hvor division med 0 kan forekomme.
+
+
+
+Exercise 2.10:
+
+
+
+    Jeres palindrome funktion fungerer ikke.
+
+    
+
+    Se eksempelvis følgende test:
+
+    
+
+        > palindrone "lol";;
+
+        val it : bool = false
+
+        
+
+Exercise 2.13 (Thor):
+
+
+
+    downTo1 er ikke korrekt, og resten af opgaven er ikke lavet.
+
+    
+
+    Jeg kigger derfor på Dennis' løsning i stedet.
+
+        
+
+Exercise 2.13 (Dennis):
+
+
+
+    Jeres downto1 er korrekt.
+
+    Jeg havde dog gerne set at den var skrevet uden brug af List.fold eller List.foldBack,
+
+    da pointen med opgaven nemlig er selv at implementere noget lignende.
+
+## Assignment 3
+Exercise 3.2:
+
+
+
+    Jeres mapInOrder er ikke "in order".
+
+    
+
+    Overvej evt. nogle mere konkrete eksempler der kan illustrere den praktiske forskel på mapInOrder og mapPostOrder.
+
+
+
+Exercise 3.6:
+
+    I har misforstået opgaven en smule.
+    
+
+    I behøver kun at forklare hvad der skal til for at implementere den ændring der foreslås.
+
+    I har i stedet forsøgt faktisk at implementere dette.
+
+   
+    Denne implementation rammer desværre også lidt ved siden af.
+
+   
+    Tag eksempelvis følgende linje kode:
+
+    
+
+        |Add(a1, a2) -> (fst(A a1 s) + fst(A a2 s),s)
+
+        
+
+    Hvad nu hvis a1 eller a2 var et increment?
+
+    Dette ville producere et nyt state, som ikke bliver bibeholdt korrekt.
+        
+
+Exercise 3.9:
+
+
+
+    I bør gerne lave en funktion der kan brugestil at konstruere et komplekst tal.
+
+    
+
+    Opgaven beder om at overloade de eksisterende aritmetiske operatorer.
+
+    I har i stedet defineret jeres egne.
+
+    
+
+    Husk at tjekke for division med 0.
+
+    Husk også at division har højere præcedens end addition, så I skal lige have fixet nogle parenteser i følgende linje:
+
+        let ( /. ) (x1,y1) (x2,y2) = ( (x1/x1*x1 + y1*y1) , (-y1/x1*x1 + y1*y1) ) *. (x2,y2)
+
+## Assignment 4
+Exercise 4.1:
+
+
+
+    "See attached drawing"
+
+    
+
+    Hvilken?
+
+    
+
+Exercise 4.6:
+
+
+
+    fibC er ikke korrekt.
+
+    
+
+    fibonacci-tallene fra 0 til 10 er:
+
+    
+
+        [0; 1; 1; 2; 3; 5; 8; 13; 21; 34; 55]
+
+        
+
+    fibC udgregner dog disse til at være:
+
+    
+
+        [0; 1; 3; 6; 10; 15; 21; 28; 36; 45; 55]
+
+    
+
+    Det tre implementationer er ikke sammenlignet.
+
+
+
+Exercise 4.10:
+
+
+
+    leftTree og rightTree bør producere træer med n+1 elementer.
+
+    I dette tilfælde produceres der dog træer med n elementer.
+
+    
+
+    I sidste del af opgaven hvor der skal testes performance, er det værd at
+
+    teste både med et langt left-tree og et langt right-tree.
+
+    Det fremgår ikke af besvarelsen hvilken af disse der er benyttet.
+
+    
+
+    Resultaterne bør også vedlægges, frem for kun at skrive de kommandoer som er kørt.
+
+## Assignment 5
+Good
+
+## Assignment 6
+Kommentarer til 2. aflevering
+
+I har fire warnings relateret til jeres brug af patterns:
+
+
+
+    ExprToPoly.fs(89,30): warning FS0025: Incomplete pattern matches on this expression. For example, the value 'AExponent (_, _)' may indicate a case not covered by the pattern(s).
+
+    ExprToPoly.fs(116,37): warning FS0025: Incomplete pattern matches on this expression. For example, the value '[_;_]' may indicate a case not covered by the pattern(s).
+
+    ExprToPoly.fs(116,29): warning FS0025: Incomplete pattern matches on this expression. For example, the value 'AExponent (_, _)' may indicate a case not covered by the pattern(s).
+
+    ExprToPoly.fs(117,28): warning FS0025: Incomplete pattern matches on this expression. For example, the value '[_;_]' may indicate a case not covered by the pattern(s).
+
+    
+
+Disse warnings stammer fra følgende linjer kode:
+
+
+
+    Ln89: "List.fold (fun atom (ANum s) -> match atom with"
+
+    Ln116: "let sum = List.fold (fun (ANum x) [ANum n] -> ANum (x+n)) (ANum 0.0) ags'"
+
+    Ln117: "let ags' = List.map (fun [ANum n] -> []) ags'"
+
+    
+
+Selvom I forventer at jeres input har en specifik form, bør I stadig forholde jer til uventede tilfælde.
+
+Eksempler på disse tilfælde er nævnt i ovenstående warnings.
+
+
+
+Når man kører testen får man faktisk en exception pga. et eller flere af disse patterns.
+
+
+
+Mere specifikt, vil man få en exception når man eksempelvis prøver at køre følgende:
+
+
+
+      simplifyAtomGroup [AExponent ("px",1)]
+
+ 
+
+
+
+Hvis i løser dette burde i kunne køre de givne tests.
+
+
+
+Herudover er der en del andre problemer. 
+
+ 
+
+Eksempelvis mangler simplifyAtomGroup at dække nogle specielle tilfælde.
+
+Under afsnittet "Simplifying an Atom Group.", står følgende "Remember to consider the cases where the sum is 0.0 and 1.0. ".
+
+Dette tages der ikke højde for i jeres simplifyAtomGroup funktion.
+
+
+
+Prøv evt. at få rettet dette til, og så om I opså kan få rettet de resterende fejl så I består testene. 
+
+
+
+
+
+Kommentarer til 1. aflevering.
+Afleveringen er tom.
+
+## Assignment 7
+7.4
+It likely has some overhead to do each and every prime check in parallel.
+You should always consider to split your calculations into bands of some size, so each task checks perhaps 1000 numbers, and counts the primes in them, instead of doing every tiny task in parallel.
+That would also mean less sequential work to be done in the end, which might increase speed.
+
+## Assignment 8
+I optionEval1 glemmer I at tjekke hvilken operator der benyttes ved evaluering af Prim1.
+
+ 
+
+Implementeringen af setEval1 er udkommenteret.
+
+Jeg kan se at I har gjort et forsøg, men ikke har kunnet få det til at virke.
+
+I er dog meget tæt på!
+
+ 
+
+opEval1, opEvalSet1, opEvalTrace1 gør intet ved operanten i tilfældet hvor operatoren er "ABS".
+
+ 
+
+Begge implementationer af optionTraceEval indeholder fejl.
+
+Den første udgave bygger ikke de fulde traces for "+" og "-".
+
+Den anden udgave ser ikke ud til at kunne håndtere division korrekt. 
+
+
+
+Der er ikke skrevet nogen explicit version af B (med returtypen int option trace).
+
+
+
+
+
+Bind i OptionTraceABuilder og OptionTraceBBuilder er ikke implementeret korrekt.
+
+Husk at pattern matche på ting af typen Option, og husk at benytte det I får ud af det.
+
+
+
+
+
+returtyperne på traceEvalA og traceEvalB er ikke angivet korrekt.
+
+Der er også problemer med white-spacing i disse funktioner.
+
+Begge funktioner bør anvende sig selv rekursivt, men anvender i jeres tilfælde traceEval3.
+
+
+
+I har en masse incomplete pattern matches.
+
+Dette skylde i nogle tilfælde at I ikke forholder jer til operatorer som ikke understøttes.
+
+I andre tilfælde skyldes det at evaluering af Prim1 og Prim3 ikke er implementeret.

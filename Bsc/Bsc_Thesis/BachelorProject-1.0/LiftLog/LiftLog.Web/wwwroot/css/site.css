@@ -1,0 +1,104 @@
+﻿/* site.css 
+   Takes HTML structure and defines how to render it 
+   This file contains the CSS selectors used to determine the design and look of our page. 
+*/
+
+/* Define class design for pictures of headshot used to display users */
+/* Use class with "." to represent a collection of specific image types to avoid overriding others*/
+.headshot {
+    border: 1px solid #222; /* Line around picture */
+    max-width: 50px;
+    padding: 3px; /* Space (ramme), pushes rest of content */
+    /* If width of element is 50, 
+        Border is 1px on each side,
+        Padding is 3 px on each side,
+        actual-width is 50+3+3+1+1=58px*/
+}
+
+/* Define design for menu class */
+
+.menu { font-size: 12px; }
+
+/* Remove bullets from list items inside menu */
+
+.menu li { list-style-type: none; }
+
+/* Style specific list item type in menu (Home) */
+
+/* NB: a space between li and .active will style children of li element */
+
+.menu li.active { font-weight: bold; }
+
+/* TODO do we use this? */
+
+.menu li a { color: #eee; }
+
+/* Side bar displayed on left hand side */
+
+#sidebar {
+    -moz-transition: margin-left ease .25s;
+    -o-transition: margin-left ease .25s;
+    -webkit-transition: margin-left ease .25s;
+    background: #2a2c36;
+    color: #eee;
+    height: 100%; /* Side bar will take up entire space up to 250px */
+    left: 0; /* We want side bar to be in left side */
+    margin: 0;
+    overflow: hidden; /* Clipped sidebar instead of just displaying over*/
+    position: fixed; /* Drawn in exact place in browser */
+    transition: margin-left ease .25s; /* Transition back when reopening sidebar */
+    width: 250px;
+}
+
+/* Sidebar class used to toggle (enable and disable) side bar*/
+
+#sidebar.hide-sidebar {
+    -moz-transition: left ease .25s;
+    -o-transition: left ease .25s;
+    -webkit-transition: left ease .25s;
+    left: -250px; /* How wide side bar is, hides it */
+    transition: left ease .25s; /* Smooth animation of hide and show sidebar */
+}
+
+/* Push all content to right of side bar */
+
+#wrapper {
+    -moz-transition: margin-left ease .25s;
+    -o-transition: margin-left ease .25s;
+    -webkit-transition: margin-left ease .25s;
+    margin: 0 0 0 250px; /* Same size as width of sidebar pusing us over */
+    transition: margin-left ease .25s; /* Transition back when reopening sidebar */
+    /* 0 top, 0 right, 0 bottom, 250 left*/
+    /* 0 margin used to remove space between sidebar and main page content */
+}
+
+/* Show and hide main content based on presence of sidebar*/
+
+#wrapper.hide-sidebar {
+    -moz-transition: margin-left ease .25s;
+    -o-transition: margin-left ease .25s;
+    -webkit-transition: margin-left ease .25s;
+    margin-left: 0; /* Used to hide sidebar */
+    transition: margin-left ease .25s;
+}
+
+/* TODO do we use this? */
+
+#map {
+    height: 600px;
+    width: 100%;
+}
+
+/* buttons and links extension to use brackets: [ click me ] */
+
+.btn-bracketed::before {
+    content: "[";
+    display: inline-block;
+    padding-right: 0.5em;
+}
+
+.btn-bracketed::after {
+    content: "]";
+    display: inline-block;
+    padding-left: 0.5em;
+}

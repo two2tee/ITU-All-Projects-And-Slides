@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UserSecretsId>01e8eb4b-23e7-4b17-a0df-320adede0e5d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\.min.css" />
+    <Content Include="wwwroot\css\site.css" />
+    <Content Include="wwwroot\css\.css" />
+    <Content Include="wwwroot\js\facebookScripts.js" />
+    <Content Include="wwwroot\js\testscript.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="1.2.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="1.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LiftLog.Core\LiftLog.Core.csproj" />
+    <ProjectReference Include="..\LiftLog.Data\LiftLog.Data.csproj" />
+    <ProjectReference Include="..\LiftLog.Service\LiftLog.Service.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2\System.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

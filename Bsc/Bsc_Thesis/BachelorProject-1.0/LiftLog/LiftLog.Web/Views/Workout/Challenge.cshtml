@@ -1,0 +1,47 @@
+﻿@model LiftLog.Web.ViewModels.WorkoutViewModels.NewChallengeViewModel
+
+
+<h1>Challenge another user</h1>
+
+<div div style="padding-left: 2%" class="row">
+
+    You can challenge another user based on this workout entry:
+    <p>
+        <b>Exercise:</b> @Model.ExerciseName</p>
+    <p>
+        <b>Weight:</b> @Model.Weight
+    </p>
+    <p>
+        <b>Reps:</b> @Model.Reps
+    </p>
+
+    <h4>User to challenge</h4>
+
+
+    <form asp-controller="Workout"
+          asp-action="Challenge"
+          method="post">
+
+        <div class="form-group">
+            <label class="col-md-2">Challengeable users</label>
+            <div class="col-md-10">
+                <select asp-for="ChallengeeId"
+                        asp-items="@(new SelectList(Model.ChallengeAbleUserDtos, "Id", "DisplayName"))">
+                </select>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <A asp-action="Workouts"> Cancel</A>
+        </div>
+    </form>
+
+
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

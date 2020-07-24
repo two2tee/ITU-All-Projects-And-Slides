@@ -1,0 +1,18 @@
+Problem 1:
+
+Question 5 b) Two columns E.userID and E1.userID not skillID and userID
+Question 5 d)  It should be E.userID and E1.userID
+problem 2:
+
+Question 1 b) one column userID. It implies to question (d) also.
+Question 3 b ) one column name but no tuple.
+problem 3:
+
+Question 3: This is not the one we expect. You must specifies the selection criterion to be applied while retrieving tuples. like role = "actor" or "director".
+Question 5: The correct output has 141 rows, but you get only 21 rows from your query. It seems like you have taken the intersection of movies between John Travolta and Uma Thurman where both are in same movies and now you have to minus from union of the movies between them.
+Problem 4:
+
+It looks fine.
+Transcript:
+
+You are missing this part. You needed to include a command line transcript of your results, mostly just showing the rows returned.

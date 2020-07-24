@@ -1,0 +1,547 @@
+﻿<!-- Represents default user management home page used to manage your account -->
+@using LiftLog.Service.Interfaces
+@using Microsoft.AspNetCore.Authorization
+@model LiftLog.Web.ViewModels.ManageViewModels.IndexViewModel
+@inject IAuthorizationService AuthorizationService
+@inject IWorkoutService WorkoutService
+@inject IChallengeService ChallengeService
+
+@{
+    ViewData["Title"] = "Manage your account";
+}
+
+<h2>@ViewData["Title"].</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div>
+    <h4>Change your account settings</h4>
+    <hr/>
+
+    <dl class="dl-horizontal">
+
+        <!-- Change password -->
+        <dt>Password:</dt>
+        <dd>
+            @if (Model.HasPassword)
+            {
+                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
+            }
+            else
+            {
+                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
+            }
+        </dd>
+        <dt>External Logins:</dt>
+        <dd>
+
+            @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
+        </dd>
+
+    </dl>
+</div>
+
+<div class="row">
+<div class="col-md-4">
+
+    <!-- Profile column -->
+    <h2> Account </h2>
+    <p> These fields enable you to update your profile settings used in LiftLog. You may also delete your account completely.  </p>
+
+    <hr/>
+
+    <form asp-controller="Manage" asp-action="Index" method="post" class="form-horizontal">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Profile Details -->
+
+        <div class="form-group">
+            <label asp-for="DisplayName" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="DisplayName" class="form-control"/>
+                <span asp-validation-for="DisplayName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="BirthDate" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="BirthDate" class="form-control"/>
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="BodyWeight" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="BodyWeight" class="form-control"/>
+                <span asp-validation-for="BodyWeight" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Height" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="Height" class="form-control"/>
+                <span asp-validation-for="Height" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Sex" class="col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="Sex" asp-items="Html.GetEnumSelectList<LiftLog.Core.Enums.Sex>()"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Country" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <select asp-for="Country" asp-items="Html.GetEnumSelectList<LiftLog.Core.Enums.Country>()"></select>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+
+                <!-- Update button -->
+                <button type="submit" class="btn btn-success">Update </button>
+
+                <!-- Delete button -->
+
+                <!-- Use Bootstrap Modal dialog box to display on top of current page for deletion of account -->
+
+                <!--Trigger delete account dialog with button -->
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
+
+                <!-- Delete Account Modal -->
+                <div id="deleteAccountModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+
+                            <!-- Header with title -->
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- &times is an HTML entity icon for close buttons -->
+                                <h4 class="modal-title text-danger"> Are you sure that you want to delete your account? </h4>
+                            </div>
+
+                            <!-- Modal text body -->
+                            <div class="modal-body">
+                                <p> Deleting your account will erase all of your data in LiftLog permanently including your account information, profile data and workout data. </p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <a asp-controller="Manage" asp-action="DeleteUser" class="btn btn-danger">Delete Account</a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"> Close </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<div class="col-md-4">
+
+<h2>Consent </h2>
+<p> These options, if enabled, give LiftLog the right to process parts of your personal data required for that particular feature to work. </p>
+<hr/>
+
+<!-- Consent settings -->
+
+<!-- Form to update consent settings -->
+<form asp-controller="Manage" asp-action="UpdateConsentSettings" method="post" class="form-horizontal">
+
+
+<!-- Account Access Option -->
+<div class="form-group">
+    @if (await AuthorizationService.AuthorizeAsync(User, "AccountAccessPolicy"))
+    {
+        <label> <input type="checkbox" checked name="accountConsent" value="check" data-toggle="modal" data-target="#accountConsentModal"/> External Account Feature </label>
+
+        <!-- Disable Account Modal -->
+        <div id="accountConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you really wish to disable the External Accounts setting? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Disabling External Accounts settings will stop you from being able to bind other social media accounts to
+                            your account
+
+                        <p/>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"> Disable </button>
+                        <a asp-controller="Manage" action="Index" class="btn btn-default"> Cancel</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <label> <input type="checkbox" name="accountConsent" value="check" data-toggle="modal" data-target="#accountConsentModal"/> External Account Feature </label>
+
+        <!-- Enable Account Modal -->
+        <div id="accountConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you allow LiftLog to proccess your data so you can bind it to an external account? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Enabling this allows LiftLog to process your account data and bind it to an external account on the social medias </p>
+                        <p> Specifically, your email will be used to bind it to an external account. </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"> Yes </button>
+                        <a asp-controller="Manage" asp-action="Index" class="btn btn-default"> Close </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+<!-- Workout Access Option -->
+<div class="form-group">
+    @if (await AuthorizationService.AuthorizeAsync(User, "WorkoutAccessPolicy"))
+    {
+        <label> <input type="checkbox" checked name="workoutConsent" value="check" data-toggle="modal" data-target="#workoutConsentModal"/> Workout feature </label>
+
+        <!-- Disable Workout Modal -->
+        <div id="workoutConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you really wish to disable the Workout setting? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Disabling workout settings will stop you from being able to use the workout functionality in the LiftLog application.
+                        <p/>
+                        <p> Specifically, your workout data is processed in the workout page to show you your workouts and workout entries. </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <a asp-controller="Manage" asp-action="DeleteAllWorkoutData" class="btn btn-danger">Delete All Workout Data</a>
+                        <button type="submit" class="btn btn-success"> Disable </button>
+                        <a asp-controller="Manage" asp-action="Index" class="btn btn-default"> Cancel</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <label> <input type="checkbox" name="workoutConsent" value="check" data-toggle="modal" data-target="#workoutConsentModal"/> Workout Feature </label>
+
+        <!-- Enable Workout Modal -->
+        <div id="workoutConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you allow LiftLog to process your personal workout data? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Enabling this allows LiftLog to process your workout data and use it in the workout page to give an overview of your workouts. </p>
+                        <p> Specifically, your workout data will be used to create, modify and delete workouts in the application. </p>
+                        <p> LiftLog may use the workout data in an anonymized format for statistical purposes. </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"> Yes </button>
+                        <a asp-controller="Manage" asp-action="Index" class="btn btn-default"> Close </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+
+<!-- Challenge Access Option -->
+<div class="form-group">
+    @if (await AuthorizationService.AuthorizeAsync(User, "ChallengeAccessPolicy"))
+    {
+        <label> <input type="checkbox" checked name="challengeConsent" value="check" data-toggle="modal" data-target="#challengeConsentModal"/> Challenge Feature </label>
+
+        <!-- Disable Challenge Modal -->
+        <div id="challengeConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you really wish to disable the Challenge setting? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Disabling the challenge setting will stop you from being able to challenge or being challenged by other users in the LiftLog application.
+                        <p/>
+                        <p> Specifically, your your display name, and workout entries are used to share and receive challenges from other users in the application. </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <a asp-controller="Manage" asp-action="DeleteAllChallengeData" class="btn btn-danger">Delete All Challenge Data</a>
+                        <button type="submit" class="btn btn-success"> Disable </button>
+                        <a asp-controller="Manage" action="Index" class="btn btn-default"> Cancel</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <label> <input type="checkbox" name="challengeConsent" value="check" data-toggle="modal" data-target="#challengeConsentModal"/> Challenge </label>
+
+        <!-- Enable Challenge Modal -->
+        <div id="challengeConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you allow LiftLog to process your personal challenge data? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Enabling this allows LiftLog to process your challenge data and use it in the challenge page to show given and received challenges. </p>
+                        <p> Specifically, your your display name, and workout entries are used to share and receive challenges from other users in the application </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"> Yes </button>
+                        <a asp-controller="Manage" asp-action="Index" class="btn btn-default"> Close </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+<!-- Share Access Option -->
+<div class="form-group">
+    @if (await AuthorizationService.AuthorizeAsync(User, "ShareAccessPolicy"))
+    {
+        <label> <input type="checkbox" checked name="shareConsent" value="check" data-toggle="modal" data-target="#shareConsentModal"/> Share Feature</label>
+
+        <!-- Disable Challenge Modal -->
+        <div id="shareConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you really wish to disable the sharing setting? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Disabling the sharing setting will prevent you as well as others from being able to share your challenge results on the social media,
+                            as well as preven you from sharing your workout results.
+                        <p/>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"> Disable </button>
+                        <a asp-controller="Manage" action="Index" class="btn btn-default"> Cancel</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <label> <input type="checkbox" name="shareConsent" value="check" data-toggle="modal" data-target="#shareConsentModal"/> Share Feature</label>
+
+        <!-- Enable Challenge Modal -->
+        <div id="shareConsentModal" class="modal fade" role="dialog">
+
+            <!-- Modal dialog -->
+            <div class="modal-dialog">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+
+                    <!-- Modal Header with title-->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"> &times; </button> <!-- Close icon -->
+                        <h4 class="modal-title text-info"> Do you allow LiftLog to process your personal challenge data? </h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p> Enabling this allows LiftLog to process your data to allow you to share challenge or workout results on a social media platform. </p>
+                        <p> Specifically, your display name and challenge results are used to share challenge results. </p>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-success"> Yes </button>
+                        <a asp-controller="Manage" asp-action="Index" class="btn btn-default"> Close </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+
+</form>
+
+</div>
+
+<!-- Data portability settings -->
+
+<div class="col-md-4">
+
+    <h2>Data Portability </h2>
+    <p> Export your personal data in a PDF for yourself or export it to another company provider by giving them the generated link. </p>
+    <hr/>
+
+    <!-- Export Pdf Button -->
+    <a asp-controller="Manage"
+       asp-action="ExportPdf"
+       class="btn btn-info">
+        Export PDF
+    </a>
+
+    <!-- Export Json Button -->
+    <a asp-controller="Manage"
+       asp-action="GetExportLink"
+       class="btn btn-info">
+        Export To Provider
+    </a>
+
+    <div>
+        <textarea readonly asp-for="ExportLink" style="resize: none"  rows="3" cols="30" placeholder="The export link will appear here..."></textarea>
+    </div>
+
+</div>
+
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

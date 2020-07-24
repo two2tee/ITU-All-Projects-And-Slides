@@ -1,0 +1,106 @@
+﻿<!-- Registration View Page -->
+@model LiftLog.Web.ViewModels.AccountViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Form used to register new user account-->
+<form asp-controller="Account"
+      asp-action="Register"
+      asp-route-returnurl="@ViewData["ReturnUrl"]"
+      method="post"
+      class="form-horizontal">
+
+    <h4>Create a new account. </h4>
+    <hr/>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <!-- Authentication details -->
+    <h5>Account details</h5>
+
+    <!-- Email label and input field -->
+    <div class="form-group">
+        <label asp-for="Email" class="col-md-2" control-label>Email*</label>
+        <div class="col-md-10">
+            <!-- Move input field under Password label -->
+            <input asp-for="Email" class="form-control"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- Password label and input field -->
+    <div class="form-group">
+        <label asp-for="Password" class="col-md-2" control-label>Password*</label>
+        <div class="col-md-10">
+            <input asp-for="Password" class="form-control"/>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <!-- Confirm password field and input -->
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="col-md-2" control-label>Confirm Password*</label>
+        <div class="col-md-10">
+            <input asp-for="ConfirmPassword" class="form-control"/>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <!-- Display name field and input -->
+    <div class="form-group">
+        <label asp-for="DisplayName" class="col-md-2" control-label>Display Name</label>
+        <div class="col-md-10">
+            <input asp-for="DisplayName" placeholder="Optional - What other users will see. " class="form-control"/>
+            <span asp-validation-for="DisplayName" class="text-danger"></span>
+        </div>
+    </div>
+    
+    <!-- Consent details -->
+    <hr />
+    <h4>Consent details</h4>
+    <div class="form-group">
+        <div class="col-md-1 text-left">
+            <label> <input type="checkbox" asp-for="IsShareConsent"/> Share data feature </label>
+            <label> <input type="checkbox" asp-for="IsChallengeConsent"/> Challenge feature </label>
+            <label> <input type="checkbox" asp-for="IsWorkoutConsent" /> Workout feature </label>
+        </div>
+        
+        <!-- Text box with consent details -->
+        <div class="form-group">
+            <div class="col-md-offset-2">
+            <textarea id="Message" readonly="readonly" style="resize: none" rows="15" cols="80">@Model.ConsentMessage</textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <!--Terms of Condition-->
+    <hr />
+    <div class="form-group">  
+        <div class="col-md-2 text-left">
+            <label> <input id="toc"  type="checkbox" asp-for="IsTermsOfUse" /> I agree with the Terms and Conditions </label>
+            <span asp-validation-for="IsTermsOfUse" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <!-- Submit button -->
+    <div class="form-group">
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-lg btn-success">Submit</button>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

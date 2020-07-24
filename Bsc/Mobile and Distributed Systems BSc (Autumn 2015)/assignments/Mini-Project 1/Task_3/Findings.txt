@@ -1,0 +1,19 @@
+Test:
+Strings / messages were between 50 and 500 characters of length.
+Number of messages is 1000 and 10000.
+Interval is between: 1, 5 and 10 micro seconds
+
+Localhost:
+When we used our own computer as an server and client. All of our sent messages when though. No duplicates or dropped messages.
+
+Ethernet:
+Ethernet were a bit better and only dropped about 0-10% of the messages. Still no duplicates.
+
+Wifi:
+Wifi were a lot worse. Depending on the number of characters and interval. Anything between 16-60 % of the messages were dropped. Still no duplicates.
+
+Internet:
+The internet was the worst. But that has perhaps something to do with the echo server "tiger.itu.dk". In our worst case of our test, only 5 % of the messages were received. The rest were dropped. In our best case about 35 % of the messages were received. Still no duplicates. 
+
+Overall findings:
+From our test, we can conclude that the number of dropped messages highly depends on the length / size of the messages and the interval. Where the interval was the most important / effective of them. The number of messages to sent as little to no effect on the number of dropped messages.

@@ -1,0 +1,37 @@
+V0.4
+
+Bugs/manglende features:  
+Nogle dele af kortet bliver ikke farvelagt
+Nogle bygninger bliver ikke malet
+Keyboard shortcuts virker ikke når søgefeltet er der.
+
+Features:  
+Optionbox som gør det mulig at indstille forskellige ting (eg. toggle AA)
+AA bliver nu automatisk slået til og fra ved zoom og panning
+Større refaktorisering af model, view og controller. 
+Implementering af vores addressparser
+
+
+
+Wish list for v0.4:
+Hent og gem adresser fra OSM fil (Bruges til vejvisning)
+Scalerings linje
+Ikoner for restauranter etc
+Coastlines
+
+
+Feedback request:
+Vi har faktoriseret vores program ved at opdele view, controller og model op i flere sub klasser. Spørgsmålet er så om selve opdelingen er okay og bør vi optimere vores klasser yderligere?
+
+Time usage in man hours:
+ 10 hours: group meeting (4 personer)
+3 hours: Rapport skrivning  (2 personer)
+ 8 hours:  Søgefelt(1 person)
+ 8 hours: Optionbox (1 person)
+ 2 hours: Optimization of AA (1 person)
+ 16 hours: Zoom function (1 person)
+ 16 hours: Code refraction and clean up (4 personer)
+
+
+Cumulative cost so far: (1h = DKK 625)
+Total : 29.375 + 30.000 + 64.375 + 90.000 = 213750,-

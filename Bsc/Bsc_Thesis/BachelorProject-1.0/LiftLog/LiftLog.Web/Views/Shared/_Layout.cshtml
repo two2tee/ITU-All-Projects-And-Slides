@@ -1,0 +1,104 @@
+﻿<!-- Represents the structure of web page -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LiftLog - @ViewBag.Title</title>
+    <meta charset="utf-8"/>
+
+    <!-- Include bootstrap stylesheet for all pages -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <!-- Web site template "Yeti" used -->
+    <link rel="stylesheet" href="~/lib/bootswatch/yeti/bootstrap.min.css"/>
+    <!-- Include Font CSS styles -->
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css"/>
+    <!-- Refers to css stylesheet located in css folder, to avoid in line styles-->
+    <link rel="stylesheet" href="~/css/site.css"/> <!-- Razor "~/" used to replace with actual path -->
+</head>
+
+<!--Content of web page -->
+<!-- Div structures HTML items as a block as wide as container (page) -->
+<body>
+
+<!-- Section on side of page -->
+<!-- Displays user info -->
+<div id="sidebar">
+    <!-- List with items denoting web pages -->
+    <!-- Nav bar used to style user friendly menu list -->
+    <!-- Tag helpers used to route menu items to correct views via the App controller actions -->
+    <ul class="nav">
+        <li class="active">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li>
+                <a asp-controller="Workout" asp-action="Workouts">Workouts</a>
+            </li>
+            <li>
+                <a asp-controller="Challenge" asp-action="Challenges">Challenges</a>
+            </li>
+        }
+        <li>
+            <a asp-controller="Home" asp-action="About">About</a>
+        </li>
+        <li>
+            <a asp-controller="Home" asp-action="Contact">Contact</a>
+        </li>
+    </ul>
+
+    @await Html.PartialAsync("_LoginPartial")
+
+</div>
+
+<!-- Section wrapping whole page -->
+<div id="wrapper">
+
+    <!-- Top navigation bar in boostrap -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-left">
+                <!-- Class styles how nav items appear -->
+                <li>
+                    <button id="sidebarToggle" class="btn btn-primary" style="margin: 5px">
+                        <!-- <i class="glyphicon glyphicon-chevron-left"></i> Show left arrow instead of text -->
+                        <i class="fa fa-angle-left"></i>
+                    </button>
+                </li>
+            </ul>
+            <!-- Anchor tag used to link back to homepage URL page -->
+            <!-- Use tag helpers to route brand (Lift Log) back to homepage via Index action in App controller-->
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand">LiftLog</a>
+        </div>
+    </nav>
+
+    <!-- Inject HTML of specific HTML page here -->
+    <div id="main" class="container-fluid">
+        <!-- Fluid used to take up as much space as possible (app support) -->
+        @RenderBody() <!-- Placeholder used to inject Index HTML home page specific content -->
+    </div>
+
+    <!-- Footer with copyright-->
+    <div id="footer" class="container-fluid">
+        <div class="navbar navbar-inverse navbar-fixed-bottom">
+            <!-- Push copyrights to bottom of page -->
+            <h4 class="text-center text-info">&copy; 2017 LiftLog Ltd. </h4>
+        </div>
+    </div>
+</div>
+
+
+<!-- Javascript script -->
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/js/site.js"></script>
+
+<!-- Render validation section (e.g. in Contact), Not all pages need a script section -->
+@RenderSection("scripts", false)
+
+
+
+</body>
+
+</html>

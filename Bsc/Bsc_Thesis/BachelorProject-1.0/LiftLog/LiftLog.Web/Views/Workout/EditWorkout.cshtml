@@ -1,0 +1,153 @@
+﻿<!-- This view represents workout entries for a given workout on the workout page -->
+
+@using Microsoft.AspNetCore.Authorization
+@model LiftLog.Web.ViewModels.WorkoutViewModels.WorkoutViewModel
+
+@inject IAuthorizationService AuthorizationService
+
+@{
+    ViewBag.Title = "Log Workout Entries";
+}
+
+<!-- Workout Table Entries -->
+
+<h1> @Model.Name </h1>
+
+<div style="height: 350px; overflow: auto;">
+    <table class="table">
+
+        <!-- Column titles -->
+        <tr>
+            <th> Exercises </th>
+            <th> Set </th>
+            <th> Reps </th>
+            <th> Weight </th>
+            <th> Action</th>
+        </tr>
+
+        @if (Model.WorkoutEntries != null)
+        {
+            foreach (var workoutEntry in Model.WorkoutEntries)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => workoutEntry.ExerciseName)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => workoutEntry.Set)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => workoutEntry.Reps)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => workoutEntry.Weight)
+                    </td>
+                    <td>
+
+                        <!-- Delete Entry button -->
+                        <a asp-controller="Workout"
+                           asp-action="DeleteEntry"
+                           asp-route-entryId="@workoutEntry.Id"
+                           asp-route-workoutId="@Model.Id"
+                           class="btn btn-danger">
+                            Delete
+                        </a>
+
+                        <!-- Display Challlenge button if user has given consent to enable feature in settings -->
+                        @if (await AuthorizationService.AuthorizeAsync(User, "ChallengeAccessPolicy"))
+                        {
+                            <!-- Challenge button -->
+                            <a asp-controller="Workout"
+                               asp-action="Challenge"
+                               asp-route-entryId="@workoutEntry.Id"
+                               asp-route-workoutId="@Model.Id"
+                               class="btn btn-warning">
+                                Challenge
+                            </a>
+                        }
+
+                        <!-- Display Share button if user has given consent to enable feature in settings -->
+                        @if (await AuthorizationService.AuthorizeAsync(User, "ShareAccessPolicy"))
+                        {
+                            <!-- Challenge button -->
+                            <a asp-controller="Workout"
+                               asp-action="ShareWorkoutEntry"
+                               asp-route-entryId="@workoutEntry.Id"
+                               asp-route-workoutId="@Model.Id"
+                               class="btn btn-info">
+                                Share
+                            </a>
+                        }
+
+                    </td>
+
+                </tr>
+            }
+        }
+
+    </table>
+
+</div>
+
+<!-- Add Exercise Entry -->
+<div div style="padding-left: 2%" class="row">
+
+    <h2> Add New Entry </h2>
+
+    <form asp-controller="Workout"
+          asp-action="EditWorkout"
+          method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Exercise Name -->
+        <div class="form-group">
+            <label class="col-md-2">Exercises</label>
+            <div class="col-md-10">
+                <select asp-for="ExerciseId"
+                        asp-items="@(new SelectList(Model.Exercises, "Id", "Name"))">
+                </select>
+            </div>
+        </div>
+
+        <!-- Exercise Sets -->
+        <div class="form-group">
+            <label asp-for="Set" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="Set" class="form-control"/>
+                <span asp-validation-for="Set" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Exercise Repititions -->
+        <div class="form-group">
+            <label asp-for="Reps" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="Reps" class="form-control"/>
+                <span asp-validation-for="Reps" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Exercise Weight -->
+        <div class="form-group">
+            <label asp-for="Weight" class="col-md-2" control-label></label>
+            <div class="col-md-10">
+                <input asp-for="Weight" class="form-control"/>
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-success"> Add Exercise</button>
+            <a asp-action="Workouts">Back to List</a>
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

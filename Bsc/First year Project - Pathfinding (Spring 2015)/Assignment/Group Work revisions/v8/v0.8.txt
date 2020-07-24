@@ -1,0 +1,23 @@
+VERSION LOG
+v0.8 - Sweet clementine
+
+Changelog:
+- Quadtree is now fully functional. Each way is inserted in multiple quads if it intersects.
+- Searchfunction/addressparsing is implemented (still needs some optimization)
+- Slider implemented
+- Optimized our model
+
+For next version:
+- Fix bin save/load
+- Optimize searchfuntion/addressparsing
+- Draw pointer when address have been parsed
+- Draw coastlines
+- Start working on route planning
+
+Time usage in man hours: 
+10 hours: Group meeting (5 persons) 
+4 hours: Optimized model (3 persons)
+8 hours: QuadTree (1 person)
+8 hours: Slider
+10 hours: Implement addressparsing (1 person)
+Cumulative cost so far: (1h = DKK 625) Total : 29.375 + 30.000 + 64.375 + 90.000 + 130625 + 55000 = 399375,-

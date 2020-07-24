@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>920e126b-2816-4674-826d-8f7dfa956c61</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>RayTracer</RootNamespace>
+    <AssemblyName>RayTracer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
+    <Name>RayTracer</Name>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Debug\RayTracer.XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin\Release\RayTracer.XML</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets')">
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <None Include="App.config" />
+    <Compile Include="FloatHelper.fs" />
+    <Compile Include="SceneAssets.fsi" />
+    <Compile Include="SceneAssets.fs" />
+    <Compile Include="BoundingBox.fsi" />
+    <Compile Include="BoundingBox.fs" />
+    <Compile Include="Transformation.fsi" />
+    <Compile Include="Transformation.fs" />
+    <Compile Include="PolynomialFormulas.fsi" />
+    <Compile Include="PolynomialFormulas.fs" />
+    <Compile Include="KDTree.fsi" />
+    <Compile Include="KDTree.fs" />
+    <Compile Include="TriangleMesh.fsi" />
+    <Compile Include="TriangleMesh.fs" />
+    <Compile Include="Shape.fsi" />
+    <Compile Include="Shape.fs" />
+    <Compile Include="ImplicitSurface.fsi" />
+    <Compile Include="ImplicitSurface.fs" />
+    <Compile Include="ConstructiveGeometry.fsi" />
+    <Compile Include="ConstructiveGeometry.fs" />
+    <Compile Include="Camera.fsi" />
+    <Compile Include="Camera.fs" />
+    <Compile Include="Scene.fsi" />
+    <Compile Include="Scene.fs" />
+    <Compile Include="PlyParser.fsi" />
+    <Compile Include="PlyParser.fs" />
+    <Compile Include="MeshBuilder.fsi" />
+    <Compile Include="MeshBuilder.fs" />
+    <Compile Include="Program.fs" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core">
+      <HintPath>..\packages\FSharp.Core.4.0.0.1\lib\net40\FSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.PowerPack">
+      <HintPath>..\packages\FSPowerPack.Core.Community.2.0.0.0\lib\Net40\FSharp.PowerPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.PowerPack.Linq">
+      <HintPath>..\packages\FSPowerPack.Linq.Community.2.0.0.0\lib\Net40\FSharp.PowerPack.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.PowerPack.Metadata">
+      <HintPath>..\packages\FSPowerPack.Metadata.Community.2.0.0.0\lib\Net40\FSharp.PowerPack.Metadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.PowerPack.Parallel.Seq">
+      <HintPath>..\packages\FSPowerPack.Parallel.Seq.Community.2.0.0.0\lib\Net40\FSharp.PowerPack.Parallel.Seq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\ExprParse\ExprParse.fsproj">
+      <Name>ExprParse</Name>
+      <Project>{4676b211-83ce-4c52-81e0-274c50ad4f69}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ExprToPoly\ExprToPoly.fsproj">
+      <Name>ExprToPoly</Name>
+      <Project>{733a8e96-abdf-43d8-a534-1dbb66fa2c5e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Point\Point.fsproj">
+      <Name>Point</Name>
+      <Project>{f9ab6b1c-edb9-4d80-b9c7-68e5c3424018}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Vector\Vector.fsproj">
+      <Name>Vector</Name>
+      <Project>{a88dc159-c923-4ddd-8f09-9bb12a95828a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

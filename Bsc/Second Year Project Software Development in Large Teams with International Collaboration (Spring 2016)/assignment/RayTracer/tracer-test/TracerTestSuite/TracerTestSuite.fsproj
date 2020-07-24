@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{66CFC955-B8C4-498E-B4D6-1AD7EF81BDB5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TracerTestSuite</RootNamespace>
+    <AssemblyName>TracerTestSuite</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <Externalconsole>true</Externalconsole>
+    <GenerateTailCalls>true</GenerateTailCalls>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\4.0\Framework\v4.0\Microsoft.FSharp.Targets" />
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Util.fs" />
+    <Compile Include="ImplicitSurfaces.fs" />
+    <Compile Include="Shapes.fs" />
+    <Compile Include="Light.fs" />
+    <Compile Include="AffineTransformations.fs" />
+    <Compile Include="Meshes.fs" />
+    <Compile Include="Texture.fs" />
+    <Compile Include="CSG.fs" />
+    <Compile Include="Program.fs" />
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\API\API.fsproj">
+      <Name>API</Name>
+      <Project>{c31d6574-258c-4b20-9084-0b85b8eec939}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ExprParse\ExprParse.fsproj">
+      <Name>ExprParse</Name>
+      <Project>{4676b211-83ce-4c52-81e0-274c50ad4f69}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ExprToPoly\ExprToPoly.fsproj">
+      <Name>ExprToPoly</Name>
+      <Project>{733a8e96-abdf-43d8-a534-1dbb66fa2c5e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Point\Point.fsproj">
+      <Name>Point</Name>
+      <Project>{f9ab6b1c-edb9-4d80-b9c7-68e5c3424018}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RayTracer\RayTracer.fsproj">
+      <Name>RayTracer</Name>
+      <Project>{920e126b-2816-4674-826d-8f7dfa956c61}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Vector\Vector.fsproj">
+      <Name>Vector</Name>
+      <Project>{a88dc159-c923-4ddd-8f09-9bb12a95828a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,183 @@
+﻿@inject IAuthorizationService AuthorizationService
+@using LiftLog.Core.Enums
+@using Microsoft.AspNetCore.Authorization
+@model LiftLog.Web.ViewModels.ChallengeViewModels.ChallengeViewModel
+
+
+<h1> Challenges</h1>
+
+<!-- Received Challenge -->
+<h3> Received Challenges</h3>
+<div div style="height: 350px; overflow: auto">
+
+    <table class="table">
+
+        <!-- Column titles -->
+        <tr>
+            <th> Challenger </th>
+            <th> Exercise </th>
+            <th> Weight </th>
+            <th> Reps </th>
+            <th> Created Date </th>
+            <th> Result Reps </th>
+            <th> Action </th>
+        </tr>
+
+        @foreach (var challenge in Model.ReceivedChallenges)
+        {
+            <tr>
+                <td>
+
+                    @if (string.IsNullOrWhiteSpace(challenge.ChallengerDisplayName))
+                    {
+                        <i> Removed User </i>
+                    }
+                    else
+                    {
+                        @challenge.ChallengerDisplayName
+                    }
+
+
+                </td>
+                <td>
+                    @challenge.ExerciseName
+                </td>
+                <td>
+                    @challenge.Weight
+                </td>
+                <td>
+                    @challenge.Reps
+                </td>
+                <td>
+                    @challenge.CreationDate
+                </td>
+                <td>
+                    @challenge.ResultReps
+                </td>
+                <td>
+                    <a id="postbtn"
+                       asp-action="PostResults"
+                       asp-route-challengeId="@challenge.Id"
+                       class="btn btn-success">
+                        Post results
+                    </a>
+                    <a asp-controller="Challenge"
+                       asp-action="DeleteChallenge"
+                       asp-route-challengeId="@challenge.Id"
+                       class="btn btn-danger">
+                        Delete
+                    </a>
+
+                    @if (await AuthorizationService.AuthorizeAsync(User, "ShareAccessPolicy"))
+                    {
+                        if (challenge.IsShareAble && challenge.ResultReps > 0)
+                        {
+                            <a asp-controller="Challenge"
+                               asp-action="ShareResult"
+                               asp-route-type="@ShareType.Challengee"
+                               asp-route-challengeId="@challenge.Id"
+                               class="btn btn-info">
+                                Share
+                            </a>
+                        }
+                        else
+                        {
+                            <a
+                                style="opacity: 0.5"
+                                title="Challenge is currently unshareable"
+                                class="btn btn-info">
+                                Share
+                            </a>
+                        }
+                    }
+
+
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+
+</div>
+
+
+<!-- Given Challenge -->
+
+<div div style="height: 350px; overflow: auto">
+
+    <h3> Given Challenges</h3>
+
+    <table class="table">
+
+        <!-- Column titles -->
+        <tr>
+            <th> Challengee </th>
+            <th> Exercise </th>
+            <th> Weight </th>
+            <th> Reps </th>
+            <th> Created Date </th>
+            <th> Result reps </th>
+            <th> Action </th>
+        </tr>
+
+        @foreach (var challenge in Model.GivenChallenges)
+        {
+            <tr>
+                <td>
+                    @challenge.ChallengeeDisplayName
+                </td>
+                <td>
+                    @challenge.ExerciseName
+                </td>
+                <td>
+                    @challenge.Weight
+                </td>
+                <td>
+                    @challenge.Reps
+                </td>
+                <td>
+                    @challenge.CreationDate
+                </td>
+                <td>
+                    @challenge.ResultReps
+                </td>
+                <td>
+                    <a asp-controller="Challenge"
+                       asp-action="DeleteChallenge"
+                       asp-route-challengeId="@challenge.Id"
+                       class="btn btn-danger">
+                        Delete
+                    </a>
+
+                    @if (await AuthorizationService.AuthorizeAsync(User, "ShareAccessPolicy"))
+                    {
+                        if (challenge.IsShareAble && challenge.ResultReps > 0)
+                        {
+                            <a asp-controller="Challenge"
+                               asp-action="ShareResult"
+                               asp-route-type="@ShareType.Challenger"
+                               asp-route-challengeId="@challenge.Id"
+                               class="btn btn-info">
+                                Share
+                            </a>
+                        }
+                        else
+                        {
+                            <a
+                                style="opacity: 0.5"
+                                title="Challenge is currently unshareable. The other user has either not posted any results or has turned of sharing functionality."
+                                class="btn btn-info">
+                                Share
+                            </a>
+                        }
+                    }
+
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>

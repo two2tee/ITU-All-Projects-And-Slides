@@ -1,0 +1,66 @@
+﻿<!-- View for Contact Page -->
+
+<!-- View mdoel associated with this view -->
+@model LiftLog.Web.ViewModels.HomeViewModels.ContactViewModel
+
+<!-- Specify this to inject page name into layout page -->
+@{
+    ViewBag.Title = "Contact Page";
+}
+
+<!-- Contact Page Form -->
+<!-- Property data is sent to ContactViewModel directly -->
+<!-- asp-validation-for used to validate input based on data annotations in View Model -->
+<div class="row">
+    <!-- Push form in by 3 and take up 6 of total 12 to effectively be in center of page -->
+    <div class="col-md-6 col-md-offset-3">
+        <h2> Contact Page </h2>
+
+        <form method="post">
+            <!-- Only show errors not shown on individual forms -->
+            <div asp-validation-summary="ModelOnly"></div>
+
+            @if (ViewBag.UserMessage != null)
+            {
+                <!-- Set user message directly in form upon success -->
+                <!-- Show message here from ModelState.IsValid in controller -->
+                <div>@ViewBag.UserMessage</div>
+            }
+
+            <!-- Represents name field and input field -->
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-muted"></span> <!-- Validate name -->
+            </div>
+
+            <!-- Represents email field and input field -->
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email" class="text-muted"></span>
+            </div>
+
+            <!-- Represents message field and input field -->
+            <div class="form-group">
+                <label asp-for="Message"></label>
+                <textarea rows="10" cols="15"
+                          asp-for="Message" class="form-control"></textarea>
+
+                @*<input asp-for="Message" class="form-control"/>*@
+                <span asp-validation-for="Message" class="text-muted"></span>
+            </div>
+
+            <!-- Submit button -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-lg btn-success">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

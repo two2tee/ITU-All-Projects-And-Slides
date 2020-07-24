@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Tingle</string>
+    <string name="headline">Last thing added:</string>
+    <string name="heading_create">Add new thing</string>
+    <string name="what_thing">What thing?</string>
+    <string name="where">Where?</string>
+    <string name="heading_lookUp">Look Up</string>
+    <string name="item_found_toast">Last known location: </string>
+    <string name="item_NotFound_toast">Not found.</string>
+    <string name="heading_showAll">Show all</string>
+    <string name="item_selected">You have selected:</string>
+    <string name="no_item_selected">No item selected</string>
+    <string name="no_what_specified">Please specify what item.</string>
+
+</resources>

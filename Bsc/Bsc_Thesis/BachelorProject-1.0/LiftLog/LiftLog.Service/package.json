@@ -1,0 +1,23 @@
+{
+  "name": "liftlogpdffileprovider",
+  "version": "1.0.0",
+  "description": "pdf file provider",
+  "main": "pdf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.itu.dk/tvao/BachelorProject.git"
+  },
+  "keywords": [
+    "pdfnpm"
+  ],
+  "author": "Dennis & Thor",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "jsreport-core": "^1.2.2",
+    "jsreport-jsrender": "^1.0.1",
+    "jsreport-phantom-pdf": "^1.4.2"
+  }
+}

@@ -1,0 +1,19 @@
+.free
+{
+    -fx-background-color: greenyellow;
+}
+
+.reserved
+{
+    -fx-background-color: red;
+}
+
+.chosen
+{
+    -fx-background-color: deepskyblue;
+}
+
+.reserveButton
+{
+    -fx-background-color: chartreuse;
+}

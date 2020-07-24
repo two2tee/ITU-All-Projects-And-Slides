@@ -1,0 +1,3 @@
+npm install jsreport-core --save
+npm install jsreport-jsrender --save
+npm install jsreport-phantom-pdf --save

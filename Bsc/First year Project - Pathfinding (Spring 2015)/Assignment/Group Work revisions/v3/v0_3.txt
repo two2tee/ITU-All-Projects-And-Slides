@@ -1,0 +1,38 @@
+V0.3
+
+Bugs/manglende features:  
+Zoom - kun ind mod midten og ikke mod musen
+Nogle dele af kortet bliver ikke farvelagt
+Nogle bygninger bliver ikke malet
+Nogle bygninger med baggårde bliver overmalet (benytter ikke winding)
+Når man panner/zoomer uden AA sat til, bliver det sat til alligevel efter endt pan/zoom.
+Keyboard shortcuts virker ikke når søgefeltet er der.
+
+Features:  
+Pan/zoom med mousedrag og scroll. 
+Små iconer på bestemte koordinater i kortet (restauranter og caféer)
+Filechooser til at loade et bestemt kort. (Programmet tager imod bin, zip og osm filer)
+Programmet kan gemme/loader bin filer
+Programmet har en søgebjælke
+
+
+Wish list for v0.3:
+Pan og zoom mod mouse
+Hent og gem adresser fra OSM fil (Bruges til vejvisning)
+Scalerings linje
+
+Feedback request:
+Bør vi opdele vores klasser op i flere subklasser? Lige nu har vi kun få klasser, som gør rigtig meget.
+
+Time usage in man hours:
+ 10 hours: group meeting (4 personer)
+ 8 hours:  Søgefelt(1 person)
+ 5 hours: Exception handling (1 person)
+ 20 hours: Cartographics (1 person)
+ 5 hours: Optimization (1 person)
+ 16 hours: Zoom function (1 person)
+ 3 hours: Code refraction and clean up (2 personer)
+
+
+Cumulative cost so far: (1h = DKK 625)
+Total : 29.375 + 30.000 + 64.375 = 123750,-

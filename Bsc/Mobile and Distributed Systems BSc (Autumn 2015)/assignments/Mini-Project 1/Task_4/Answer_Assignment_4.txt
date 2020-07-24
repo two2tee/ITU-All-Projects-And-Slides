@@ -1,0 +1,52 @@
+Exercise 4 Written Answer
+
+We have created a class UDPClient and class UDPServer
+that tries to reliably transmit a string of length less than 255 characters.  
+
+The UDPClient class has been modified to make it possible to handle corrupted, duplicated and missing packets:
+
+Firstly, we generate a hash code for each message String and send it together in the packet with the message
+to make it possible to check for corrupted messages. The idea is to match the message String's hash code
+and the hash code send a long with it in the UDPServer to see if the message has been corrupted during the tramission.
+We are aware that a possibility exists for the hash code itself to be corrupted during the transmission, but after 
+dicussing the issue with our TA we came to the conclusion that it was sufficiently small for the needs of our program.
+Also we concatenate the hash code and the message and isolate the hash code using $ on both sides of it.
+This is used to make a split operation in the UDPServer and separate the message and hash code for comparrison.
+We know that this is not an optimal solution since it means that our message transmission will go wrong if the user
+tries to send a message containing a $.
+A better solution would have been to add the message data and hash code to a byte array
+and then extract the data directly from the byte array using ByteBuffer.
+
+Secondly, we always wait for the UDPServer to respond by using a timeout in the UDPClient while awaiting a response. 
+If the packet has not been received no respond will come from the UDPServer
+which will result in the UDPClient resending the packet (this is done up to 3 times). The logic behind resending 3 times
+was that something had to be wrong with the connection if the packet had not yet been received at this point and so
+we wanted to stop the attempt to resend the packet instead of keeping the program running.
+ 
+Thirdly, to avoid duplicates we use a HashMap<InetAddress, Integer> to map the IPaddress of a user to the hash code
+of the latest DatagramPacket received from this user.
+When a packet is received we can do the duplicate check in expected constant time
+by extracting the IPAddress from the received packet and check if its hash code is the same as the value 
+of the previous packet which is saved in our HashMap.
+The downside of this method is, that the memory usage for storing this information is linear
+in the number of user IPAddresses.
+
+Another way to avoid duplicates one could instead have used a ticket system, which could be done in the following way:
+	1. The client sends a request to the UDPServer to get promission to send a message.
+	2. If the server accepts the request it sends back a ticket for the client and registers the ticket number
+	   and client IPAddress.
+	3. The client now holds the ticket information which it sends together with the message.
+	4. When the server receives the packet it can then check the ticket information and IPAddress
+	   to see if the packet should be accepted.
+
+In this way the memory usage is only linear in the number of tickets which probably would be a lot less than
+the amount of users if the system were to support a larger user base.
+
+A problem with this is that the system could end up holding unused tickets 
+e.g. if a client receives a ticket but crashes before sending its message or if a message get lost for a year
+before arriving at the server. 
+A way to solve this problem could be to have different types of tickets with different expiration dates
+depending on the importance of the message. The client could then know the importance of the message 
+and request a certain kind of ticket from the server. 
+E.g. a normal chat message could expire after say a week while a pentagon clearance level 6 message might first
+expire after 10 years or more.

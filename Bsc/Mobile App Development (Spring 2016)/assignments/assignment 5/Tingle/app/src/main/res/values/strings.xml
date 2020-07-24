@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Tingle</string>
+    <string name="headline">Last thing added:</string>
+    <string name="heading_create">Add thing</string>
+    <string name="heading_create_barcode">Add thing with barcode</string>
+    <string name="what_thing">What thing?</string>
+    <string name="where">Where?</string>
+    <string name="heading_lookUp">Look Up</string>
+    <string name="item_found_toast">Last known location: </string>
+    <string name="item_NotFound_toast">Not found.</string>
+    <string name="heading_showAll">Show all</string>
+    <string name="item_selected">You have selected:</string>
+    <string name="no_item_selected">No item selected</string>
+    <string name="no_what_specified">Please specify what item.</string>
+    <string name="something_Went_Wrong">Something went wrong</string>
+    <string name="wrong_resultCode">No result code matches the returned code</string>
+    <string name="delete">Delete</string>
+    <string name="back">Back</string>
+    <string name="what_hint">Enter name of item.</string>
+    <string name="where_hint">Enter location of item</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_question">Are you sure you want to delete selected elements?</string>
+    <string name="warning">Warning</string>
+    <string name="details_label">Other details</string>
+    <string name="basic_info_label">Basic information</string>
+    <string name="description_hint">Enter description</string>
+    <string name="date_picker_title">Last seen date</string>
+    <string name="ok">OK</string>
+    <string name="no_changes">No changes were made.</string>
+    <string name="saved">Saved!</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="no_scanner_found">No scanner found.</string>
+
+
+    <string name="sharereport_with_description">The %1$s was last located at %2$s on date %3$s with the following
+                                description: %4$s </string>
+    <string name="sharereport_without_description">The %1$s was last located at %2$s on date %3$s. </string>
+
+    <string name="share_thing">Share thing!</string>
+    <string name="description">Description</string>
+    <string name="scan_success">scanned</string>
+    <string name="scan_fail">Scan canceled</string>
+    <string name="scan_button_not_scanned">No barcode scanned.</string>
+    <string name="exit_question">Are you sure you want to exit?</string>
+    <string name="barcode">Barcode information</string>
+    <string name="photo">Photo</string>
+    <string name="where_is_empty">Please specify location</string>
+    <string name="no_network">No internet connection found.</string>
+    <string name="no_barcode">No barcode scanned.</string>
+    <string name="search">Search</string>
+    <string name="sort_what">Sort what</string>
+    <string name="sort_date">Sort Date</string>
+    <string name="sort_where">Sort where</string>
+    <string name="openDrawer"> &lt; </string>
+    <string name="search_what">search for \'what\'</string>
+    <string name="search_where">Search for \'where\'</string>
+    <string name="photo_Hint">Photo of thing</string>
+    <string name="camera_button_hint">Take Picture</string>
+</resources>
+

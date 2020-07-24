@@ -1,0 +1,23 @@
+﻿@*@model IEnumerable<LiftLog.Data.Entities.Workout>*@
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Initial welcome message -->
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Welcome to LiftLog </h1>
+        <p>This is a web app that will help you log your strength workouts in the gym.</p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Workout" asp-action="Workouts" class="btn btn-lg btn-success">Goto Your Workouts</a>
+        }
+    </div>
+</div>
+
+<!-- Display status message (e.g. from registration or deletion of account) -->
+<div style="padding-top: 10px">
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+</div>

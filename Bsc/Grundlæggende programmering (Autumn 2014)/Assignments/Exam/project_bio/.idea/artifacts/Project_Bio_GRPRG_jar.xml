@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Project_Bio_GRPRG:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Project_Bio_GRPRG_jar</output-path>
+    <root id="archive" name="Project_Bio_GRPRG.jar">
+      <element id="module-output" name="Project_Bio_GRPRG" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mockito/mockito-all/1.10.8/mockito-all-1.10.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.11/junit-4.11.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

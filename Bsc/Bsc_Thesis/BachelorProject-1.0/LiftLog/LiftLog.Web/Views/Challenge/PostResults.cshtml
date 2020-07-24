@@ -1,0 +1,56 @@
+﻿@model LiftLog.Web.ViewModels.ChallengeViewModels.ChallengeResultViewModel
+
+
+<h1>Post Challenge Results</h1>
+
+
+<!-- Add Exercise Entry -->
+<div div style="padding-left: 2%" class="row">
+
+    You can post your results for the following challenge:
+    <p/>
+    <p>
+        <b>Challenger:</b> @Model.ChallengerDisplayName
+    </p>
+    <p>
+        <b>Creation Date:</b> @Model.CreationDate
+    </p>
+    <p>
+        <b>Exercise:</b> @Model.ExerciseName</p>
+    <p>
+        <b>Weight:</b> @Model.Weight
+    </p>
+    <p>
+        <b>Reps:</b> @Model.Reps
+    </p>
+
+    <h4>Your Results</h4>
+
+
+    <form asp-controller="Challenge"
+          asp-action="PostResults"
+          method="post">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label class="col-md-2" control-label> Result reps </label>
+            <div class="col-md-10">
+                <input asp-for="ResultReps" class="form-control"/>
+                <span asp-validation-for="ResultReps" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <A asp-action="Challenges"> Cancel</A>
+        </div>
+    </form>
+
+
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

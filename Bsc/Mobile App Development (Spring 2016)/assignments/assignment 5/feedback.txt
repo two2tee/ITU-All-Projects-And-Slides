@@ -1,0 +1,3 @@
+Thank you for a nice solution to the second mandatory assignment, it has been accepted so you can take the exam.
+Good documentation with a nice class diagram showing the overall structure of the application. Using the ActionBar is a good design choice, but you should be sure that it is intuitive, otherwise it is counter-productive. It is good that you have even included extra functionality like sharing on social media.
+You are welcome to contact Abdulrashid to get further feedback on your solution.

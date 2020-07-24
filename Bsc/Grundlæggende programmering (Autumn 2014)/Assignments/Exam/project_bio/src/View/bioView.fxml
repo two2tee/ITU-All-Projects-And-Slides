@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GUIController">
+   <center>
+      <TabPane fx:id="showTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab fx:id="showTab" text="Show hall">
+               <content>
+                  <AnchorPane prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane fx:id="showBorderPane" layoutX="-2.0" prefHeight="467.0" prefWidth="922.0" stylesheets="@styleSheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <top>
+                              <StackPane BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#028fcf" height="42.0" smooth="false" stroke="BLACK" strokeType="INSIDE" width="624.0" />
+                                    <Text fill="#e8e8e8" strokeType="OUTSIDE" strokeWidth="0.0" text="SCREEN" wrappingWidth="77.83232116699219">
+                                       <font>
+                                          <Font name="Helvetica Bold" size="14.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </StackPane>
+                           </top>
+                           <bottom>
+                              <GridPane prefHeight="120.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" GridPane.rowIndex="1">
+                                       <children>
+                                          <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="65.0" styleClass="free" text="Free">
+                                             <HBox.margin>
+                                                <Insets left="5.0" right="5.0" top="40.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="65.0" styleClass="reserved" text="Booked">
+                                             <HBox.margin>
+                                                <Insets left="5.0" right="5.0" top="40.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" prefHeight="65.0" prefWidth="65.0" styleClass="chosen" text="Chosen">
+                                             <HBox.margin>
+                                                <Insets left="5.0" right="5.0" top="40.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="381.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <children>
+                                          <Button fx:id="reserveButton" alignment="CENTER" blendMode="DARKEN" defaultButton="true" mnemonicParsing="false" onMouseClicked="#clickOnReserved" prefHeight="72.0" prefWidth="137.0" styleClass="reserveButton" text="Reserve" textAlignment="CENTER" underline="true">
+                                             <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="20.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </GridPane>
+                           </bottom>
+                        </BorderPane>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Reservations">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="438.0" prefWidth="988.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                              <TableView fx:id="reservationTableView" focusTraversable="false" prefHeight="438.0" prefWidth="985.0" BorderPane.alignment="CENTER">
+                                <columns>
+                                    <TableColumn fx:id="reservationIdColumn" prefWidth="127.0" text="Reservations-ID" />
+                                  <TableColumn fx:id="customerNameColumn" prefWidth="367.0" text="Customer-Name" />
+                                    <TableColumn fx:id="customerPhoneColumn" prefWidth="123.0" text="Customer-Phone" />
+                                    <TableColumn fx:id="reservedSeatColumn" prefWidth="165.0" text="Reserved-Seat" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <padding>
+                                    <Insets bottom="2.0" />
+                                 </padding>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="68.0" prefWidth="920.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="reservationDeleteButton" mnemonicParsing="false" onMouseClicked="#deleteReservarionClick" prefHeight="43.0" prefWidth="117.0" text="Delete">
+                                       <font>
+                                          <Font name="System Bold" size="17.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </bottom>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Help">
+              <content>
+                <AnchorPane>
+                     <children>
+                        <TextArea editable="false" prefHeight="467.0" prefWidth="920.0" text="Project Bio v. 1.0&#10;&#10;This is a simple guideline on how to use the program.&#10;&#10;1) See shows &#10;&#10;1a. Shows can be seen in the show table located in the left part of the program. &#10;1b. The table displays all shows available in the cinema. &#10;1c. Each row in the table holds a movie, its showtime and which theater it runs in. &#10;&#10;2) Create a reservation&#10;&#10;2a. Mark the desired show on your left according to the customer request.&#10;2b. A map of the seats will appear on the screen under the &quot;Show Hall&quot; tab. &#10;2c. The seats will have different colours depending on their availability. &#10;2d. A seat is available for booking if it is green.&#10;2e. A seat is marked blue if a green seat is clicked on, which indicates that is is ready to be booked.&#10;2f. A seat is red if it has already been booked and can't be clicked on. &#10;2g. To complete a reservation, follow 2a and click on the desired seat (if green) followed by the reserve button in the lower right corner.&#10;&#10;3) Delete a reservation&#10;&#10;3a. Please enter the &quot;Reservations&quot; tab to see all existing reservations. These are lynced to a marked show in the show table. &#10;3b. Mark the desired reservation that is to be deleted and click &quot;Delete&quot; in the lower right corner of the program. &#10;&#10;4) Create several reservations&#10;&#10;4a. If several different customers want to make a reservation you will have to perform one reservation at the time.&#10;4b. If the samme customer wants to make several reservations to the same movie, it can be done in one reservation.&#10;4c. To complete 4b, mark the desired amount of seats in the desires location and follow 2g. &#10;&#10;Features available in Project Bio v. 2.0 (not released yet) &#10;&#10;Search functions&#10;- Retrieve a customer reservation using name and phone number &#10;- Find shows playing only on a specific day &#10;- Find shows with available seat(s) for a customer reservation&#10;&#10;Reservations&#10;- Create simultaneous reservations independent of customer information &#10;- Edit an existing reservation, workaround to avoid deleting the old reservation first and then registering new one &#10;&#10;Feel free to  contact us at tvao@itu.dk for further help...  &#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </TabPane>
+   </center>
+   <left>
+      <AnchorPane prefHeight="689.0" prefWidth="292.0" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane minWidth="-Infinity" prefHeight="471.0" prefWidth="360.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <center>
+                  <StackPane prefHeight="704.0" prefWidth="292.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label prefHeight="16.0" prefWidth="272.0" text="Reservations">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Show picker">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="bioTable" onMouseClicked="#setShowBorderPane" prefHeight="480.0" prefWidth="369.0">
+                          <columns>
+                            <TableColumn fx:id="showColumn" minWidth="-Infinity" prefWidth="133.0" resizable="false" sortType="DESCENDING" text="Show" />
+                            <TableColumn fx:id="timeColumn" minWidth="0.0" prefWidth="96.0" sortType="DESCENDING" text="Time" />
+                              <TableColumn fx:id="hallColumn" prefWidth="161.0" sortType="DESCENDING" text="Hall" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </StackPane>
+               </center>
+               <right>
+                  <Separator focusTraversable="false" orientation="VERTICAL" prefHeight="705.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+               </right>
+               <bottom>
+                  <HBox alignment="CENTER" prefHeight="0.0" prefWidth="360.0" BorderPane.alignment="CENTER">
+                     <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="1.0" />
+                     </padding>
+                  </HBox>
+               </bottom>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </left>
+</BorderPane>

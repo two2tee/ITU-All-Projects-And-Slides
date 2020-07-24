@@ -1,0 +1,69 @@
+problem 1
+
+correct
+
+correct
+
+correct
+
+not correct
+
+correct
+
+serializability
+
+correct
+
+correct
+
+correct
+
+correct
+
+not correct
+
+Problem 2
+
+Deadlock Detection
+
+correct
+
+correct
+
+correct
+
+Deadlock prevention
+
+correct
+
+correct
+
+correct
+
+correct
+
+
+
+Practical Part
+
+Cleaning
+
+   Good
+
+
+
+Age Approximation
+
+  Good
+
+
+
+Enrichment
+
+  Good
+
+
+
+OLAP model
+
+  Good, but you are missing "A description of the pre-aggregation tables and indexes created, incl. transscript.”

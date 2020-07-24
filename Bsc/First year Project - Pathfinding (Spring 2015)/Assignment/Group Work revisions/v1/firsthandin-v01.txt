@@ -1,0 +1,19 @@
+Group C
+============
+
+Features:
+* Load and display an OSM file as line segments in black and white
+* Change colors on buildings and streets
+
+"Features":
+* Kan ikke tegne/farvelægge dele af kortet
+* Kan ikke zoome eller panne kortet
+* Bygninger før den samme farve som park/grønne områder første gang der loades og farver slås til. Farven kan dog ændres så snart brugeren vælger at skifte farve vha. "building" color picker i GUIen.
+* Hvid er standard "fill" farve for bygninger så snart brugeren slår farver til og interagere med color picker første gang.
+* Stregtykkelse bliver tykkere hver gang vi loade et kort igen. (strokeWidth) Ser ud til at stregerne bliver tegnet flere gange oven på hinanden?
+
+Wish list for v0.2:
+ * Pan and zoom implementations with JavaFX
+
+Feedback request:
+ * We've implemented some tests as well in the folder "tests", and we would like some feedback on this as well. 

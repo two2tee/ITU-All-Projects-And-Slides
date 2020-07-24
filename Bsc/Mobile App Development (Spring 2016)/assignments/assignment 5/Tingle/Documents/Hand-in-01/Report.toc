@@ -1,0 +1,17 @@
+\contentsline {section}{\numberline {1}Important Backend design choices}{3}
+\contentsline {subsection}{\numberline {1.1}MVC architecture}{3}
+\contentsline {subsection}{\numberline {1.2}Repository pattern with dependency injection}{3}
+\contentsline {subsubsection}{\numberline {1.2.1}IDs for Things/entities}{4}
+\contentsline {subsection}{\numberline {1.3}Fragment callbacks and eventhandlers}{4}
+\contentsline {section}{\numberline {2}User interface}{4}
+\contentsline {subsection}{\numberline {2.1}Usability design choices}{4}
+\contentsline {section}{\numberline {3}Functionality extensions to Tingle V3}{5}
+\contentsline {section}{\numberline {4}Test}{5}
+\contentsline {subsection}{\numberline {4.1}Unit testing of model}{5}
+\contentsline {subsection}{\numberline {4.2}Manual testing of View and application}{5}
+\contentsline {section}{\numberline {5}Bugs}{5}
+\contentsline {section}{\numberline {6}Appendix}{6}
+\contentsline {subsection}{\numberline {6.1}Manual of Tingle}{6}
+\contentsline {subsection}{\numberline {6.2}Class Diagrams}{7}
+\contentsline {subsection}{\numberline {6.3}Test Results}{8}
+\contentsline {subsection}{\numberline {6.4}UI pictures}{9}

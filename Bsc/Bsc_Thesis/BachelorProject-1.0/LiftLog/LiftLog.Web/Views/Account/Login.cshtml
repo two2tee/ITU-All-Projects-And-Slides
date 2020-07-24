@@ -1,0 +1,112 @@
+﻿<!-- Represents login page -->
+@using LiftLog.Data.Entities
+@using Microsoft.AspNetCore.Identity
+@model LiftLog.Web.ViewModels.AccountViewModels.LoginViewModel
+@inject SignInManager<User> SignInManager
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!-- Use Boostrap to build up login page -->
+
+<div class="row">
+    <!-- Center page using size 6 and offset 3 (total size in Bootstrap grid is 12 )-->
+    <div class="col-md-8">
+        <section>
+            <h3> Login </h3>
+            <!-- Form used to retrieve login information and post it to database -->
+            @*<form method="post" novalidate> <!-- Forces browser not to validate using novalidate -->*@
+            <form method="post" asp-controller="Account" asp-action="Login">
+                @*asp-route-returnurl = "@Model.ReturnUrl">*@
+
+                <!-- Validation of login credentials -->
+                <!-- Do not display property validation (ValidationSummary.ModelOnly) -->
+                <div asp-validation-summary="ModelOnly"></div>
+
+                <!-- Represents user name (email) field and input field-->
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control"/>
+                    <span asp-validation-for="Email"></span> <!-- Validation of user name -->
+                </div>
+
+                <!-- Represents password field and input field -->
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control"/>
+                    <span asp-validation-for="Password"></span> <!-- Validation of password -->
+                </div>
+
+                <!-- Choose to remember user with permanent cookie or session cookie-->
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <label asp-for="RememberMe">
+                                <input asp-for="RememberMe"/>
+                                @Html.DisplayNameFor(m => m.RememberMe)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Represents submit button-->
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn btn-success"/>
+                    @*<input type="submit" value="Register" class="btn btn btn-default" />*@
+                </div>
+
+                <!-- Register new user -->
+                <p>
+                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                </p>
+
+                <!-- Forgot password-->
+                <p>
+                    <a asp-action="ForgotPassword">Forgot your password?</a>
+                </p>
+
+            </form>
+        </section>
+    </div>
+
+    <!-- Login with external provider (e.g. Facebook) -->
+    <div class="col-md-4">
+        <section>
+            <h3>Use another service to log in. </h3>
+            <hr/>
+            @{
+                var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+                if (loginProviders.Count == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form asp-controller="Account" asp-action="ExternalLogin"
+                          asp-route-returnurl="@ViewData["ReturnUrl"]" metho="post">
+                        <div>
+                            <p>
+                                @foreach (var provider in loginProviders)
+                                {
+                                    <button type="submit" class="btn btn-default" name="provider"
+                                            value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">
+                                        @provider.AuthenticationScheme</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

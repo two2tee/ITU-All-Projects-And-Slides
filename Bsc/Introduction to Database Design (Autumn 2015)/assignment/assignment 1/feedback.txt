@@ -1,0 +1,57 @@
+	
+Theoretical part:
+
+Problem 1.
+
+Question 1.
+
+Correct
+
+Question 2.
+
+Correct
+
+Question 3.
+
+Correct
+
+Problem 2.
+
+Question 4.
+
+Correct
+
+Question 5.
+
+Correct
+
+Problem 3.
+
+Question 6.
+
+Not entirely correct.
+
+You can not prove any FD's by an instance of a schema, only disprove.
+
+Question 7.
+
+b) is Yes, c) is No
+
+Practical part:
+Problem 4.
+
+Question 8.
+
+Overall it seems legit, though the bold line between Reviewer and Movie does not makes sense to me, can you not register and not review a movie? Do you have to on sign-up?
+
+Question 9.
+
+Seems legit.
+
+Question 10.
+
+Seems legit.
+
+Question 11.
+
+Good work.

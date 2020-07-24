@@ -1,0 +1,10 @@
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\bin\Debug\netcoreapp1.1\LiftLog.Service.deps.json
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\bin\Debug\netcoreapp1.1\LiftLog.Service.dll
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\bin\Debug\netcoreapp1.1\LiftLog.Service.pdb
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\bin\Debug\netcoreapp1.1\LiftLog.Core.dll
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\bin\Debug\netcoreapp1.1\LiftLog.Data.dll
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\bin\Debug\netcoreapp1.1\LiftLog.Core.pdb
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\bin\Debug\netcoreapp1.1\LiftLog.Data.pdb
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\obj\Debug\netcoreapp1.1\LiftLog.Service.AssemblyInfo.cs
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\obj\Debug\netcoreapp1.1\LiftLog.Service.dll
+C:\Users\DennisThinhTan\Desktop\BachelorProject-1.0\LiftLog\LiftLog.Service\obj\Debug\netcoreapp1.1\LiftLog.Service.pdb

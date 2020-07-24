@@ -1,0 +1,63 @@
+Questions
+Besides implementing such processes, you must also answer the following questions (justify your answers, 1-2 paragraphs each; shorter is better).
+
+1.Are your processes Web Services?
+
+Since the two processes communicate over a network one could argue that they are web services. 
+However, the sink and source do not interact using SOAP (Simple Object Access Protocol) messages.
+A web service normally uses e.g. XML or SOAP with an internet protocol (e.g. HTTP) where XML is used to tag data, SOAP to transfer data etc.
+Our solution uses sockets like web services to communicate with the client where random bytes are sent over a socket. As opposed to web services that use a standard format to make it easy for the client to parse data.
+To sum up, the communication principles are the same since the two processes communicate over a network but we do not apply a specific format for data exchange.
+
+
+
+
+
+2.Is your system time and/or space de-coupled?
+
+The decoupling properties ensure that the communication is anonymous (space decoupling) and communicating parties do not need to be active at the same time (time decoupling). 
+
+The system is time-decoupled since the client (source) does not block to wait for a response from the server. The message from the server is communicated to the client when available. 
+In our solution the server notifies all connected sinks when a source(s) sends a message. As a result, the client process can continue its own execution without being coupled to the execution of the server process. 
+
+The system is space decoupled since the sources are connected to the server, and not the sinks. The sources and sinks do not know about each other and are only connected through the server. 
+
+
+
+
+3.Is your system a message queue?
+
+No, it is based on a socket connection, which is a low-level abstraction allowing two programs to exchange data over a network while a connection is active.
+A message queue is an asynchronous (allowing delays instead of steady stream) protocol where the sender and receiver do not need to interact with the message queue simultaneously.
+This allows for the system to work even if sources (senders) and sinks (receivers) are not alive at the same time. The message queue functions as a temporary storage for undelivered messages. 
+This implies that I could run a source without a sink and send messages that would be sent as soon as a sink had been activated.
+
+
+
+
+4.Is your system a publish/subscribe system?
+
+- Yes, our system is a publish/subscribe system. The sinks act as the subscribers, and the sources act as the publishers. 
+
+A publish-subscribe system is when a publisher(sender) sends an event to an event handler/or event service (a server) and the subscriber(receiver) are able to subscribe to particular events of interest through the event service. 
+Fundamentally, publish/subscriber is a one-to-many communication paradigm, since one event is delivered to many subscribers. 
+
+In this system the sources are able to publish events to the server, and the server will pass the events on to all subscribers which have subscribed to this event. 
+The subscribers will be the sinks and will establish a connection to the server, so it is possible for the server to pass on messages.
+
+ 
+
+
+5.What are the failure models of your system?
+
+In the system there are different kinds of failure models:  
+
+Fail-stop failure: Since our server is listening to sinks and sources, and the sinks and sources are dependent on the server, the server can have a fail-stop failure. All sinks and sources can detect this failure. 
+The other way around, the server can detect if a sink is down.
+
+Crash-Failure: If a source is down, the server or any of the sinks will not detect this, but simply a crash failure will happen.
+
+Omission failure: If the server is down an Omission failure will happen, since the outgoing message from the source never arrives at the other end at the sink.  
+
+
+

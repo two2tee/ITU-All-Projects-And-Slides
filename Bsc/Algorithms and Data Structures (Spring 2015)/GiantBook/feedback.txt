@@ -1,0 +1,5 @@
+Add more conclusions to your results
+
+Your fields should not be static
+
+Main method is a Little too big, try breaking down into smaller methods

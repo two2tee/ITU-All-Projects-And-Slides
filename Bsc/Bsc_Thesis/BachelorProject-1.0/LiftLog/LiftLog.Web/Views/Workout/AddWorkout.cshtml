@@ -1,0 +1,28 @@
+﻿<!-- This view page represents a form used to add a new workout in a partial view of the workout view -->
+
+@model LiftLog.Web.ViewModels.WorkoutViewModels.WorkoutViewModel
+
+
+<h1> Add New Workout </h1>*@
+
+<form asp-controller="Workout"
+      asp-action="AddWorkout"
+      asp-route-returnurl="@ViewData["ReturnUrl"]"
+      method="post"
+      class="form-horizontal">
+
+    <!-- Workout name field and input -->
+
+    <div>
+
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name"/>
+            <button type="submit" class="btn btn-sm btn-success">Add Workout</button>
+            <div>
+                <a asp-action="Workouts">Back to List</a>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--POM = project-object-model Er et reference til et system "maven" der bygger java-projekter.
+ uden at man skal bruge en IDE.
+
+//Se 4-testing.mp4 - Uploaded i LearnIT.
+Vi benytter dog IntelliJ til at generere vores .JAR filer.
+
+HUSK at REIMPORTE pom.xml, hvis man ændrer filen her.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ITU-BGP14</groupId>
+    <artifactId>projectBio</artifactId>
+    <name>ProjectBio</name>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+
+    <dependencies>
+        <!-- mysql connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.33</version>
+        </dependency>
+
+        <!--JUNIT-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+
+        <!-- Mockito - En udvidelse til JUNIT hvor man kan skrive mocks.
+                - Mock's formål er en mock-up objekt af det egentlige objekt.
+                  Den simulerer altså det komplekse
+         -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.8</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

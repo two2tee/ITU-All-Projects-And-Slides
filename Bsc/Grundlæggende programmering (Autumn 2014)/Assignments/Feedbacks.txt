@@ -1,0 +1,60 @@
+## Assignment 1
+1.17: Korrekt. Interessant placering af den anden sol :) 1.19: Med effekten fra sol to der får solen til at ligne en halvmåne, så er der ikke så meget solnedgang over metoden, men den bevæger en sol rigtigt nok. 1.24: Der var intet lab-classes projekt vedlagt eller kommentarer jeg kunne finde, men det er okay..
+
+
+## Assignment 2
+Rettelse:Naive Machine:FintBetter ticketMachine:Du kan forkorte            total = total + price;            til            total += price;og ligeså             balance = balance - price;            til            balance -= price;Så skal du skrive mindre kode :DBook-exercise:1)    if (refNumber.length() > 0){        System.out.println("Title: "+ title + " : Author: " + author + " pages: "+ pages +"Ref. Number: "+refNumber);    }    else{        System.out.println("Title: "+ title + " : Author: " + author + " pages: "+ pages +"Ref. Number: ZZZ");    }Ville kunne laves om til        System.out.print("Title: "+ title + " : Author: " + author + " pages: "+ pages);    if (refNumber.length() > 0){        System.out.printnl("Ref. Number: "+refNumber)    }    else{        System.out.printnl("Ref. Number: ZZZ")    }Så undgår du kode dublikation2)    if(ref.length() > 3)Skal være     if(ref.length() >= 3)    Ellers fint
+
+
+## Assignment 3
+Generalt
+
+God opgave, men oplysende kommentarer
+
+ 
+
+GA1
+
+Tree - klassen:
+
+if (alive == true) kan skrives som  if (alive)
+
+Du kunne med fordel gemme resultatet af height * (1 + growthPct/100) og så var du fri for at beregne det to gange
+
+ 
+
+Forest - klassen:
+
+Fint
+
+ 
+
+GA2
+
+Du kunne bruge din show metode i compute metode til vise ligningen
+
+Du udregner d 4 gange i din solve metode, en gang skulle være nok.
+
+Jeg ville gerne have haft både en super og en robust solve
+
+ 
+
+GA3
+
+Fint
+
+## Assignment 4
+Fine tests.   Gode overvejelser omkring korrektheden af date klassen.   Fine overvejelser omkring Ulrik’s kode, og fedt du har målt på tiden. Hvilke konsekvenser kan det få at koden ikke er særlig læsbar.   Fedt du har lavet extra opgaven.   Fin implementation af next, men hvad med leap year? Fin test, men forstår ikke helt logikken at der er to dage mellem 28/2 og 01/03 ved skudår, next metoden skulle netop kunne håndtere dette, også retunere den 29/2 når der var skud år og derfor burde daysTill være lig 1.
+
+## Assignment 5
+7.2 Super Fint   7.3 Super fint. Du kunne måske have været lidt mere kreativt omkring hvordan du sætter træer ind i din newForest
+
+## Assignment 6
+Det var bedre. Det ser rigtigt fint ud. Histogrammet skalere fint i højden. Gode exceptions, nogle af dem er måske en smule unødvendige ...
+
+## Assignment 7
+Godt arbejde. Det ser rigtigt fint ud. Fin testing environment til at teste køretiden af algoritmerne . Korrekt antagelse om bedste og værste køretid.
+
+## Assignment 8
+
+## Assignment 9
