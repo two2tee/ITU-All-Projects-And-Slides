@@ -1,0 +1,1094 @@
+
+ data/G-ex.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: true
+Find None: 3
+
+ data/P3.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: true
+Find None: -1
+
+ data/bht.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 6
+
+ data/common-1-100.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-1000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-1500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-20.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-2000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-250.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-2500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: false
+Find None: 6
+
+ data/common-1-3000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: false
+Find None: 6
+
+ data/common-1-3500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: false
+Find None: 6
+
+ data/common-1-4000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: false
+Find None: 6
+
+ data/common-1-4500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 6
+Find Alternate: true
+Find None: 6
+
+ data/common-1-50.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-1-5000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 8
+Find Alternate: true
+Find None: 6
+
+ data/common-1-5757.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 5
+Find Alternate: true
+Find None: 6
+
+ data/common-2-100.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-2-1000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: true
+Find None: 4
+
+ data/common-2-1500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: true
+Find None: 4
+
+ data/common-2-20.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-2-2000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: true
+Find None: 4
+
+ data/common-2-250.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-2-2500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 3
+Find Alternate: true
+Find None: 4
+
+ data/common-2-3000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 5
+Find Alternate: true
+Find None: 4
+
+ data/common-2-3500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: true
+Find None: 4
+
+ data/common-2-4000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: true
+Find None: 4
+
+ data/common-2-4500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 3
+Find Alternate: true
+Find None: 4
+
+ data/common-2-50.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/common-2-500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: true
+Find None: 4
+
+ data/common-2-5000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: true
+Find None: 4
+
+ data/common-2-5757.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: true
+Find None: 4
+
+ data/dodecahedron.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: false
+Find None: 1
+
+ data/gnm-10-15-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/gnm-10-15-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: true
+Find None: 1
+
+ data/gnm-10-20-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 3
+
+ data/gnm-10-20-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: true
+Find None: 3
+
+ data/gnm-1000-1500-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: false
+Find None: -1
+
+ data/gnm-1000-1500-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 3
+Find Alternate: false
+Find None: -1
+
+ data/gnm-1000-2000-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 7
+
+ data/gnm-1000-2000-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: false
+Find None: -1
+
+ data/gnm-2000-3000-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 8
+
+ data/gnm-2000-3000-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: true
+Find None: -1
+
+ data/gnm-2000-4000-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 6
+
+ data/gnm-2000-4000-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 3
+Find Alternate: false
+Find None: 5
+
+ data/gnm-3000-4500-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: false
+Find None: 10
+
+ data/gnm-3000-4500-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 6
+Find Alternate: false
+Find None: -1
+
+ data/gnm-3000-6000-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: false
+Find None: 6
+
+ data/gnm-3000-6000-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 10
+Find Alternate: false
+Find None: 6
+
+ data/gnm-4000-6000-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: false
+Find None: 7
+
+ data/gnm-4000-6000-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 6
+Find Alternate: false
+Find None: 15
+
+ data/gnm-4000-8000-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: false
+Find None: 5
+
+ data/gnm-4000-8000-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 5
+Find Alternate: true
+Find None: 6
+
+ data/gnm-5000-10000-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 5
+Find Alternate: false
+Find None: 5
+
+ data/gnm-5000-10000-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 8
+Find Alternate: true
+Find None: 5
+
+ data/gnm-5000-7500-0.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/gnm-5000-7500-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/grid-10-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 3
+Find Alternate: false
+Find None: 49
+
+ data/grid-10-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: false
+Find None: 29
+
+ data/grid-10-2.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: true
+Find None: -1
+
+ data/grid-25-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 8
+Find Alternate: true
+Find None: 324
+
+ data/grid-25-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 4
+Find Alternate: true
+Find None: 123
+
+ data/grid-25-2.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 9
+Find Alternate: true
+Find None: -1
+
+ data/grid-5-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: true
+Find None: 14
+
+ data/grid-5-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: true
+Find None: 8
+
+ data/grid-5-2.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: true
+Find None: -1
+
+ data/grid-50-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 21
+Find Alternate: false
+Find None: 1249
+
+ data/grid-50-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 20
+Find Alternate: false
+Find None: 521
+
+ data/grid-50-2.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 25
+Find Alternate: false
+Find None: -1
+
+ data/increase-n10-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 9 is -2147483647
+Find Many:5
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n10-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 9 is -2147483647
+Find Many:7
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n10-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 9 is 1
+Find Many:8
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/increase-n100-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 99 is -2147483647
+Find Many:53
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/increase-n100-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 99 is -2147483647
+Find Many:48
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n100-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 99 is -2147483647
+Find Many:51
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/increase-n20-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 19 is -2147483647
+Find Many:11
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/increase-n20-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 19 is -2147483648
+Find Many:11
+Find Few: 0
+Find Alternate: true
+Find None: 1
+
+ data/increase-n20-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 19 is -2147483647
+Find Many:13
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/increase-n50-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 49 is -2147483647
+Find Many:21
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/increase-n50-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 49 is -2147483647
+Find Many:23
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n50-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 49 is -2147483647
+Find Many:27
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n500-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 499 is -2147483647
+Find Many:258
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n500-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 499 is -2147483647
+Find Many:251
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n500-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 499 is -2147483647
+Find Many:255
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n8-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 7 is -2147483647
+Find Many:6
+Find Few: 1
+Find Alternate: true
+Find None: 1
+
+ data/increase-n8-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 7 is -2147483647
+Find Many:3
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/increase-n8-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 7 is -2147483647
+Find Many:4
+Find Few: 0
+Find Alternate: true
+Find None: 1
+
+ data/rusty-1-17.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 10
+
+ data/rusty-1-2000.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/rusty-1-2500.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/rusty-1-3000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 14
+
+ data/rusty-1-3500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 14
+
+ data/rusty-1-4000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 13
+
+ data/rusty-1-4500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 7
+
+ data/rusty-1-5000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 7
+
+ data/rusty-1-5757.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 7
+
+ data/rusty-2-2000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 5
+
+ data/rusty-2-2500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/rusty-2-3000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/rusty-2-3500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/rusty-2-4000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/rusty-2-4500.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/rusty-2-5000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/rusty-2-5757.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/ski-illustration.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 35 is -2147483647
+Find Many:1
+Find Few: 0
+Find Alternate: false
+Find None: 8
+
+ data/ski-level10-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 78 is 1
+Find Many:23
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/ski-level10-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 75 is -2147483647
+Find Many:7
+Find Few: 1
+Find Alternate: false
+Find None: -1
+
+ data/ski-level10-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 76 is -2147483647
+Find Many:29
+Find Few: 4
+Find Alternate: false
+Find None: -1
+
+ data/ski-level20-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 251 is 1
+Find Many:83
+Find Few: 3
+Find Alternate: false
+Find None: -1
+
+ data/ski-level20-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 252 is -2147483647
+Find Many:83
+Find Few: 9
+Find Alternate: false
+Find None: -1
+
+ data/ski-level20-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 253 is 1
+Find Many:11
+Find Few: 0
+Find Alternate: false
+Find None: -1
+
+ data/ski-level3-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 15 is -2147483647
+Find Many:5
+Find Few: 0
+Find Alternate: true
+Find None: 5
+
+ data/ski-level3-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 13 is -2147483647
+Find Many:4
+Find Few: 0
+Find Alternate: false
+Find None: 5
+
+ data/ski-level3-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 14 is -2147483647
+Find Many:3
+Find Few: 0
+Find Alternate: false
+Find None: 5
+
+ data/ski-level5-1.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 28 is 1
+Find Many:8
+Find Few: 1
+Find Alternate: false
+Find None: -1
+
+ data/ski-level5-2.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 25 is 1
+Find Many:5
+Find Few: 1
+Find Alternate: false
+Find None: -1
+
+ data/ski-level5-3.txt
+ERR: directed graph! Find Some: false
+distance of source  0 to 26 is -2147483647
+Find Many:0
+Find Few: 0
+Find Alternate: false
+Find None: 7
+
+ data/smallworld-10-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 6
+
+ data/smallworld-10-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: true
+Find None: 8
+
+ data/smallworld-20-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: false
+Find None: 8
+
+ data/smallworld-20-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 9
+Find Alternate: true
+Find None: 14
+
+ data/smallworld-3-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 4
+
+ data/smallworld-3-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 1
+Find Alternate: false
+Find None: 2
+
+ data/smallworld-30-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 9
+
+ data/smallworld-30-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 5
+Find Alternate: true
+Find None: 11
+
+ data/smallworld-40-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 8
+
+ data/smallworld-40-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 2
+Find Alternate: true
+Find None: 13
+
+ data/smallworld-50-0.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 3
+
+ data/smallworld-50-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 3
+Find Alternate: true
+Find None: -1
+
+ data/wall-n-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-n-10.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-n-100.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-n-1000.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-n-10000.txt
+
+ data/wall-n-2.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-n-3.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-n-4.txt
+Find Some: false
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-p-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-p-10.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-p-100.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-p-1000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-p-10000.txt
+
+ data/wall-p-2.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-p-3.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-p-4.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-z-1.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-z-10.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-z-100.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-z-1000.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-z-10000.txt
+
+ data/wall-z-2.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-z-3.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1
+
+ data/wall-z-4.txt
+Find Some: true
+ERR: undirected graph! Find Many:-1
+Find Few: 0
+Find Alternate: false
+Find None: 1

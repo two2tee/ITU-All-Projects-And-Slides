@@ -1,0 +1,2 @@
+5- it's better to not use array.drop(n) as it creates a new copy of the array each call,instead use array(n) to access a specific entry (which is constant time operation instead of the linear drop operation)
+see http://docs.scala-lang.org/overviews/collections/performance-characteristics.html

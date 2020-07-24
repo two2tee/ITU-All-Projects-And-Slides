@@ -1,0 +1,6 @@
+
+	
+Great job with append2, a lot of students find it hard to understand that the easier way to type-soundness is to specify the type in the fold.
+
+headOptionFold2 - How does this cover the empty case?: foldRight returns the accumulator straight away for empty Streams
+unfold - Why do I need to use the { case ... } construct inside fold instead of just (a,s)?: a and s are the head and the tail of the stream, so you need to pattern match against the function argument in order to access them. They are not provided to your function directly.

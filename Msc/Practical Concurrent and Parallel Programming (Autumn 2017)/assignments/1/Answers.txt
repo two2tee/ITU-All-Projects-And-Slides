@@ -1,0 +1,134 @@
+*PCPP Exercise 1*
+
+# Exercise 1.1
+1: Since the synchronized keyword is removed thread t1 and t2 are both incrementing the variable count concurrently. Assume that t1 updates count after t2 has read the count, t2 has, therefore, read a stale value and may thus overwrite t1's updates. Consequently, many lost updates may happen.
+
+2: Possibly because the lost updates happen so rarely that it is not likely to happen the first 200 times that the counter is incremented. I would not consider the program correct as there could be an instance where a lost update actually happens.
+
+3: It would not make any difference since neither of these operations is atomic on a bytecode level. That is, first the value of count is read, then the value of count + 1 is computed, and then it is saved in the variable count. When the different alternatives for increment count are run, there is no difference – lost updates still happen.
+
+4: Final value should be 0 - They both have to be synchronized so the shared value can't be accessed when it is being used by another thread.
+
+5: 
+None synchronized: 768592, -15202, -600516
+
+Only Decrement synchronized: -36334, -24453, -27685
+
+Only Increment synchronized:   16424, 16501, 14030
+
+Both synchronized: 0,0,0,0
+
+#Exercise 1.2
+1: The threads probably have to acquire a lock when writing to System.out, which causes the time intervals between the execution of the two threads to be skewed. This might result in the fact that at some moments in time, the threads are put to sleep simultaneously, and then one or the other thread gets to write ‘||’ or ‘--’ before the other one prints. 
+
+2: It works. The threads are guaranteed to print both ‘-’ and ‘|’ respectively since synchronized ensures that no other thread can execute the method while the other one is in the process of executing it.
+
+3: 
+class Printer {
+  public void print() {
+    synchronized(this){
+    System.out.print("-");
+    try { Thread.sleep(50); } catch (InterruptedException exn) { }
+    System.out.print("|");
+  }
+  }
+
+4: class Printer {
+  public static void print() {
+    synchronized(Printer.class){
+    System.out.print("-");
+    try { Thread.sleep(50); } catch (InterruptedException exn) { }
+    System.out.print("|");
+  }
+  }
+
+#Exercise 1.3
+
+1: Yes, it loops forever due to a stale value. If you don’t have volatile, the optimizing compiler will place variables wrong in memory - making us unable to use the right value.
+
+2: Yes, it terminated.
+
+3: No, it still loops forever. For any variable that may be accessed by more than one thread, all accesses to that variable must be performed with the same lock held. If we only lock set(), get() may still read a stale value because the compiler places the operations in the wrong order. 
+
+4: The volatile field modifier can be used to ensure visibility (but not mutual exclusion). This means that two threads can still access the value on the same time, because all writes by a thread A are visible to thread B when it is reading the volatile field.
+
+#Exercise 1.4
+
+1: Sequential takes time 49.159.
+2: Parallel 10 takes time 14.45. That means it is faster.
+3:  Without sync 
+Time: 45.38
+Result: 2999522
+
+With sync
+Time: 45.085
+Result: 3001134
+
+
+Based on all my previous results with synchronized, the system returned 3001134 as a result. Thus I use this base number to compare the results from running the get and increment without sync. As it can be seen in the results, removing synchronize produces a wrong result.
+
+4: After running the program where get() is not synchronized, I was able to produce the correct result 3001134. So in practice, this seems to be working. In theory, by omitting the synchronized keyword one may thus introduce unintended actions when the system is extended (e.g. if the variable is to be set or get by more than one thread). Since the two threads t1 and t2 are joined when they are done, only the main thread call get(), hence only one threads calls it and synchronization does not matter.
+
+
+#Exercise 1.5
+1: 
+Sum is 1622479.000000 and should be 2000000.000000
+Sum is 1701514.000000 and should be 2000000.000000
+Sum is 1675959.000000 and should be 2000000.000000
+
+Based on the above results, it can be concluded that the class Mystery is not thread-safe. All tests failed as the actual result/sum did not equal to the expected sum.
+
+2:
+Instance methods and static methods differ in regards to how synchronize work as they use different monitor objects. Static method uses the class to synchronize while the instance method synchronizes using the object instance. Because one of the methods (addInstance) is a non-static method, it only synchronizes on the instance object - it does not monitor on the class, which actually holds the sum double.
+
+3: I would add a intrinsic synchronization lock on the instance method addInstance, where i monitor the class as seen below:
+
+ class Mystery {
+  private static double sum = 0;
+
+  public static synchronized void addStatic(double x) {
+    sum += x;
+  }
+
+  public synchronized void addInstance(double x) {
+    synchronized(Mystery.class){
+      sum += x;
+    }
+  }
+
+  public static synchronized double sum() {
+    return sum;
+  }
+}
+
+#Exercise 1.6
+1: Set size and items to volatile variables to ensure visibility and add synchronize keyword to all set methods, eg, add and set.
+
+2: In regards to scalability, if a large number of threads are trying to interact with the double array list concurrently, they must wait for each other until everyone is served. This may thus reduce performance due to wait time.
+
+3: No this would not ensure thread-safety because all methods have their own locks. Thus when add() and set() are called concurrently by two different threads, dirty reads and writes may occur. The proposed solution would only stop other threads from calling the same method concurrently. E.g. t2 tries to call add() when t1 is currently using add(). Also in regards to visibility one needs to add volatile keyword on the shared resources to avoid stale readings.
+
+
+#Exercise 1.7
+1: I have added the synchronized keyword to the add() method and denoted the class to be the monitor object since totalSize is a static field. Also, I have made the totalSize variable volatile to ensure visibility.
+
+2: I have added the synchronized keyword to the DoubleArrayList constructor and denoted the class to be the monitor object since allList is a static field. This is to ensure mutual exclusion. Also, I have made the variable volatile to ensure visibility.
+
+
+#Exercise 1.8
+1: MysteryB synchronizes on the MysteryB class and MysteryA synchronizes on the MysteryA class, which means they do not synchronize on the same object, which means their access is not synchronized between one another. Since MysteryB extends MysteryA, I have added the synchronized keyword in increment4() located in MysteryB. In the synchronization lock, I have added MysteryA class as the monitor object since we are referring the static variable 'count' from mysteryA which MysteryB inherits from. 
+
+
+2: You can synchronize the access to the count by adding an explicit lock on a new protected object as shown below, ensuring that both classes monitor the same object:
+
+class MysteryA {
+  protected static long count = 0;
+  protected static final Object lock = new Object();
+  public static long get() 
+  {
+    synchronized (lock) {
+      return count;
+  }...}
+class MysteryB extends MysteryA {
+  public static void increment4() {
+      synchronized (lock) { count += 4}

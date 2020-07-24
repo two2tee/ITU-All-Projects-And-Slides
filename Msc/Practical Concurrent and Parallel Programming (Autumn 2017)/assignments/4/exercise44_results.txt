@@ -1,0 +1,16 @@
+# OS:   Mac OS X; 10.12.6; x86_64
+# JVM:  Oracle Corporation; 1.8.0_144
+# CPU:  null; 8 "cores"
+# Date: 2017-09-27T15:30:22+0200
+Memoizer 0
+countFactorizerParallel     16        750441.2 us   11037.78          2
+Memoizer 1
+countFactorizerParallel     16       1599877.0 us   11323.33          2
+Memoizer 2
+countFactorizerParallel     16        822368.6 us    2419.23          2
+Memoizer 3
+countFactorizerParallel     16        716415.0 us    2469.94          2
+Memoizer 4
+countFactorizerParallel     16        718901.0 us    3847.85          2
+Memoizer 5
+countFactorizerParallel     16        717249.7 us    2957.48          2

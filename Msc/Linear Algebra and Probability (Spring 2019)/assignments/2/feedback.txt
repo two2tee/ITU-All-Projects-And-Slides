@@ -1,0 +1,11 @@
+I think in both exercises you mean to do the right thing, but you need to be much more careful with your writing and notation. In the first one, in your definition of W, what is p? It should say = 0, not p(3), I believe. The elements of W should be polynomials, not numbers, so you should prove p in W, not p(3) in W.
+
+In 4.4.26 write out precisely what it means for the vectors to span P3. You almost do it in line 7, but the left hand side of the equation is a strange tupple (a, x, x2, x3). It should be a polynomial.
+
+For more help, talk to the TAs.
+
+Please resubmit both assignments.
+
+Comments to resubmission: This is a bit better, and I will approve it. The equality in line 9 of second exercise is not well typed, since it compares a vector to a polynomial. What does the line "We can rewrite..." and the four equations below mean? Do you mean 4 equations (not polynomials)? What are the unknowns?
+
+In this exercise you should take an element in P3. Such a thing can be written on form ax3 + bx2 + cx + d, not (u1, u2, u3, u4). Use this to write out what it means for the vectors to span P3.

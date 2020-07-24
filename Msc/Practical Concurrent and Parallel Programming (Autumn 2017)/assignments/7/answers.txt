@@ -1,0 +1,42 @@
+#Exercise 7.1.2
+Implement concurrent download. You can ignore the cancellation button and progress bar for now. There
+seems to be two ways to implement concurrent download of N webpages. Either (1) create N SwingWorker
+subclass instances that each downloads a single webpage; or (2) create a single SwingWorker subclass
+instance that itself uses Java’s executor framework to download the N web pages concurrently. Approach
+(1) seems more elegant because it uses the SwingWorker executor framework only, instead of using two
+executor frameworks. Also, approach (2) seems dubious unless it is clear that a SwingWorker’s publish
+method can be safely called on multiple threads; what does the Java class library documentation say about
+this? Implement and explain the correctness of your solution for concurrent download.
+
+Our solution is based on (1) where we create a N Swingworker subclass instances that each downloads a single webpage.
+For each swing worker instance we add their downloadTasks to the fetchButton ActionListener and cancelTask to the 
+cancelButton actionListner. Thus when any of these buttons are pressed, all SwingWorker task a executed concurrently.
+
+In regards to solution (2) and the publish method, the Java doc states the following: 
+"Because the process method is invoked asynchronously on the Event Dispatch Thread multiple invocations
+to the publish method might occur before the process method is executed. 
+For performance purposes all these invocations are coalesced into one invocation with concatenated arguments."
+
+It therefore seems that the implementation of process handles the case that multiple calls to publish occur before process is invoked.
+
+#Exercise 7.2.1 
+Explain why the whole simulation and its graphical user interface is thread-safe, in spite of the Swing GUI
+toolkit components not being thread-safe.
+
+The whole simulation is thread safe because:
+1: All methods in the Lift class is synchronized. Thus operations called on the same lift cannot cause inconsistency.
+Updates to the shared state of stops[] can therefore not be overwritten as actions are called on the lift, such as if customerAt() and 
+goTo() is called simultaneously.
+
+2: Each lift is running on their own thread thus changes to a lift's states does not affect the other lifts. This allows them to run concurrently.
+Direction and floor need not be synchronized, because they are only ever accessed by the containing lift thread, 
+thus this is not a shared mutable state between threads.
+
+3: Each lift thread has each their canvas (the liftShaft), therefore only one thread updates this canvas at once,
+making the operations on the UI theadsafe without requiring the swing framework to be threadsafe. 
+Had the lifts shared a canvas, the implementation would not be threadsafe.
+
+As a last note, all interactions on the user interface happens on the event thread whereas all other long
+operations run in background thus. Thus any long operations do not 
+lock or freeze the whole user-interface preventing the user to interact with it.
+

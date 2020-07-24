@@ -1,0 +1,6 @@
+	
+You write a lot of text, also more than what is needed. The last part of  exercise 1 does not entirely make sense although you are on the right track. The first equation is not right, since (2,0) is not an eigenvector. Instead, you should distribute B^n, not lambda^n over the sum. Also, there are two lambdas in play, not just one, so you should at least use different letters for the two different ones, but why not just write 5 and -1, since this is what they are.
+
+I do not understand the way you write the conclusion in the second part. What is Rx? Why not just write what the solution is. It is there in the text, so I will approve it.
+
+Rasmus

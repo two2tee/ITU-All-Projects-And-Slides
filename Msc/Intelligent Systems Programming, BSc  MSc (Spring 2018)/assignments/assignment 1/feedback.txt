@@ -1,0 +1,4 @@
+	
+There is a bit of confusion regarding the nodes in the game tree. You have made the root node MAX which is correct, but its three children should then be CHANCE nodes, since it is now the time to roll the dice. The child nodes of these CHANCE nodes should then be MIN nodes, since it is up to MIN to make a decision, and so on so forth.
+
+Otherwise good job.

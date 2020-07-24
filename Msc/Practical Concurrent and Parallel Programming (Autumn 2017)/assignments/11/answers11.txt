@@ -1,0 +1,120 @@
+#Exercise 11.1.1
+See class TestMSQueue, method sequentialTest
+
+#Exercise  11.1.2
+Yes, the queue implementation passes the test.
+
+#Exercise  11.1.3
+Inject some faults in the MSQueue implementation and see whether the test detects them. Describe the
+faults and whether the test detects them, and if it does detect them, how it fails.
+
+We try to inject faults that violate the variants as defined on slide 4.
+-- We tried to skip the intermediate state and did not advance the tail.
+it resulted in an endless loop. 
+-- We tried to always make the queue assume it was in quiescent state regardless
+of where the tall was. It resulted in a null pointer exception because
+-- We tried to remove the quiescent state and we do not check if the insertion of a new node fails or succeeds before updating the tail
+This results in null pointer exceptions, probably because tail is set to null repeatedly.
+-- We tried to replace the intermediate step with tail.compareAndSet(last, last), so that it does not advance the tail when in intermediate state.
+The queue actually passed the parallel test upon doing this. 
+
+#######QUESTION: WHY? Is this probably because this means that threads only ever insert and dequeue one. 
+
+#Exercise 11.2.1
+
+1. The checks performed at source lines E7 and D5 look reasonable enough, but are they really useful? For
+instance, it seems that right after (last == tail.get()) was successfully evaluated to true at E7,
+another thread could modify tail. Hence it seems that the check does not substantially contribute to the
+correctness of the data structure. Do you agree with this argument? Think about it, make some drawings of possible scenarios, perform some
+computer experiments, or anything else you can think of, and report your findings.
+
+It is true that another thread could modify the tail after the call to last == tail.get(). 
+Running the concurrent tests with and without the lines does not change the fact that it passes.
+Therefore it seems that it does not contribute to the thread safety of the data structure.
+We thought of different interleavings of the threads, e.g. where one thread has modified the next of the last, but not last yet,
+and another thread reads the tail between these two operations. However, it does not seem to make a difference to the correctness.
+
+2. We removed the line at E7 ran the concurrent test again to see if it fails. The test passes. 
+
+3. We removed the line at D5 ran the concurrent test again to see if it fails. The test passes. 
+
+4. If the checks at lines E7 and D5 are indeed unnecessary for correctness, what other reasons could there be
+to include them in the code? How would you test your hypotheses about such reasons?
+
+Is the only reason for having E7 and D5 is to ensure better performance. One way to test this may be to benchmark the implementation without the statements
+for a varying number of threads and then benchmark the implementation with the statements for a varying number of threads.
+Even if removed it still passes. It does not contribute to correctness. 
+
+5. Describe and conduct an experiment to cast some light on the role of one of E7 and D5
+Make tests where many writes/reads happens concurrenly and see if there are any cases where E7 or D5 equals false. 
+If such case happens, then one can assume it does what it suppose to do.
+That is it checks if read data is not stale. Benchmark it as we did in Exercise 11.3.4 for a varying number of threads.
+
+#Exercise 11.3.1
+See class BenchmarkTest in file TestMSQueue.java (we used Mark7 to measure)
+
+The following are the results 
+
+MSQueue               1             733,6 us      47,85        512
+MSQueue               2            1217,4 us      24,73        256
+MSQueue               3            1608,4 us      15,20        256
+MSQueue               4            4610,9 us    1481,47         64
+
+#Exercise 11.3.2
+The following are the results using MSQueueRefl
+
+MSQueueRefl               1             906,4 us     316,92        256
+MSQueueRefl               2            1218,5 us      19,96        256
+MSQueueRefl               3            1600,1 us      11,70        256
+MSQueueRefl               4            4502,8 us     770,09         64
+
+There is hardly any difference 
+
+
+#Exercise 11.3.3
+Please see in code for class name MSLockQueue.
+MSLockQueue               1             780,1 us      21,80        512
+MSLockQueue               2            1213,4 us      30,16        256
+MSLockQueue               3            1625,0 us      31,09        256
+MSLockQueue               4            2057,1 us      32,33        128
+
+It is much faster than the other implementation. 
+
+#Exercise 11.3.4
+The following are the results using MSQueue without E7 and D5
+MSQueue               1             727,4 us      25,96        512
+MSQueue               2            1091,0 us      17,15        256
+MSQueue               3            1805,7 us     887,04        256
+MSQueue               4            4669,2 us     907,71         64
+
+For lower contention, it seems that removing E7 and D5 improves the time, but for larger contention, 
+it seems that removing the two statements makes it slower. Therefore it seems as if the two statements 
+increases performance when contention is high. This actually makes sense since the statements are more likely to be reached for higher contentions,
+and ensure that unnecessary code is not run. However, the difference is not remarkable.
+
+#Exercise 11.4.1
+See class TestChaseLevQueue.java, method sequentialTest.
+
+#Exercise 11.4.2
+See class TestChaseLevQueue.java, ConcurrencyTest.
+We are using a cachedThreadPool to execute one callable that pushes 1.000.000 random integers to the queue
+and N numbers callables that steals from the queue. Their results are retreived from their futures.
+
+For the pushpop callable, the results are stored in an int array where index 0 contains the sum of pushed numbers and 
+index 1 contains the sum of popped numbers. 
+
+For the stealer callables, the returned values are the sum of the integers they have stolen from the queue.
+
+We use a foreach loop to iterate trough the futures that the callable produces and sum up the values.
+In this case the sum of steals and pop are added together and then compared with the sum of pushed values.
+
+If the they are equal, wish they are, the test passes.
+
+Exercise 11.4.3
+- Use top.set in steal instead of CAS when incrementing T --> test fails
+- Remove size <= 0 check from steal --> test fails
+- Remove aftersize < 0 check from pop --> test fails
+
+
+Exercise 11.4.4 
+The test failed thus it detects that the values are are wrong.

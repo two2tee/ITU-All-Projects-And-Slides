@@ -1,0 +1,117 @@
+#Exercise 6.1.2
+
+Accessing the size array must be an atomic operation, so while reading the size of a given stripe, someone may not change it simultaneously.
+Therefore, it is important to lock stripe s to not read a inconsistent/stale value of the size of a given stripe.
+
+#Exercise 6.1.6
+We chose to implement the second version, since it maximizes concurrency because it does not lock the whole bucket, but only the stripe we are currently iterating over.
+
+
+#Exercise 6.1.8
+Measure the performance of SynchronizedMap<K,V> and StripedMap<K,V> by timing calls to method
+exerciseMap. Report the results from your hardware and discuss whether they are as expected.
+
+
+- OS:   Windows 10; 10.0; amd64
+- JVM:  Oracle Corporation; 1.8.0_60
+- CPU:  Intel64 Family 6 Model 61 Stepping 4, GenuineIntel; 4 "cores"
+- Date: 2017-10-25T10:27:09+0200
+
+SynchronizedMap       16         525606.8 us   53378.67          2
+99992.0
+StripedMap            16         167609.7 us   33483.72          2
+128703.25
+
+As expected, the StripedMap is considerably faster than the synchronized map, 
+since our implementation only locks on each stripe instead, therefore increasing concurrency between different stripes.
+
+#Exercise 6.1.9: What advantages are there to using a small number (say 32 or 16) of stripes instead of simply having a stripe
+for each entry in the buckets table? Discuss.
+
+If you have more stripes, you also have more locking overhead. E.g. if you have a stripe for every bucket (eg stripCount = bucketCount),
+you have to lock each bucket individually when e.g. iterating over all buckets.
+You avoid this by having a smaller number of stripes per buckets.
+
+On the other hand, you get more fine-grained locking, which increases concurrency. 
+That means that if you e.g. want to remove an element from a bucket only one bucket is locked
+and all other buckets may still be read/written concurrently.
+
+#Exercise 6.1.10: Why can using 32 stripes improve performance even if one never runs more than, say, 16 threads? Discuss.
+
+The probability that two threads will access the same stripe is lower with a larger amount of stripes. 
+Therefore, the probably that two threads will collide on trying to access the same stripe is lower with 32 stripes than with 16 stripes. 
+If there was only 2 stripes, the 16 threads would compete for access to the stripe, and they would have to wait for each other all the time.
+Therefore, increasing the number of stripes can give more fine-grained concurrency, but it depends on which stripes the threads access.
+
+#Exercise 6.1.11: A comment in the example source code says that it is important for thread-safety of StripedMap and StripedWriteMap
+that the number of buckets is a multiple of the number of stripes.
+Give a scenario that demonstrates the lack of thread-safety when the number of buckets is not a multiple
+of the number of stripes. For instance, use 3 buckets and 2 stripes, and consider two concurrent calls
+put(k1,v1) and put(k2,v2) where the hash code of k1 is 5 and the hashcode of k2 is 8.
+
+In this scenario, we try to allocate the two elements to the same bucket concurrently, and it is possible because the two element get different stripes since:
+stripe(k1) = 5%2= 1 and stripe(k2) = 8%2 = 0. But this violates thread safety as the same bucket may be accesed concurrently due to items having different stripes in a given bucket. 
+Therefore, it might occur that k2 overwrites k1 in the bucket - causing a lost update. 
+
+
+#Exercise 6.2.3: Why do you not need to write to the stripe size if nothing was added?
+
+If nothing was added, the size of the stripe does not increase, therefore you do not need to write to it.
+
+
+
+
+#Exercise 6.2.6
+- OS:   Windows 10; 10.0; amd64
+- JVM:  Oracle Corporation; 1.8.0_60
+- CPU:  Intel64 Family 6 Model 61 Stepping 4, GenuineIntel; 4 "cores"
+- Date: 2017-10-25T13:44:01+0200
+
+SynchronizedMap       16         545664.9 us   62862.14          2
+99992.0
+StripedMap            16         167325.4 us   30747.52          2
+128683.5
+StripedWriteMap       16         146669.5 us   14817.87          2
+99991.15
+
+As it can be seen it was expected that SynchronizedMap is the slowest due to excessive locking. 
+StripedMap is second to slowest but is considerably faster due striping and finally StripedWriteMap is
+the fastest map due to locking only occurs during writes while reads can be done concurrently without locking.
+
+
+#Exercise 6.3.1
+File TestLongAdders.java contains several implementations of a long (64-bit) integer with threadsafe
+add and get operations: (a) Java’s AtomicLong; (b) Java 8’s LongAdder; (c) a simple long field with
+synchronized operations; (d) a number represented as the sum of multiple “stripes” densely allocated in an AtomicLongArray;
+and (e) a number represented as the sum of multiple “stripes” allocated as scattered AtomicLong
+objects.
+
+
+Compile the file and run the code to measure, on your own hardware, the performance of the various atomic
+long implementations. Report the numbers and discuss whether they are plausible, eg. relative to the number
+of cores in your machine and the number of threads trying to access the thread-safe long integer
+
+- OS:   Windows 10; 10.0; amd64
+- JVM:  Oracle Corporation; 1.8.0_60
+- CPU:  Intel64 Family 6 Model 61 Stepping 4, GenuineIntel; 4 "cores"
+- Date: 2017-10-25T13:58:07+0200
+
+current thread hashCode               0.0 us       0.00  134217728
+ThreadLocalRandom                     0.0 us       0.00   67108864
+AtomicLong                       677831.7 us   27476.21          2
+LongAdder                        141297.9 us    7244.67          2
+LongCounter                      504919.9 us  404593.53          2
+NewLongAdder                     402125.8 us   63253.15          2
+NewLongAdderPadded               220433.5 us   29640.49          2
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,141 @@
+
+System: 
+# OS:   Mac OS X; 10.12.6; x86_64
+# JVM:  Oracle Corporation; 1.8.0_144
+# CPU:  2.3 GHz Intel Core i7; 4 "cores" hyperthread to 8 cores 
+# RAM:  16 GB 1600 MHz DDR3
+# Date: 2017-09-22T15:56:56+0200
+
+/* Exercise 4.1 */ 
+
+    - 4.1.1 : See mark1_6.txt 
+
+NB: we disabled all other programs 
+
+Results: 
+
+Mark1 : the result becomes 0 ns presumably because of dead code elimination by the JIT (i.e. dummy result never used).
+
+Mark2 : plausible, around ~30 ns similar to Microbenchmarks result. 
+
+Mark3 : plausible, around ~30 ns similar to Microbenchmarks result
+
+Mark4 : plausible, however we noticed that using a System.out.println("Mark 4: "); increased the standard deviation dramatically. We tried running a benchmark on Mark4 alone and godt 0,2 ns, which is close to the original.
+
+Mark5 : this is faster than the microbenchmark, explaining the extra iteration count of 16777216. 
+Also, the time increases suddenly at count=4096 as opposed to the microbenchmark that peaks at count=2048. 
+This might be due to garbage collection. 
+
+Mark6 : plausible, looks similar but the time is lower in the beginning. 
+This may be due to the CPU on the machine being faster and therefore decreases the initial overhead.\
+
+    - 4.1.2 : See mark7.txt 
+
+Surprisingly, the standard deviation is a lot higher on almost all of the function calls. 
+
+We do not know the immediate cause of this. 
+
+In general, we believe that benchmarks like these should be performed on the same machine with the same platform, hardware and processes.
+Otherwise, comparing the results between different environment may greatly influence the standard deviation. 
+We ran the benchmark again, which reduced the standard deviation by half - this may be due to some process in the background or GC.
+
+
+/* Exercise 4.2 */ 
+
+    - 4.2.1 : TestTimeThreads.java as is with Mark6 
+    
+    In general, it is observed that it is much slower in the beginning due to the low count of iterations. 
+    By increasing the count, the overhead becomes less significant. Intuitively, this makes sense since we distribute the initial overhead over more experiments. 
+    The thread results seem a bit more inconsistent, especially the last one varies in time. 
+
+    - 4.2.2 : TestTimeThreads.java with Mark7 
+
+    See testTimeThreadsMark7.txt 
+
+    The results are very similar except for the "Thread create start join" that deviates on the count by a factor 2. 
+    Maybe, this is due to our i7 CPU being newer (and faster), thus being able to handle a higher count.
+
+/* Exercise 4.3 */ 
+
+    - 4.3.1 : See exercise43_1.txt for execution times for 1-32 threads 
+    
+    - 4.3.2 : See exercise432.png
+    Graph shows that more than 4 threads does not lower execution time)
+    
+    - 4.3.3 : 
+    The result seems plausible and fits well with the fact that the testing machine has 4 cores.
+    Thus, an increase of more than 4 threads will not be able to exploit more than 4 cores provided.
+    Surprisingly, the graph increases and decreases in small intervals when using more than 4 threads.
+    Arguably, this is due to the garbage collector.
+    
+    - 4.3.4 See exercise_4_3_4_atomiclong_graph
+    In general, the execution time per thread is quite similar independent of using either the AtomicLong or LongCounter.
+    Noticeable, the AtomicLong starts increasing the execution time after reaching around 20 threads.
+    However, it does seem to outperform the LongCounter by a small fraction of time when using between 6-26 threads.
+    Despite the similar execution time, we believe that using the built-in concurrent collections are considered good practice.
+    By explanation, the AtomicLong is already safe to use in a multithreaded environment and we do not have to address this the same way as in the LongCounter where synchronized must be used.
+    
+    - 4.3.5 : See exercise_4_3_5_atomiclong_outsideloop_graph
+    Most of the time, the new change makes it run somewhat slower than in the version using synchronized extensively. 
+    However, it seems that it spikes less, which may be due to not having the threads wait for each other to access the AtomicLong as much for a prolonged period of time, as in the many-synchronizations code.
+    
+
+/* Exercise 4.4 */
+
+    - 4.4.1 (Memoizer 1) : Initial cache attempt using HashMap & synchronization -> suffers from lack of parallelism due to coarse locking.
+    Running time: 1.599.877,0 us 
+     
+    
+    - 4.4.2: (Memoizer 2) :  Replacing HashMap with ConcurrentHashMap for better parallelism.
+    Running time: 822.368,6 us 
+
+    
+    - 4.4.3 (Memoizer3) : Create a Future and register in cache immediately. 
+                          Calls: ft.run() -> eval.call() -> c.compute(arg)
+    Running time: 716.415,0 us 
+    
+    - 4.4.4 (Memoizer4) : Memoizer4, hybrid of variant of Goetz's Memoizer3 and Memoizer.  
+                          If arg not in cache, create Future, then atomically putIfAbsent in cache, then run on calling thread.
+    Running time: 718.901,0 us
+     
+    - 4.5.5 (Memoizer5) : Memoizer5, modern variant of Memoizer4 using the new Java 8 computeIfAbsent.  
+                          Atomically test whether arg is in cache and if not create Future and put it there, then run on calling thread.
+    Running time: 717.249,7 us
+    
+    - 4.5.6 (Memoizer0) : Replacing HashMap with ConcurrentHashMap for better parallelism and use computeIfAbsent (less overlaps) 
+    Running time: 750.441,2 us
+    
+    - 4.5.7
+    Based on the results, the fastest implemented cache was memoizer3 while the slowest was memoizer1. 
+    Presumably, memoizer1 is slowest because it employs coarse locking and suffers from lack of parallelism.
+    
+    Memoizer2 is the second slowest.
+    It is almost twice as fast as Memoizer1, which makes good sense since it uses a concurrent hashmap that support concurrent operations.
+    
+    Memoizer0 is slightly faster than Memoizer2. 
+    The only difference her is that Memoizer0 uses computeIfAbsent, while Memoizer2 handles this explicitly using a null check. 
+    Arguably, the Memoizer2 should be faster than Memoizer 0 in regards to the fact that it does does not synchronize the check if a key is already existing
+    like computeIfAbsent does in Memoizer 0.
+    However, the probability that operations between threads overlap in Memoizer 2 is higher,
+    because it performs two synchronized operations (put and get) as opposed to Memoizer0 that only performs one in computeIfAbsent.. 
+    
+    Memoizer 4 is a hybrid of Memoizer 3 and Memoizer which also utilizes the Future interface to prevent calculated resulted to be recomputed.
+    However, it is still slower than memoizer 3 since it performs atomic put-if-absent to add future to cache which prevents double computations.
+    Arguably, this may slightly increase running time.
+    
+    Memoizer 5 is an extension of Memoizer4 using the new Java 8 computeIfAbsent. 
+    It Atomically test whether a computation is in cache and if not create Future and put it there, then run it on calling thread.
+    
+    
+    Memoizer 3 was the fastest. 
+    This cache uses the Future (i.e. promise of result) interface to represent computations and register results in the cache.
+    Thus, any calculations that have already been made will not be calculated more than once, since computations are cached.
+    As a result, less overlaps occur and the performance improves. 
+    Memoizer 3 was the fastest, yet the difference in performance between memoizer 0, 4, 5 was minimal.
+    
+    - 4.5.8 : Test scalability of different cache implementations 
+
+    We could test the performance of the cache implementations by increasing the number of threads, testing on hardware with more CPU cores, computations etc.
+    This would give us an impression of how the different scales and behave when increasing loads and hardware available. 
+    Also, one could imagine trying to perform a huge computation and test them on the different cache implementations 
+    to see how they behave in terms of blocking and synchronization. 

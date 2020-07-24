@@ -1,0 +1,215 @@
+
+*Exercise 2.1*
+
+1: The following times were achieved by running Primes:
+
+real    0m7,660s
+user    0m0,000s
+sys     0m0,031s
+
+2: See MyAtomicInteger.java.
+
+3: The following times were achieved by running the ParallelProgram:
+real    0m3,688s
+user    0m0,000s
+sys     0m0,031s
+
+4: We can use volatile in a situation where only one thread writes, and the rest of them reads. This does not work in this scenario where multiple threads are modifying the integer concurrently. 
+
+Multiple threads write to the shared mutable state (i.e. count variable in ParallelProgram.java) at the same time, in which case using volatile is insufficient. 
+
+Instead, synchronization is used to lock access to the write operations (i.e. addAndGet()) to a single thread at the time, achieving mutual exclusion and preventing race conditions. 
+
+5: The following times are achieved by running ParallelProgramTwo:
+
+real    0m3,856s
+user    0m0,000s
+sys     0m0,015s
+
+The difference between running it with MyAtomicInteger or AtomicInteger is mimimal.
+
+Should the AtomicInteger field be declared final?
+
+This does not affect the result but is considered good practice, since it prevents the object reference from being changed at a later time. In other words, the MyAtomicInteger instance is immutable and may not be changed or replaced after construction with a different instance (that may have its own integer field value). 
+
+
+*Exercise 2.2*
+
+1: In the VolatileCachingFactorizer class, why is it important that the cache field is declared volatile? 
+
+When a thread sets the volatile cache field to reference a new OneValueCache, the new cached data becomes immediately visible to other threads. If it was not volatile, other threads risk reading a stale value of the cache in the following line:
+
+long[] factors = cache.getFactors(p); 
+
+The field has be to volatile to avoid reading from an old cache value.
+
+2: In the OneValueCache class, why is it important that both fields are declared final?
+It is important because the final statements ensures that the constructor is run as syncronized. If the final annotation was not provided, the memory would be allocated but may not be set with the instance. Thus, other threads may actually try to refer to it without the instance being probably initialized 
+
+It is the use of final fields that makes possible the guarantee of initialization safety that lets immutable objects be freely accessed and shared without synchronization. However, in this case, the fields won’t be modified anyhow. But it is good practice to declare them final in case the class is extended in the future, if you know that the fields are supposed to be immutable.
+
+
+*Exercise 2.3*  
+
+1: SimpleHistogram: Which fields and methods need which modifiers? Why? Does the getSpan method need to be synchronized? 
+						
+The variable ‘counts’ is initialized once in the constructor and declared final for safe publication. In other words, if the code is accessed or modified at a later time, the state of the counts variable remains consistent, which is preferable in a multithreaded environment. 		 				
+The methods ‘increment’ and ‘getCount’ have to be synchronized because multiple threads may access these methods when writing and reading to/from the shared state (the array elements in the counts variable).
+
+getSpan does not need to be synchronized because the length of the array counts is only initialized once in the constructor and never changes (unmodifiable). Thus multiple threads will always read the same value, even if they read concurrently.
+
+2: Look in ParallelHistogram.java 
+
+3: Look in ParallelHistogram3.java
+Can you now remove synchronized from all methods? Why? Run your prime factor counter and check that the results are correct. 
+					
+Yes, we can remove synchronized since all operations on AtomicIntegers are performed atomically on the underlying integer. 
+real    0m4,575s
+user    0m0,000s
+sys     0m0,031s
+
+The performance was 0,1 seconds faster. 
+
+4: Look in ParallelHistogram4.java
+
+5: show getBins in all histograms. Explain for each implementation whether it gives a fixed snapshot or a live view of the bin counts, possibly affected by subsequent increment calls. 
+
+For Histogram2: Returns a snapshot
+  public synchronized int[] getBins(){
+    return counts.clone();  //Returns a snapshot
+  }
+
+For Histogram3: Returns live data due to atomic operations
+    public int[] getBins()
+    {
+      int[] bin = new int[counts.length];
+      for(int i = 0 ; i< counts.length; i++)
+      {
+        bin[i] = counts[i].get(); 
+      }
+      return bin;
+    }
+
+For Histogram4: Returns live data due to atomic operations and references to an AtomicIntegerArray
+
+  public int[] getBins(){
+    int[] bin = new int[counts.length()];
+    for(int i = 0 ; i< counts.length(); i++)
+    {
+      bin[i] = counts.get(i); 
+    }
+    return bin; 
+  }
+
+For Histogram5:
+
+public int[] getBins(){
+    int[] bins = new int[counts.length];
+    for(int i = 0; i < counts.length; i++){
+      bins[i] = counts[i].intValue();
+    }
+    return bins;
+  }
+
+6: see ParallelHistogram5.java and Histogram5.java 
+
+
+*Exercise 2.4*			 				
+
+1: See FactorizeExercise.java 
+
+2: Wrap Factorizer in the Memoizer1 class - see memoizer1() in FactorizeExercise.java
+
+Result: 
+class Memoizer1
+115000
+
+real	0m15.301s
+user	0m15.540s
+sys	0m0.458s
+
+Explanation: the synchronization on the compute method makes this slower. 
+
+3: Repeat with Memoizer2
+
+class Memoizer2
+227678
+real	0m8.837s
+user	0m57.138s
+sys	0m0.166s
+
+Explanation (how many times is factorizer called and how long it takes): There is a high probability that threads compute the same thing twice. Compute is not atomic, since there might be a large time between the cache gets read and the value gets put in cache. Meanwhile, another thread might access the cache and read a dirty value. Therefore, compute is not synchronized, which allows threads to write the same values to the cache.
+It also takes a longer time because the cache is not used as much as intended, which means the value is recomputed rather than taken from the cache.
+
+4: Repeat with Memoizer3 
+
+class Memoizer3
+117014
+
+real	0m7.450s
+user	0m23.148s
+sys	0m1.334s
+
+Explanation (how many times is factorizer called and how long it takes): 
+The result is twice as fast as the Memoizer1 in realtime and has almost the same function calls, however still a wrong number of function calls. As opposed to Memoizer1, this cache does not employ synchronization but uses a ConcurrentHashMap and FutureTask<V> to represent computations. Consequently, cache lookups are better parallelized between the working threads. Further, the FutureTasks may be placed directly in the map so the time gap where two threads potentially produce the same result (i.e. read the cache as not containing a given value) is minimized - which is why there are less calls.
+
+5: Repeat with Memoizer4 
+
+class Memoizer4
+115000
+
+real	0m7.223s
+user	0m22.745s
+sys	0m1.389s
+
+Explanation (how many times is factorizer called and how long it takes): The putifAbsent() method is atomic and thus allows to produce the correct amount of function calls. In other words, the FutureTasks are only added if they do not already exist - otherwise, they are kept in the cache. Consequently, another thread cannot put a task in the cache between the time it takes another thread to check if the value already exists in cache and put it in the cache. 
+
+6: Repeat with Memoizer5 
+
+class Memoizer5
+115000
+
+real	0m7.175s
+user	0m22.769s
+sys	0m1.303s
+
+Explanation (how many times is factorizer called and how long it takes): 
+The ConcurrentHashMap allows for fast cache lookups in parallel.
+The Callable interface provides the same advantage as the FutureTask and is wrapped in a FutureTask to return a result (unlike a Runnable).  
+7: Caching class Memoizer0 ConcurrentHashMap & computeIfAbsent (see Memoizer0)
+
+Result: class Memoizer0
+115000 
+real	0m7.708s
+user	0m28.685s
+sys	0m0.975s
+
+Explanation: 
+The ConcurrentHashMap allows for fast cache lookups in parallel and the computeIfAbsent() method ensures that no duplicate computations are added to the cache. 
+
+
+*Exercise 2.5*			 				
+1: Describe what you observe when you run the program.
+main
+main finished 40000000
+fresh 1 stops: 25127439
+fresh 0 stops: 25295946
+
+It can be seen that the threads are performing dirty read/writes, since it is expected that each thread must increment the shared counter and when the counter reaches the designated limited, the thread loops must stop. Thus, one of the threads must return 4.000.000 in the print, but they don’t as seen above. 
+		
+2. How can you explain what you observe? 
+Since the threads use the ‘count’ variable as their intrinsic lock, a synchronization problem occurs when the variable changes for each increment. Specifically, the threads may each refer to a different lock, when they increment the count concurrently and the Long object state is modified. 
+Example: thread 1 may synchronize on count 1 and thread 2 may synchronize on count 2. Consequently, mutual exclusion is not in place and dirty writes and reads may happen.
+
+3. Create a version of the program (changing as little as possible) that works as intended
+One can create a custom intrinsic lock and use that eg:
+static Object lock = new Object();
+….
+synchronized(lock)  {  count++; }
+
+When you run the program the following result is produced:
+
+main
+main finished 40000000
+fresh 1 stops: 38222012
+fresh 0 stops: 4000000	 			

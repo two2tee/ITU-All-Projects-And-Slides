@@ -39,6 +39,7 @@ This repository contains all courses, projects, handinds that I have been part o
 - Cross-Disciplinary Team Work (Autumn 2018)
 - How to make (almost) anything (Spring 2019)
 - Intelligent Systems Programming, BSc  MSc (Spring 2018)
+- Linear Algebra and Probability (Spring 2019)
 - Advanced Machine Learning (Autumn 2019)
 - Research Project Machine Learning in Fitness and Health (Autumn 2019)
 - Msc Thesis: Evolutionary Planning in World Models

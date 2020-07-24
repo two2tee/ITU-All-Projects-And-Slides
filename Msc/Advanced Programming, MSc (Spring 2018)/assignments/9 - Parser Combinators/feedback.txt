@@ -1,0 +1,4 @@
+	
+3 - It seems you are trying to parse a regex that takes letter followed by zero, one or many letters/digits, i.e. you can parse the string "abc3d" or "x". Instead if you make a parser that can parse a number as a string, turn this string into a number and use this number to construct a Parser that can parse a list of 'a's of that size (which can be done by the provided listOfN method) you will be better off. 
+
+Good job.

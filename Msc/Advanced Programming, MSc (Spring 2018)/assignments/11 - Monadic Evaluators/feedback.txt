@@ -1,0 +1,7 @@
+Everything works first try, you're making giving you feedback time consuming :P
+
+In thebasic monadic evaluator, the for comprehension can be shortened: the line with unit can be deleted and a / b can be yielded directly. This also means that the second flatMap in eval2 can be turned to a map. You might spot the map implementation for monads here, based on flatMap + unit.
+
+I see that you have written the flatMap + map counterpart in the for comprehensions. They are correct, except for a little smudge: lines 265-266 (State monadic evaluator) are not a map and a flatMap but a single map, tick.map(r => a / b), exactly as in eval2.
+
+All those discussion questions basically could be all answered by "The only difference is the implementation of unit and flatMap"

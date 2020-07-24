@@ -1,0 +1,17 @@
+
+	
+Good to go
+
+
+
+alternate: good
+
+few: good
+
+many: good. the reduciton should be the other way around, it's many that gets reduced to an instance of hamiltonian path
+
+none: good
+
+some: good
+
+I wasn't able to identify the problem with Few for common-2-1000, however the way you go about the problem should be correct.

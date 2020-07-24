@@ -1,0 +1,78 @@
+1
+The expectiminimax decision for MAX is to place the piece on the lower left H
+
+
+
+2 
+Below is my pseudocode for the expecitminimax
+
+let action = //a given action to be used on a state
+let state = //a given state of a game
+let max =   //player max and the player we want to win
+let min =  //player min and is our opponent 
+
+function MINIMAX-DECISION(state) returns an action{
+    return bestAction(expectiminimax(Result(state,initalAction)))
+}
+
+function expectiminimax(state) : value = {
+    let player p = Player(s);
+    if(p == Max)
+    {
+        return  Max-Value(state) 
+    }
+    else if(p == Min)
+    {
+         return Min-Value(state)   
+    }
+    else //chance node
+    {
+        return Chance(state)
+    }
+}
+
+function Max-Value(state) : value ={
+    if(Terminal-Test(state)){
+        return Utility(state, Player(s)) 
+    }
+    let value v = double.NEGATIVEINFITIY;
+    
+    for(a in Actions(state)){
+        v = Max(v,expectiminimax(RESULT(s, a)))
+    }
+    return v
+}
+
+
+function Min-Value(state) : value ={
+    if(Terminal-Test(state)){
+        return Utility(state, Player(s))
+    }
+    let value v = double.INFINITY;
+    
+    for(a in Actions(state)){
+        v = Min(v,expectiminimax(RESULT(s, a)))
+    }
+    return v
+}
+
+function Chance(state): value ={
+    let value v = 0
+    let i = 0;
+    
+    for(a in Actions(state)){
+        v = expectiminimax(RESULT(s, a))
+    }
+    return v/Actions(state).length //assuming that the chance is equally weigted
+
+}
+
+function Utility(State, Player) value ={
+    if Player wins{
+        return 1
+    }
+    if draw{
+        return 0
+    }
+    else return -1
+}

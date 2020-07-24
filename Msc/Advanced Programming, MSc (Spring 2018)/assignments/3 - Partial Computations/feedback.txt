@@ -1,0 +1,30 @@
+	
+Exercise 1:
+
+	A correct solution, but pattern matching is maybe a bit awkward in this scenario. Instead you could go directly to the if statements, i.e.:
+
+		override def compare .. =
+
+			if (..) -1
+
+			else if (..) 1
+
+			else 0
+
+
+
+Exercise 6:
+
+	In flatMap when you match on f(a) you just return the identity, i.e. if it is None you return None, if it is Some(b) you return Some(b), so you could completely omit matching on f(a) and just return f(a) is this matches Some(a)
+
+
+
+Exercise 7:
+
+	The xs.isEmpty check is not necessary, since if xs is empty, then mean(xs) will return None, and flatMapping on None will return None, so the result will be None anyway.
+
+
+
+Exercise 10:
+
+	A maybe more elegant solution would be to fold the 'as', building up a Option[List[B]], by applying f to each 'a' in the 'as' along the way. If you want to talk it over, you are welcome to ask at the exercise sessions.

@@ -1,0 +1,865 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Programing exercise 8.3\n",
+    "This problem is classification of two classes using ensemble averaging.First, generate the data by drawing 1000 random numbers from two dimensional isotropic normal distributions, that form the ground truth class conditional distributions,respectively, with the parameters:\n",
+    "\n",
+    "$$μ1 = (0, 0), C1 = I$$\n",
+    "\n",
+    "$$μ2 = (2, 0), C2 = 4I$$\n",
+    "\n",
+    "Divide the data into training and test sets with 500 points each.\n",
+    "Let us look at the classification problem. Assume that the two classes are equiproba-\n",
+    "ble, the costs for misclassifications are zero, and costs for correct classifications are zero. It can be shown that the optimal, Bayes classifier would achieve 81.51% classification score for this set up.\n",
+    "\n",
+    "(a) Train a MLP network with one hidden layer and two hidden neurons using Ten- sorFlow using the training data generated. Use the learning rate, η = 0.1 and momentum constant α = 0.5. This trained MLP network is the Expert 1.\n",
+    "\n",
+    "(b) Train nine more experts as in (a) with the only difference of using different initialisation for the network weights. These experts are the Experts 2-9.\n",
+    "\n",
+    "(c) Construct a committee machine by ensemble averaging. Compute the classifica- tion results on the test set by the individual experts and compare to the result you will obtain the committee machine. What can you conclude from the results?"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import tensorflow as tf\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Create the functions to be used in the exercise (in this case I have the sessions here)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def runSession(optimizer, loss):\n",
+    "    with tf.Session() as session:\n",
+    "        # Initialize the values\n",
+    "        session.run(init)\n",
+    "\n",
+    "        # Training cycle\n",
+    "        for epoch in range(50000):\n",
+    "            _, loss_value = session.run([optimizer, loss], feed_dict={x: X_train, t: t_train})\n",
+    "\n",
+    "            if epoch % 10000 == 0 or epoch == 49999:\n",
+    "                if epoch > 1:\n",
+    "                    print(\"Epoch: {}  loss = {:.6f}  diff = {:.9f}\".format(epoch,loss_value,prev-loss_value))\n",
+    "                else:\n",
+    "                    print(\"Epoch: {}  loss = {:.6f}\".format(epoch,loss_value))\n",
+    "            prev = loss_value            \n",
+    "\n",
+    "        print(\"Optimization done\")\n",
+    "\n",
+    "        # Evaluate the accuracy on the test set\n",
+    "        accuracy_value = session.run(accuracy, feed_dict={x: X_train, t: t_train})\n",
+    "        print(\"Accuracy on train set:\", accuracy_value)\n",
+    "\n",
+    "        # Evaluate the accuracy on the test set\n",
+    "        accuracy_value = session.run(accuracyt, feed_dict={xt: X_test, tt: t_test})\n",
+    "        print(\"Accuracy on test set:\", accuracy_value)\n",
+    "        output = session.run(prediction, {x:X_test})\n",
+    "    return output"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Create the simulated values!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "n=500\n",
+    "mean1 = [0,0]\n",
+    "cov1 = [[1,0],[0,1]]\n",
+    "\n",
+    "mean2 = [2,0]\n",
+    "cov2 = [[4,0],[0,4]]\n",
+    "normal1 = np.random.multivariate_normal(mean1, cov1,n)\n",
+    "normal2 = np.random.multivariate_normal(mean2,cov2,n)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "x = np.concatenate([normal1, normal2])\n",
+    "c1 = [1]*n+[0]*n\n",
+    "c2 = [0]*n+[1]*n\n",
+    "y = list(map(list,zip(c1,c2)))\n",
+    "y = np.array(y)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X_train, X_test, t_train, t_test = train_test_split(x, y, test_size=0.20)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "plt.scatter(X_train[:n,0], X_train[:n,1], label = \"C1\")\n",
+    "plt.scatter(X_train[n:,0], X_train[n:,1], label = \"C2\")\n",
+    "plt.legend()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Start Creating the models\n",
+    "### 1 Random Normal"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "WARNING:tensorflow:From /anaconda3/lib/python3.7/site-packages/tensorflow/python/framework/op_def_library.py:263: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n",
+      "Instructions for updating:\n",
+      "Colocations handled automatically by placer.\n",
+      "Epoch: 0  loss = 2.123259\n",
+      "Epoch: 10000  loss = 0.417968  diff = -0.000000060\n",
+      "Epoch: 20000  loss = 0.417968  diff = 0.000000000\n",
+      "Epoch: 30000  loss = 0.417968  diff = 0.000000089\n",
+      "Epoch: 40000  loss = 0.417968  diff = -0.000000060\n",
+      "Epoch: 49999  loss = 0.417968  diff = 0.000000030\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.8125\n",
+      "Accuracy on test set: 0.815\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W1 = tf.get_variable(\"W1\", [2, 2], initializer=tf.random_normal_initializer)\n",
+    "b1 = tf.get_variable(\"b1\", [2], initializer=tf.random_normal_initializer)\n",
+    "W2 = tf.get_variable(\"W2\", [2, 2], initializer=tf.random_normal_initializer)\n",
+    "b2 = tf.get_variable(\"b2\", [2], initializer=tf.random_normal_initializer)\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W1) + b1)\n",
+    "y =  tf.matmul(z1, W2) + b2\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W1) + b1)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W2) + b2)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list1 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Check for consistency:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.815"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "np.mean(y_value_list1==t_test[:,1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 2 Truncated Normal"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 0.693320\n",
+      "Epoch: 10000  loss = 0.413310  diff = -0.000000060\n",
+      "Epoch: 20000  loss = 0.413310  diff = 0.000000030\n",
+      "Epoch: 30000  loss = 0.413310  diff = -0.000000060\n",
+      "Epoch: 40000  loss = 0.413310  diff = 0.000000060\n",
+      "Epoch: 49999  loss = 0.413310  diff = 0.000000060\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.81125\n",
+      "Accuracy on test set: 0.82\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W3 = tf.get_variable(\"W3\", [2, 2], initializer=tf.truncated_normal_initializer(mean=0.0, stddev=0.01))\n",
+    "b3 = tf.get_variable(\"b3\", [2], initializer=tf.truncated_normal_initializer(mean=0.0, stddev=0.01))\n",
+    "W4 = tf.get_variable(\"W4\", [2, 2], initializer=tf.truncated_normal_initializer(mean=0.0, stddev=0.01))\n",
+    "b4 = tf.get_variable(\"b4\", [2], initializer=tf.truncated_normal_initializer(mean=0.0, stddev=0.01))\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W3) + b3)\n",
+    "y =  tf.matmul(z1, W4) + b4\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list2 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 3 Random Uniform"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 0.630045\n",
+      "Epoch: 10000  loss = 0.413249  diff = -0.000000030\n",
+      "Epoch: 20000  loss = 0.413249  diff = 0.000000000\n",
+      "Epoch: 30000  loss = 0.413249  diff = -0.000000089\n",
+      "Epoch: 40000  loss = 0.413249  diff = 0.000000060\n",
+      "Epoch: 49999  loss = 0.413249  diff = 0.000000000\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.8125\n",
+      "Accuracy on test set: 0.49\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W5 = tf.get_variable(\"W5\", [2, 2], initializer=tf.random_uniform_initializer)\n",
+    "b5 = tf.get_variable(\"b5\", [2], initializer=tf.random_uniform_initializer)\n",
+    "W6 = tf.get_variable(\"W6\", [2, 2], initializer=tf.random_uniform_initializer)\n",
+    "b6 = tf.get_variable(\"b6\", [2], initializer=tf.random_uniform_initializer)\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W5) + b5)\n",
+    "y =  tf.matmul(z1, W6) + b6\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list3 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 4 Zeros initializer"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 0.693147\n",
+      "Epoch: 10000  loss = 0.693134  diff = 0.000000000\n",
+      "Epoch: 20000  loss = 0.693134  diff = 0.000000000\n",
+      "Epoch: 30000  loss = 0.693134  diff = 0.000000000\n",
+      "Epoch: 40000  loss = 0.693134  diff = 0.000000000\n",
+      "Epoch: 49999  loss = 0.693134  diff = 0.000000000\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.5025\n",
+      "Accuracy on test set: 0.51\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W5 = tf.get_variable(\"W7\", [2, 2], initializer=tf.zeros_initializer)\n",
+    "b5 = tf.get_variable(\"b7\", [2], initializer=tf.zeros_initializer)\n",
+    "W6 = tf.get_variable(\"W8\", [2, 2], initializer=tf.zeros_initializer)\n",
+    "b6 = tf.get_variable(\"b8\", [2], initializer=tf.zeros_initializer)\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W5) + b5)\n",
+    "y =  tf.matmul(z1, W6) + b6\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list4 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 5 constant_initializer"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 0.693147\n",
+      "Epoch: 10000  loss = 0.453290  diff = 0.000000209\n",
+      "Epoch: 20000  loss = 0.453290  diff = -0.000000060\n",
+      "Epoch: 30000  loss = 0.453291  diff = -0.000000060\n",
+      "Epoch: 40000  loss = 0.453291  diff = -0.000000119\n",
+      "Epoch: 49999  loss = 0.453291  diff = -0.000000119\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.79875\n",
+      "Accuracy on test set: 0.49\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W5 = tf.get_variable(\"W9\", [2, 2], initializer=tf.constant_initializer(value=0.3))\n",
+    "b5 = tf.get_variable(\"b9\", [2], initializer=tf.constant_initializer(value=0.3))\n",
+    "W6 = tf.get_variable(\"W10\", [2, 2], initializer=tf.constant_initializer(value=0.3))\n",
+    "b6 = tf.get_variable(\"b10\", [2], initializer=tf.constant_initializer(value=0.3))\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W5) + b5)\n",
+    "y =  tf.matmul(z1, W6) + b6\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list5 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 6 Glorot normal"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 0.616466\n",
+      "Epoch: 10000  loss = 0.413251  diff = 0.000000149\n",
+      "Epoch: 20000  loss = 0.413251  diff = -0.000000149\n",
+      "Epoch: 30000  loss = 0.413251  diff = 0.000000000\n",
+      "Epoch: 40000  loss = 0.413251  diff = -0.000000089\n",
+      "Epoch: 49999  loss = 0.413251  diff = -0.000000119\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.80875\n",
+      "Accuracy on test set: 0.51\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W5 = tf.get_variable(\"W11\", [2, 2], initializer=tf.initializers.glorot_normal)\n",
+    "b5 = tf.get_variable(\"b11\", [2], initializer=tf.initializers.glorot_normal)\n",
+    "W6 = tf.get_variable(\"W12\", [2, 2], initializer=tf.initializers.glorot_normal)\n",
+    "b6 = tf.get_variable(\"b12\", [2], initializer=tf.initializers.glorot_normal)\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W5) + b5)\n",
+    "y =  tf.matmul(z1, W6) + b6\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list6 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 7 Glorot Uniform"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 1.028300\n",
+      "Epoch: 10000  loss = 0.446157  diff = 0.000000000\n",
+      "Epoch: 20000  loss = 0.446157  diff = 0.000000000\n",
+      "Epoch: 30000  loss = 0.446157  diff = 0.000000000\n",
+      "Epoch: 40000  loss = 0.446157  diff = 0.000000000\n",
+      "Epoch: 49999  loss = 0.446157  diff = 0.000000000\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.795\n",
+      "Accuracy on test set: 0.49\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W5 = tf.get_variable(\"W13\", [2, 2], initializer=tf.initializers.glorot_normal)\n",
+    "b5 = tf.get_variable(\"b13\", [2], initializer=tf.initializers.glorot_normal)\n",
+    "W6 = tf.get_variable(\"W14\", [2, 2], initializer=tf.initializers.glorot_normal)\n",
+    "b6 = tf.get_variable(\"b14\", [2], initializer=tf.initializers.glorot_normal)\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W5) + b5)\n",
+    "y =  tf.matmul(z1, W6) + b6\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list7 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 8  Glorot Normal with Random Uniform"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 2.683044\n",
+      "Epoch: 10000  loss = 0.451343  diff = 0.000000030\n",
+      "Epoch: 20000  loss = 0.451301  diff = -0.000000060\n",
+      "Epoch: 30000  loss = 0.451301  diff = 0.000000030\n",
+      "Epoch: 40000  loss = 0.451301  diff = 0.000000060\n",
+      "Epoch: 49999  loss = 0.451301  diff = -0.000000060\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.78\n",
+      "Accuracy on test set: 0.49\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W5 = tf.get_variable(\"W15\", [2, 2], initializer=tf.initializers.glorot_normal)\n",
+    "b5 = tf.get_variable(\"b15\", [2], initializer=tf.initializers.random_uniform)\n",
+    "W6 = tf.get_variable(\"W16\", [2, 2], initializer=tf.initializers.glorot_normal)\n",
+    "b6 = tf.get_variable(\"b16\", [2], initializer=tf.initializers.random_uniform)\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W5) + b5)\n",
+    "y =  tf.matmul(z1, W6) + b6\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list8 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 9 Glorot Uniform and Glorot Normal"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Epoch: 0  loss = 0.771406\n",
+      "Epoch: 10000  loss = 0.419101  diff = 0.000000030\n",
+      "Epoch: 20000  loss = 0.419101  diff = -0.000000030\n",
+      "Epoch: 30000  loss = 0.419101  diff = 0.000000030\n",
+      "Epoch: 40000  loss = 0.419101  diff = 0.000000000\n",
+      "Epoch: 49999  loss = 0.419101  diff = -0.000000060\n",
+      "Optimization done\n",
+      "Accuracy on train set: 0.81375\n",
+      "Accuracy on test set: 0.49\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Input and output\n",
+    "x = tf.placeholder(tf.float32, [None, 2])\n",
+    "t = tf.placeholder(tf.float32, [None, 2])\n",
+    "xt = tf.placeholder(tf.float32,[None, 2])\n",
+    "tt = tf.placeholder(tf.float32,[None, 2])\n",
+    "\n",
+    "# Defined the model parameters\n",
+    "W5 = tf.get_variable(\"W17\", [2, 2], initializer=tf.initializers.glorot_uniform)\n",
+    "b5 = tf.get_variable(\"b17\", [2], initializer=tf.initializers.glorot_normal)\n",
+    "W6 = tf.get_variable(\"W18\", [2, 2], initializer=tf.initializers.glorot_uniform)\n",
+    "b6 = tf.get_variable(\"b18\", [2], initializer=tf.initializers.glorot_normal)\n",
+    "\n",
+    "# Construct model\n",
+    "z1 = tf.nn.relu(tf.matmul(x, W5) + b5)\n",
+    "y =  tf.matmul(z1, W6) + b6\n",
+    "\n",
+    "z1t = tf.nn.relu(tf.matmul(xt, W3) + b3)\n",
+    "yt =  tf.nn.softmax(tf.matmul(z1t, W4) + b4)\n",
+    "\n",
+    "\n",
+    "# Variables for prediction and accuracy\n",
+    "prediction = tf.argmax(y, 1)\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(t, 1)), tf.float32))\n",
+    "\n",
+    "predictiont = tf.argmax(yt, 1)\n",
+    "accuracyt = tf.reduce_mean(tf.cast(tf.equal(predictiont, tf.argmax(tt, 1)), tf.float32))\n",
+    "\n",
+    "# Difine the loss function\n",
+    "loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(labels=t, logits=y))\n",
+    "\n",
+    "# Define the optimizer operation\n",
+    "optimizer = tf.train.MomentumOptimizer(learning_rate = 0.1, momentum = 0.5).minimize(loss)\n",
+    "\n",
+    "# Make an operation that initializes the variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "\n",
+    "y_value_list9 = runSession(optimizer, loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Ensamble\n",
+    "Now we join the results of all the classifiers and calculate its mean. If the value of the mean is greater than 0.5, then it means that most classifiers voted on the x value. This should be done with some class of probability embeded on it (softmax on the output layer, TODO) for better results. the idea is the same in this case we can \"cheat\" and just use the final results to calculate the results."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "y_ensamble = []\n",
+    "for i in range(len(t_test)):\n",
+    "    # This is not optimal\n",
+    "    mean_prediction = np.mean([y_value_list1[i],y_value_list2[i],y_value_list3[i],\n",
+    "                              y_value_list4[i],y_value_list5[i],y_value_list6[i],\n",
+    "                              y_value_list7[i],y_value_list8[i],y_value_list9[i]])\n",
+    "    lambda mean_prediction: 1 if mean_prediction > 0.5 else 0\n",
+    "    y_ensamble.append(mean_prediction)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.41"
+      ]
+     },
+     "execution_count": 20,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "np.mean(y_ensamble==t_test[:,1])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

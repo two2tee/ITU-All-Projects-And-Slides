@@ -1,0 +1,3 @@
+Perfect. Except you did the wrong ex 2.3.14. Not sure where you got it from. Since you just compute the inverse of a different matrix than the one you were supposed to, I will approve it.
+
+Rasmus

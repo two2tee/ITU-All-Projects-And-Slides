@@ -1,0 +1,146 @@
+Instances 
+
+#None -- There is a shortest path where no red vertices are visited between s and t
+        BFS where red vertices are marked for no visit -> if red is hit, do not pop
+	    BFS - Length of path of edges that do not contain red vertices 
+
+#Some -- There is a path where at least 1 red vertex is visited between s and t
+(HARD?)  Idea (intuition): start on red vertex and find way to s and t 
+         Idea 2: 1: mark edges and remove ones that do not lead to red vertex 
+                 2: check with prim if minimum spanning tree still exists with remaining edges
+        
+        Bevis for at some er et hard problem for directed graphs 
+            Fortune Hopcroft
+
+#Many -- Return the maximum number of red vertices on any path between s and T
+(HARD?)  Weight is amount of reds hit on the way 
+         Bellman-Ford: red vertices are given negative weights favored by Bellman-Ford for shortest path 
+         
+#Few -- Return the minimum number of red vertices on any path between s and T, 
+        Build weighted graph where red vertices have weight 1 and others weight 0 
+        Use priority queue to pop edges with weight 0 as to "avoid" red vertices in path and favor others (Dijkstra = Greedy) 
+        
+   
+#Alternate -- There is a path where red and non red alternates (That is no two adjacent vertices have the same color --> s-red-black-red-t)
+              2-k coloring brute force with BFS 
+
+Assumption: Graphs may be cyclic but we only look for simple paths 
+
+(NP-completeness) - Many problem: 
+1) NP: Establish that Many is a problem in NP 
+    Many belongs to NP if it has a verification algorithm 
+    Easiness problem: Many problem is easier than Hamiltonian
+2) NP-hard: Show that Hamiltonian path is a special case of the Many problem by reduction => shows that Many is NP hard
+    Many is NP-hard if Many <= Hamiltonian 
+    Hardness problem: Many is at least as hard as Hamiltonian
+Many is not a decision problem and is hard to reduce ! 
+NP intuition: yes/no instances by verification from existing result of algorithm 
+
+Inspiration: 
+ Many problem: https://cs.stackexchange.com/questions/14390/find-a-simple-path-visiting-all-marked-vertices 
+ 
+NP: all problems verified in polynomial time 
+NP-hard: do not have to be an NP or decision problems -> problem is NP hard if ? 
+
+Plan
+1) Work Monday and Friday (10am-2:30pm)
+2) Overview of data 
+    - Parsing done 
+    - 1 dimensional : name of vertices 
+    - 2 dimensional : connections 
+
+
+ESTABLISHING HARDNESS OF MANY
+
+We will show that the Longest Path problem can be reduced to an instance of the Many problem. 
+As Longest Path is an established NP-hard problem, this will establish Many as an NP-hard problem.
+The longest path of a given graph G can be found by an algorithm that solves Many, if all vertices in G are colored red.
+For every vertex V1 to every other vertex V2 in G, the maximum number of red vertices between these two are computed using Many,
+keeping track of the source vertex S and terminal vertex T, for which the longest path of red vertices were found. 
+Once this has gone through all vertices, alternate between removing a vertex and calculating the longest path between S and T, 
+ensuring that a vertex that changes the maximum path of red between S and T is never removed. Do this until all vertices has been tested like this,
+and you end up with the longest path. 
+
+
+
+
+
+Then the maximum number of red vertices on a path from S to T will be the longest path from S to T. 
+This path can then be found by continously removing vertices and checking if the maximum path of red vertices is still the same until 
+
+The NP-hardness of the unweighted longest path problem can be shown using a reduction from the Hamiltonian path problem: 
+a graph G has a Hamiltonian path if and only if its longest path has length n − 1, where n is the number of vertices in G.
+
+Instances 
+
+#None -- There is a shortest path where no red vertices are visited between s and t
+        BFS where red vertices are marked for no visit -> if red is hit, do not pop
+	    BFS - Length of path of edges that do not contain red vertices 
+
+#Some -- There is a path where at least 1 red vertex is visited between s and t
+(HARD?)  Idea (intuition): start on red vertex and find way to s and t 
+         Idea 2: 1: mark edges and remove ones that do not lead to red vertex 
+                 2: check with prim if minimum spanning tree still exists with remaining edges
+        
+        Bevis for at some er et hard problem for directed graphs 
+            Fortune Hopcroft
+
+#Many -- Return the maximum number of red vertices on any path between s and T
+(HARD?)  Weight is amount of reds hit on the way 
+         Bellman-Ford: red vertices are given negative weights favored by Bellman-Ford for shortest path 
+         
+#Few -- Return the minimum number of red vertices on any path between s and T, 
+        Build weighted graph where red vertices have weight 1 and others weight 0 
+        Use priority queue to pop edges with weight 0 as to "avoid" red vertices in path and favor others (Dijkstra = Greedy) 
+        
+   
+#Alternate -- There is a path where red and non red alternates (That is no two adjacent vertices have the same color --> s-red-black-red-t)
+              2-k coloring brute force with BFS 
+
+Assumption: Graphs may be cyclic but we only look for simple paths 
+
+(NP-completeness) - Many problem: 
+1) NP: Establish that Many is a problem in NP 
+    Many belongs to NP if it has a verification algorithm 
+    Easiness problem: Many problem is easier than Hamiltonian
+2) NP-hard: Show that Hamiltonian path is a special case of the Many problem by reduction => shows that Many is NP hard
+    Many is NP-hard if Many <= Hamiltonian 
+    Hardness problem: Many is at least as hard as Hamiltonian
+Many is not a decision problem and is hard to reduce ! 
+NP intuition: yes/no instances by verification from existing result of algorithm 
+
+Inspiration: 
+ Many problem: https://cs.stackexchange.com/questions/14390/find-a-simple-path-visiting-all-marked-vertices 
+ 
+NP: all problems verified in polynomial time 
+NP-hard: do not have to be an NP or decision problems -> problem is NP hard if ? 
+
+Plan
+1) Work Monday and Friday (10am-2:30pm)
+2) Overview of data 
+    - Parsing done 
+    - 1 dimensional : name of vertices 
+    - 2 dimensional : connections 
+
+
+ESTABLISHING HARDNESS OF MANY
+
+We will show that the Longest Path problem can be reduced to an instance of the Many problem. 
+As Longest Path is an established NP-hard problem, this will establish Many as an NP-hard problem.
+The longest path of a given graph G can be found by an algorithm that solves Many, if all vertices in G are colored red.
+For every vertex V1 to every other vertex V2 in G, the maximum number of red vertices between these two are computed using Many,
+keeping track of the source vertex S and terminal vertex T, for which the longest path of red vertices were found. 
+Once this has gone through all vertices, alternate between removing a vertex and calculating the longest path between S and T, 
+ensuring that a vertex that changes the maximum path of red between S and T is never removed. Do this until all vertices has been tested like this,
+and you end up with the longest path. 
+
+
+
+
+
+Then the maximum number of red vertices on a path from S to T will be the longest path from S to T. 
+This path can then be found by continously removing vertices and checking if the maximum path of red vertices is still the same until 
+
+The NP-hardness of the unweighted longest path problem can be shown using a reduction from the Hamiltonian path problem: 
+a graph G has a Hamiltonian path if and only if its longest path has length n − 1, where n is the number of vertices in G.
+

@@ -1,0 +1,70 @@
+# OS:   Mac OS X; 10.12.6; x86_64
+# JVM:  Oracle Corporation; 1.8.0_144
+# CPU:  2.3 GHz Intel Core i7; 8 "cores"
+# RAM:  16 GB 1600 MHz DDR3
+# Date: 2017-09-22T16:07:07+0200
+countSequential                   10052.8 us     252.54         32
+countParallelN      1              9718.3 us     591.89         32
+countParallelNLocal      1          9883.0 us     187.91         32
+countParallelN      2              6092.9 us      85.90         64
+countParallelNLocal      2          5759.4 us     137.21         64
+countParallelN      3              4498.3 us      86.31         64
+countParallelNLocal      3          4127.2 us      66.95         64
+countParallelN      4              3733.8 us      89.09        128
+countParallelNLocal      4          3266.5 us      31.41        128
+countParallelN      5              3481.9 us      39.98        128
+countParallelNLocal      5          3190.2 us      19.36        128
+countParallelN      6              3236.0 us      28.77        128
+countParallelNLocal      6          3016.0 us      59.30        128
+countParallelN      7              3237.0 us     108.21        128
+countParallelNLocal      7          2972.3 us      27.31        128
+countParallelN      8              3105.0 us      80.59        128
+countParallelNLocal      8          2850.0 us      36.44        128
+countParallelN      9              3172.9 us      93.13        128
+countParallelNLocal      9          3064.2 us      94.04        128
+countParallelN     10              3152.6 us     118.17        128
+countParallelNLocal     10          3007.9 us     112.66        128
+countParallelN     11              3162.0 us      61.51        128
+countParallelNLocal     11          2981.0 us      51.08        128
+countParallelN     12              3050.6 us      58.65        128
+countParallelNLocal     12          2957.7 us      80.94        128
+countParallelN     13              3093.4 us      39.01        128
+countParallelNLocal     13          2841.1 us      12.09        128
+countParallelN     14              2985.4 us      35.79        128
+countParallelNLocal     14          2841.0 us      38.11        128
+countParallelN     15              3198.7 us      87.73        128
+countParallelNLocal     15          2845.3 us      56.80        128
+countParallelN     16              2992.0 us      39.97        128
+countParallelNLocal     16          2880.4 us      44.24        128
+countParallelN     17              3038.2 us      71.78        128
+countParallelNLocal     17          3063.1 us      61.66        128
+countParallelN     18              3013.9 us      51.26        128
+countParallelNLocal     18          2943.5 us      37.15        128
+countParallelN     19              3061.1 us      44.69        128
+countParallelNLocal     19          2871.2 us      54.57        128
+countParallelN     20              3032.2 us      47.64        128
+countParallelNLocal     20          3100.8 us      71.81        128
+countParallelN     21              3252.1 us      63.74        128
+countParallelNLocal     21          3092.4 us      95.58        128
+countParallelN     22              3172.5 us      79.74        128
+countParallelNLocal     22          3010.5 us      52.78        128
+countParallelN     23              3130.9 us      47.24        128
+countParallelNLocal     23          3063.1 us     152.77        128
+countParallelN     24              3206.2 us      58.01        128
+countParallelNLocal     24          2986.6 us      66.25        128
+countParallelN     25              3111.9 us      46.37        128
+countParallelNLocal     25          2995.0 us      57.10        128
+countParallelN     26              3148.3 us      60.71        128
+countParallelNLocal     26          3181.1 us     128.58        128
+countParallelN     27              3281.9 us      48.11        128
+countParallelNLocal     27          3125.8 us      71.35        128
+countParallelN     28              3145.7 us      47.30        128
+countParallelNLocal     28          3030.5 us      69.48        128
+countParallelN     29              3151.0 us      16.95        128
+countParallelNLocal     29          3081.6 us      63.47        128
+countParallelN     30              3180.8 us      32.20        128
+countParallelNLocal     30          3071.1 us      41.99        128
+countParallelN     31              3171.0 us      16.22        128
+countParallelNLocal     31          3056.3 us      30.57        128
+countParallelN     32              3178.5 us      13.50        128
+countParallelNLocal     32          3137.3 us      65.87        128

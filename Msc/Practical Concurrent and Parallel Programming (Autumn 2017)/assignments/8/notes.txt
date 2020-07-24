@@ -1,0 +1,4 @@
+Difference between branch and statement coverage:
+
+http://testersthoughtsuncombed.blogspot.dk/2013/02/statement-coverage-vs-branch-coverage.html
+

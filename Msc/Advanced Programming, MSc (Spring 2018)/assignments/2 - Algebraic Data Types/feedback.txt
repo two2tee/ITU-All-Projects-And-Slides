@@ -1,0 +1,20 @@
+
+Feel free to ask questions in the exercise slot, even if we have not already corrected your assignment.
+
+
+Student Question: why is Nil an object and Cons a class signature? Case classes need a parameter list. Even empty, but it should be there. Conversely, case objects can not have any. You don't need parameters for Nil, and if you want to use a case class, you would write case class Nil(). But Scala has too many parentheses already.
+Solution 2 - which one do you prefer? The first one has less cases. But you could use an underscore instead of h, you don't need it :P
+Exercise 3: I imagine you got a bit stuck on matching that n. What about a simple if?
+Exercise 8: Believe or not, you're one of the few that actually did the product and not the sum. However, in the concise version, the accumulator needs to be 1, as in the base case of the long one :D
+Exercise 9: If you use Nil, scala sloppy type inference is not able to infer that you meant a  list of A. List() is ugly. In the List from the standard library there is List.empty[A] that solves the problem. But you don't have it here D:
+Exercise 10: in the alternative definition, what you did is the scala version of Haskell flip. Just if you're curious.
+How do we do this function as a partial value? I don understand this. Remember to ask next week.
+Exercise 11: There's nothing wrong in using foldRight :P
+Exercise 13: Append bottlenecks, but there's no way around it. You'llnotice in the Stream exercise, if you do anything wrong in append than flatMap errors with StackOevrflow
+Question: is this tail-recursive version too verbose?: Yes. Don't be bothered with tail recursiveness if they don't ask you. If you want efficiency,
+
+Play Video
+.
+Student Question: is this not reduce?: No. Reduce can return any type B, while zipWith will always return a List. Also, zipWith applies f to elements from different lists, while reduce takes an element and the accumulator.
+Exercise 17: You swapped t and t2 in the recursive call to hasSubsequence. That is fine, I hated the string subsequence function in every course I had so far myself.
+Bottleneck: how can we add a 0 for padding to end of original row w/o linear time append? For standard library list, there is the :+ method. But that is the right way of doing it for our List.

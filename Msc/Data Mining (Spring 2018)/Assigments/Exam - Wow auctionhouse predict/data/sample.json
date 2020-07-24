@@ -1,0 +1,10 @@
+{
+  "realms": [
+    {"name":"Dentarg","slug":"dentarg"},
+    {"name":"Tarren Mill","slug":"tarren-mill"}],
+  "auctions": [
+    {"date":"2018-04-09 06:24:15","auc":862466435,"item":106521,"owner":"Rolkonijn","ownerRealm":"Tarren Mill","bid":16717355,"buyout":16717355,"quantity":1,"timeLeft":"VERY_LONG","rand":0,"seed":0,"context":29,"bonusLists":[{"bonusListId":3854},{"bonusListId":156}],"modifiers":[{"type":9,"value":110}]},
+    {"date":"2018-04-09 06:24:15","auc":862466152,"item":22450,"owner":"Whooligandru","ownerRealm":"Tarren Mill","bid":3517375,"buyout":3702500,"quantity":1,"timeLeft":"VERY_LONG","rand":0,"seed":0,"context":0},
+    {"date":"2018-04-09 06:24:15","auc":862728300,"item":2589,"owner":"Touka","ownerRealm":"Dentarg","bid":3640,"buyout":3640,"quantity":5,"timeLeft":"LONG","rand":0,"seed":0,"context":0},
+    {"date":"2018-04-09 06:24:15","auc":861156314,"item":82800,"owner":"Incredibelle","ownerRealm":"Tarren Mill","bid":14154999,"buyout":14899999,"quantity":1,"timeLeft":"VERY_LONG","rand":0,"seed":1091537920,"context":0,"modifiers":[{"type":3,"value":1234},{"type":4,"value":50331655},{"type":5,"value":5}],"petSpeciesId":1234,"petBreedId":7,"petLevel":5,"petQualityId":3}]
+}

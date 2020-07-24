@@ -1,0 +1,9 @@
+
+Sorry for the delay.
+
+As you know your result is not the expected one so I wanted to make sure to check your assignment in great detail.
+
+You can now cherish, comrades! you were just missing a simple step in your process!
+
+When initialising your graph, you need to include both the edge graph[from][to] = capacity;     and     graph[to][from] = capacity; to reproduce an undirected graph as if it was directed.
+

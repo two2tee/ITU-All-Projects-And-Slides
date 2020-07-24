@@ -1,0 +1,36 @@
+# OS:   Mac OS X; 10.12.6; x86_64
+# JVM:  Oracle Corporation; 1.8.0_144
+# CPU:  null; 8 "cores"
+# Date: 2017-09-27T13:33:47+0200
+countParallelN      1              9762.3 us     240.02         32
+countParallelN      2              6089.9 us     100.66         64
+countParallelN      3              4278.6 us      62.37         64
+countParallelN      4              3396.3 us      25.08        128
+countParallelN      5              3493.9 us      37.82        128
+countParallelN      6              3331.8 us      18.44        128
+countParallelN      7              3276.6 us      31.07        128
+countParallelN      8              3317.4 us     228.77         64
+countParallelN      9              3344.9 us      64.79        128
+countParallelN     10              3499.3 us     195.41        128
+countParallelN     11              3311.5 us      32.91        128
+countParallelN     12              3413.6 us     153.44        128
+countParallelN     13              3210.5 us      98.01        128
+countParallelN     14              3254.8 us     132.27        128
+countParallelN     15              3250.3 us      70.21        128
+countParallelN     16              3330.1 us      96.68        128
+countParallelN     17              3304.3 us     112.97        128
+countParallelN     18              3162.0 us      55.71        128
+countParallelN     19              3275.6 us     138.58        128
+countParallelN     20              3136.9 us      45.92        128
+countParallelN     21              3359.7 us      56.55        128
+countParallelN     22              3100.7 us      14.90        128
+countParallelN     23              3135.1 us      58.65        128
+countParallelN     24              3360.2 us      70.88        128
+countParallelN     25              3146.9 us      81.21        128
+countParallelN     26              3201.3 us      76.45        128
+countParallelN     27              3188.6 us      81.45        128
+countParallelN     28              3160.9 us      45.62        128
+countParallelN     29              3584.1 us     146.87        128
+countParallelN     30              3313.8 us     104.37        128
+countParallelN     31              3267.1 us      59.54        128
+countParallelN     32              3276.1 us      50.87        128

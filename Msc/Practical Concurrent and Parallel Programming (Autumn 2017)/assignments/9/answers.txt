@@ -1,0 +1,82 @@
+#Exercise 9.1.2
+
+The result when unning the test is the following:
+
+**********   0:         2
+   1:    283146
+   2:    790986
+   3:    988651
+   4:    810386
+   5:    524171
+   6:    296702
+   7:    155475
+   8:     78002
+   9:     38069
+  10:     18232
+...
+
+
+This shows that our histogram implementation returns the correct result. 
+
+
+#Exercise 9.1.6
+At the end histogram’s counts should be all zero, and total’s counts should be what histogram’s
+used to be, regardless when and how many times transferBins has been called. Is this the case?
+
+It is expected that 'total' has all values of 'histogram' and histogram is expected to be 0 on all bins.
+Yet, one cannot expect or guarantee that all threads are done adding to 'histogram' before stopping the 
+transferBins to total regardles of the number of times it performs the operations.  
+Thus there may be cases that you stop transfering bins before the threads are done writing to 'histogram'.
+However, increasing the number of times it performs the transferBins and the delay between them
+may increase the chance of getting all values.
+
+
+
+#Exercise 9.1.7
+What effect would you expect total.transferBins(total) to have? What effect does it have in
+your implementation? Explain.
+
+We would expect that transferBins(total) would be the same. No difference in the results. 
+But you could also expect that it runs infinitely, because the counts array is modified while you use it in the transaction.
+Our implementation gives the same results, but it does not run infinitely as the atomic transaction creates its own copy that it works on. Therefore,
+the real array has not been modified.
+
+#Exercise 9.2.3. Implement the put, putIfAbsent and remove methods. Do not worry about updating the size count
+for now. Briefly explain why you believe your implementations are correct.
+
+We believe our implementations are correct because all access to transactional variables are done within transactions. 
+This means that the initial array access to buckets is within a transaction. If the array is resized meanwhile, the transaction will try again in this case.
+Furthermore, the indexes into the array also happens within transactions. 
+
+#Exercise 9.3.1
+see code 
+
+#Exercise 9.3.2
+see code
+
+#Exercise 9.3.3
+see code
+
+#Exercise 9.3.4
+see code
+
+#Exercise 9.3.5
+Discuss the problems involved in implementing reallocateBuckets efficiently using transactions and
+optimistic concurrency. There seems to be at least two problems: 
+
+
+The proposed idea may be a viable solution to implement. One could ensure that all updating methods(put, putIfAbsent, remove)
+reads the transactional field 'newBuckets' and if it is not null, they retry, e.g.:
+
+if(newBuckets != null)
+   retry()
+.....
+
+However, this idea may still not be the most optimal solution since there might 
+be cases where two or more overlapping threads may call reallocateBuckets at the same time.
+This may result in both transaction may be cancelled and thus one have to perform the recalculations.
+It was a proposed idea that reallocateBuckets also would read the 'newBuckets' field before it would reallocate.
+Consequently, this might result in a deadlock where it is waiting for itself to set "newBuckets" to null.
+Regardless, we assume that this solution is somewhat acceptable due to it being able to block the updating threads and prevent
+wasted computation.
+

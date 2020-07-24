@@ -1,0 +1,12 @@
+
+	
+Excellent.
+
+You worked hard on that parFilter anyway, even though I basically told you the solution in the exercise session :P
+
+So, does map actually handle elements in parallel? No, but that part of the algorithm is not parallelizable. Didn't you take PCPP ;P
+
+parFilterWithTuple: what about using filter and then map on the list instead of foldRight?
+
+parFilterListWrap: it's the same as the first one, LOL
+

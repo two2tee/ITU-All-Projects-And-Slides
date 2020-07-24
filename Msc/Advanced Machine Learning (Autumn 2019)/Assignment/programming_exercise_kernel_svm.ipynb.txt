@@ -1,0 +1,490 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Helper notebook\n",
+    "## Programming Exercises 7.3: kernel SVM\n",
+    "*The goal is to implement and evaluate different kernels for SVMs for one dataset.*\n",
+    "\n",
+    "\n",
+    "*We start by importing the necessary libraries.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "import matplotlib as mpl\n",
+    "# if you're using tensorflow v1, then uncomment the following one line\n",
+    "#import tensorflow as tf\n",
+    "# if you're using tensorflow v2, then uncomment the following two lines\n",
+    "#import tensorflow.compat.v1 as tf\n",
+    "#tf.disable_v2_behavior()\n",
+    "\n",
+    "from sklearn import datasets"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*Then we generate our random dataset; this will be 2D data that is not linearly separable. In fact, the data will follow concentric rings.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "N = 200 # number of samples\n",
+    "c = 0.5 # scale factor between inner and outer circles\n",
+    "noise = 0.1 # noise parameter\n",
+    "\n",
+    "# generate data\n",
+    "x_vals, r_vals = datasets.make_circles(n_samples=N, factor=c, noise=noise)\n",
+    "# if a value in y_vals is 1, we leave it at one, but if it is 0, we set it to -1\n",
+    "r_vals = np.where(r_vals, 1, -1)\n",
+    "\n",
+    "class1_idxs = np.flatnonzero(r_vals == 1)\n",
+    "class1_x = x_vals[class1_idxs]\n",
+    "class1_r = r_vals[class1_idxs]\n",
+    "class2_idxs = np.flatnonzero(r_vals == -1)\n",
+    "class2_x = x_vals[class2_idxs]\n",
+    "class2_r = r_vals[class2_idxs]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*We can take a quick look at our data to get a sense of what we're trying to predict.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.scatter(class1_x[:, 0], class1_x[:, 1],\n",
+    "            label = \"Class 1 (+1)\",\n",
+    "            color = \"none\",\n",
+    "            edgecolor = \"red\"\n",
+    "           )\n",
+    "plt.scatter(class2_x[:, 0], class2_x[:, 1],\n",
+    "            label = \"Class 2 (-1)\",\n",
+    "            color = \"none\",\n",
+    "            edgecolor = \"blue\"\n",
+    "           )\n",
+    "plt.legend(loc=\"upper left\", framealpha=0.25)\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*We start a computational graph session.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sess = tf.Session()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*We declare the batch size (large for SVMs - in this case we set it equal to the number of samples), create the placeholders, and declare the $\\pmb{\\alpha}$-variable for the SVM model.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "batch_size = N\n",
+    "\n",
+    "# initialize placeholders\n",
+    "x = tf.placeholder(shape=[None, 2], dtype=tf.float32)\n",
+    "r = tf.placeholder(shape=[None, 1], dtype=tf.float32)\n",
+    "pred_grid = tf.placeholder(shape=[None, 2], dtype=tf.float32)\n",
+    "\n",
+    "# create variables for svm\n",
+    "alpha = tf.Variable(tf.random_normal(shape=[1, batch_size]))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### (a)\n",
+    "*Implement:*\n",
+    "* *a linear kernel:* $K(\\mathbf{x}_1, \\mathbf{x}_2) = \\mathbf{x}_1^\\intercal \\mathbf{x}_2$\n",
+    "* *a Gaussian or radial basis function (RBF) kernel:* $K(\\mathbf{x}_1, \\mathbf{x}_2) = e^{(-\\gamma \\|\\mathbf{x}_1 - \\mathbf{x}_2 \\|^2)}$\n",
+    "* *a polynomial kernel:* $K(\\mathbf{x}_1, \\mathbf{x}_2) = (\\mathbf{x}_1^\\intercal \\mathbf{x}_2 + c)^d$\n",
+    "\n",
+    "### Solution (where you have to write code)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Here we will apply the kernel."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# linear kernel\n",
+    "# *CODE FOR LINEAR KERNEL*\n",
+    "#kernel = *kernel output value*\n",
+    "\n",
+    "# Gaussian (RBF) kernel\n",
+    "# *CODE FOR GAUSSIAN (RBF) KERNEL*\n",
+    "#kernel = *kernel output value*\n",
+    "\n",
+    "# polynomial kernel\n",
+    "# *CODE FOR POLYNOMIAL KERNEL*\n",
+    "#kernel = *kernel output value*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Just like we created the kernel for the training points, we need to create the kernel for the test/prediction points.\n",
+    "\n",
+    "Again, comment/uncomment the appropriate lines for using the linear, RBF, or polynomial kernels."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# prediction kernels\n",
+    "\n",
+    "# linear prediction kernel\n",
+    "# *CODE FOR LINEAR KERNEL*\n",
+    "#pred_kernel = *kernel output value*\n",
+    "\n",
+    "# Gaussian (RBF) prediction kernel\n",
+    "# *CODE FOR GAUSSIAN (RBF) KERNEL*\n",
+    "#pred_kernel = *kernel output value*\n",
+    "\n",
+    "# polynomial prediction kernel\n",
+    "# *CODE FOR POLYNOMIAL KERNEL*\n",
+    "#pred_kernel = *kernel output value*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*Next we set up the SVM model and create our loss function. This is done using equation (13.27)*\n",
+    "\n",
+    "$$\n",
+    "L_d = \\sum_{t} \\alpha^t - \\frac{1}{2} \\sum_{t} \\sum_{s} \\alpha^t \\alpha^s r^t r^s K(\\mathbf{x}^t, \\mathbf{x}^s),\n",
+    "$$\n",
+    "\n",
+    "*however, for TensorFlow we work with arrays, so by defining the matrix $\\mathbf{A} = K(\\mathbf{x}^t, \\mathbf{x}^s) \\pmb{\\alpha}^\\intercal \\pmb{\\alpha} \\mathbf{r} \\mathbf{r}^\\intercal$, we can sum all its elements to get the double-sum on the right. We can therefore write $L_d$ as*\n",
+    "\n",
+    "$$\n",
+    "L_d = \\sum_{t} \\alpha^t - \\frac{1}{2} \\sum_{i,j} A_{i,j}\n",
+    "$$\n",
+    "\n",
+    "*instead, where $A_{i,j}$ is the value at the $i$th row and $j$th column.*\n",
+    "\n",
+    "*Note that $\\mathbf{A}$ is in fact a matrix since $K(\\mathbf{x}^t, \\mathbf{x}^s)$ gives a scalar, $\\pmb{\\alpha}^\\intercal \\pmb{\\alpha}$ gives us ($1\\times N \\cdot N\\times 1$) another scalar, and $\\mathbf{r} \\mathbf{r}^\\intercal$ gives us ($N \\times 1 \\cdot 1 \\times N$) an $N \\times N$-matrix.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# compute SVM model\n",
+    "\n",
+    "alpha_sum = tf.reduce_sum(alpha)\n",
+    "\n",
+    "r_matrix = tf.matmul(r, tf.transpose(r))\n",
+    "alpha_prod = tf.matmul(tf.transpose(alpha), alpha)\n",
+    "double_sum = tf.reduce_sum(tf.multiply(kernel, tf.multiply(alpha_prod, r_matrix)))\n",
+    "\n",
+    "loss = tf.negative(tf.subtract(alpha_sum, double_sum))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*In order to use the kernel to classify points, we create a prediction operation.  This prediction operation will be the sign (positive or negative) of the model outputs.  The accuracy can then be computed if we know the actual target labels.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pred_output = tf.matmul(tf.multiply(tf.transpose(r), alpha), pred_kernel)\n",
+    "pred = tf.sign(pred_output - tf.reduce_mean(pred_output))\n",
+    "accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.squeeze(pred), tf.squeeze(r)), tf.float32))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*We now declare the optimizer and variable initialization operations.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# declare optimizer\n",
+    "my_opt = tf.train.GradientDescentOptimizer(0.0005)\n",
+    "train_step = my_opt.minimize(loss)\n",
+    "\n",
+    "# initialize variables\n",
+    "init = tf.global_variables_initializer()\n",
+    "sess.run(init)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*We start the training loop for the SVM.  We will randomly choose a batch of points and run the train step.  Then we calculate the loss and accuracy.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# training loop\n",
+    "temp_losses = []\n",
+    "batch_accs = []\n",
+    "np.random.seed(0) # set this for your experiments to compare the different kernels\n",
+    "for i in range(10000):\n",
+    "    # generate random indices equal to batch_size \n",
+    "    batch_idxs = np.random.choice(N, size=batch_size)\n",
+    "    # get the corresponding input and target points\n",
+    "    batch_x = x_vals[batch_idxs]\n",
+    "    batch_r = np.transpose([r_vals[batch_idxs]])\n",
+    "    # train the model with this batch\n",
+    "    sess.run(train_step, feed_dict={x: batch_x, r: batch_r})\n",
+    "    \n",
+    "    # calculate temporary train loss and accuracy\n",
+    "    temp_loss = sess.run(loss, feed_dict={x: batch_x, r: batch_r})\n",
+    "    temp_losses.append(temp_loss)\n",
+    "    batch_acc = sess.run(accuracy, feed_dict={x: batch_x, r: batch_r, pred_grid: batch_x})\n",
+    "    batch_accs.append(batch_acc)\n",
+    "    \n",
+    "    if (i+1)%1000==0:\n",
+    "        print(\"Step #{}\".format(i+1))\n",
+    "        print(\"Loss = \", temp_loss)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*To plot a pretty picture of the regions we fit, we create a fine mesh to run through our model and get the predictions.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# find boundaries for contour plot\n",
+    "abscissa_min, abscissa_max = x_vals[:, 0].min()-1, x_vals[:, 0].max()+1\n",
+    "ordinate_min, ordinate_max = x_vals[:, 1].min()-1, x_vals[:, 1].max()+1\n",
+    "\n",
+    "# generate mesh grid of points\n",
+    "xx, yy = np.meshgrid(\n",
+    "    np.linspace(abscissa_min, abscissa_max, 1000),\n",
+    "    np.linspace(ordinate_min, ordinate_max, 1000)\n",
+    ")\n",
+    "grid_points = np.c_[xx.ravel(), yy.ravel()]\n",
+    "\n",
+    "# find predictions for grid of points\n",
+    "[grid_preds] = sess.run(pred, feed_dict={\n",
+    "    x: x_vals,\n",
+    "    r: np.transpose([r_vals]),\n",
+    "    pred_grid: grid_points\n",
+    "})\n",
+    "grid_preds = grid_preds.reshape(xx.shape)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*Then we make the plot of our points and our decision boundary.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# plot our decision boundary\n",
+    "plt.imshow(\n",
+    "    grid_preds,\n",
+    "    extent=[abscissa_min, abscissa_max, ordinate_min, ordinate_max],\n",
+    "    origin=\"lower\",\n",
+    "    cmap=\"bwr\",\n",
+    "    aspect=\"auto\",\n",
+    "    alpha=0.375\n",
+    ")\n",
+    "plt.contour(xx, yy, grid_preds, 1, colors=\"black\", alpha=0.5)\n",
+    "\n",
+    "# plot our points\n",
+    "plt.scatter(class1_x[:, 0], class1_x[:, 1],\n",
+    "    label = \"Class 1 (+1)\",\n",
+    "    color = \"none\",\n",
+    "    edgecolor = \"red\"\n",
+    ")\n",
+    "plt.scatter(class2_x[:, 0], class2_x[:, 1],\n",
+    "    label = \"Class 2 (-1)\",\n",
+    "    color = \"none\",\n",
+    "    edgecolor = \"blue\"\n",
+    ")\n",
+    "\n",
+    "# add title and legend\n",
+    "plt.title(\"Decision boundary of trained SVM\")\n",
+    "plt.legend(loc=\"upper left\", framealpha=0.25)\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "*We can also plot the loss over time and batch accuracy.*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fig = plt.figure(figsize=(13,4))\n",
+    "\n",
+    "# plot batch accuracy\n",
+    "ax1 = fig.add_subplot(121)\n",
+    "ax1.plot(batch_accs, color=\"black\", linewidth=0.1)\n",
+    "ax1.set_title(\"Accuracy per batch\")\n",
+    "ax1.set_xlabel(\"Batch\")\n",
+    "ax1.set_ylabel(\"Accuracy\")\n",
+    "\n",
+    "# plot loss over time\n",
+    "ax2 = fig.add_subplot(122)\n",
+    "ax2.plot(temp_losses, color=\"black\", linewidth=0.1)\n",
+    "ax2.set_title(\"Loss per batch\")\n",
+    "ax2.set_xlabel(\"Batch\")\n",
+    "ax2.set_ylabel(\"Loss\")\n",
+    "\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### (b)\n",
+    "*Which of these performs best on the data, in terms of speed and quality? Do not forget to set the random seed to receive reproducible results.*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### (c)\n",
+    "*Test different values of $c$ and $d$ for the polynomial kernel. Which of them work best?*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### (d)\n",
+    "*Test different values of $\\gamma$ for the RBF kernel. Which of them works best?*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### (e)\n",
+    "*Change the part of the code which generates the data such that it becomes linearly separable.*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### (f)\n",
+    "*Re-evaluate the three kernels. Do you get the same result?*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

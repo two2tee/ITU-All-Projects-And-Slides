@@ -1,0 +1,10 @@
+	
+Is this LaTeX Why not use brackets around matrices Also, on learnit your solution is all in chinese. If I download it, I can read it.
+
+The second coordinate of the second basis vector has the wrong sign. Otherwise the first exercise is correct. 
+
+The second one has b slightly off, it should be 3. Also you can compute a and b first before you compute the projection, since it should just be the whole projection, except the left most A.
+
+Good work in the last one.
+
+Rasmus

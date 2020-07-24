@@ -1,0 +1,4 @@
+
+In the first tree exercise, a sum becomes a multiplication. The right result is (x + 1)/4. This has effect on the following questions, which are otherwise correct. The second one is correct. Well done.
+
+Rasmus

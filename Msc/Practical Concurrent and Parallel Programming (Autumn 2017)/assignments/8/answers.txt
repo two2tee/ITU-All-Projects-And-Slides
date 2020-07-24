@@ -1,0 +1,49 @@
+#Exercise 8.1.1
+
+The implementation passes the sequential test.
+There is no method coverage as reallocateBuckets is never called.
+
+Coverage of the methods below: (see description below of why they don't have statement coverage):
+- size (has statement coverage)
+- containsKey (has statement coverage)
+- get (has statement coverage)
+- put (does not run reallocateBuckets)
+- putIfAbsent (does not run reallocateBuckets)
+- forEach (has statement coverage)
+- remove (not statement coverage)
+- reallocateBuckets (not covered at all)
+
+All methods within the ourMap implementation have been covered in the test.
+
+- Put does not have statement coverage as the true case of "if (afterSize * lockCount > bs.length) reallocateBuckets(bs);" is never reached.
+- PutIfAbsent does not have statement coverage as the true case of "  if (afterSize * lockCount > bs.length) reallocateBuckets(bs);" is never reached.
+- Remove does not have statement coverage as the case where we try to delete an item with a given key k that does not exist in the map. 
+- This means that the statement "return null;" is never run. 
+
+Since there are cases where statement coverage and branch coverage are not satisfied, path coverage are therefore also not satisfied.
+Test case assert map.remove(117) == null was added to achieve statement coverage for remove.
+The lockcount and stripecount of the map was reduced to 5 to allow for calls to reallocateBuckets, therefore also ensuring method coverage.
+
+
+#Exercise 8.1.2
+The method does not tell us anything about the correctness of containsKey,
+as we do not check that the boolean value returned by this call is supposed to be so or not.
+In our case, the test method did not reveal any defects.
+
+#Exercise 8.1.3
+There are no defects to find.
+
+#Exercise 8.1.6
+You could increase the number of threads to make sure that they don't interleave in a way that makes the program correct even if it is not. 
+Furthermore, you could increase the number of insertions and deletions in order to stress test the implementation.
+If the code passes the test, you can try to inject faults to make sure that the test cases are not weak, as in that they do not assert true even when the implementation is wrong.
+To make sure to get different interleaving of the threads, you can introduce Thread.sleep into some of the implementation of the threads, making sure that the interleaving differs.
+
+
+
+QUESTIONS: 
+- Barrier runs infinitely? And that makes Exercise 8.1.5 assert false (?)
+- Exercise 8.1.6: what else can you test ??? How can you test containsKey? and why did we need to call it in the threads?? WAT?
+
+
+

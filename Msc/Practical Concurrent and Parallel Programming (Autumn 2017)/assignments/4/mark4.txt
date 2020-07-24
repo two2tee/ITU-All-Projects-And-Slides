@@ -1,0 +1,7 @@
+# OS:   Mac OS X; 10.12.6; x86_64
+# JVM:  Oracle Corporation; 1.8.0_144
+# CPU:  null; 8 "cores"
+# Date: 2017-09-22T16:19:20+0200
+
+ Mark 4: 
+  29.8 ns +/-  0.678

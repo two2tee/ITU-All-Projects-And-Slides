@@ -1,0 +1,39 @@
+
+
+﻿1. How​ ​is​ ​the​ ​image​ ​data​ ​stored?​ ​How​ ​is​ ​metadata​ ​of​ ​images​ ​stored? 
+The image data is stored on the google cloud service. Each image are sorted and stored in their specific granule that indicates  a snapshot of a grid square at some specific point of time.
+
+Each granule path is structured based on the following directory structure
+/tiles/[UTM_ZONE]/[LATITUDE_BAND]/[GRID_SQUARE]/[GRANULE_ID]/...
+
+Each folder represents a given component that defines the common attributes of images that share the same location. This structure allows one to query the files based on which attributes one is requesting.
+
+Finally, the meta data is stored in an index.csv file. The metadata provides a general overview of where each granules are located. 
+
+
+2. Design​ ​and​ ​implement​ ​in​ ​Go​ ​on​ ​the​ ​Google​ ​Cloud​ ​Service​ ​a​ ​webservice​ ​that​ ​accepts GET​ ​requests​ ​that​ ​contain​ ​a​ ​location​ ​(latitude,​ ​longitude)​ ​as​ ​query​ ​parameters​ ​as follows:​ ​​http://your.app.com/images?lat=37.4224764&lng=-122.0842499 It​ ​should​ ​return​ ​a​ ​JSON​ ​array​ ​containing​ ​the​ ​links​ ​to​ ​all​ ​images​ ​for​ ​that​ ​location,​ ​e.g.: [“...2A_OPER_MSI_L1C_TL_EPA__20170529T193446_A002407_T33UUP_B01.jp2”,”... 2A_OPER_MSI_L1C_TL_EPA__20170529T193446_A002407_T33UUP_B02.jp2”...​ ​] 
+
+-- Please refer to source code
+The webservice is deployed at https://dttn-178408.appspot.com/. 
+
+The following are some examples of how to query the web service:
+https://dttn-178408.appspot.com/images?lat=10&lng=10
+https://dttn-178408.appspot.com/imagesByAddress?address=ribegade2b
+
+
+3. How​ ​do​ ​Go​ ​language​ ​features​ ​support​ ​your​ ​server​ ​side​ ​programming? 
+The net/http package has supported the implementation of the server side by providing multiplexing logic, 
+allowing us to define HTTP handlers and register them for specific routes, thereby being able to provide responses to requests.
+Furthermore, this language feature has allowed us to send requests to other APIs - e.g. Google's Geocoding API.
+
+The encoding/json package has allowed us to unmarshal from json to response objects upon using Google's Geocoding API.
+
+In addition, we used the "cloud.google.com/go/bigquery" package to be able to query Google's BigQuery service using SQL syntax and "google.golang.org/api/iterator" to be able to iterate over the result.
+
+
+
+
+4. Bonus​ ​exercise:​ ​Imagine​ ​that​ ​you​ ​are​ ​building​ ​the​ ​backend​ ​for​ ​a​ ​system​ ​that​ ​needs​ ​to deal​ ​with​ ​end​ ​users​ ​that​ ​just​ ​want​ ​to​ ​specify​ ​a​ ​human-like​ ​location,​ ​such​ ​as “Rued​ ​Langgaards​ ​Vej​ ​7,​ ​2300​ ​København​ ​S” Implement​ ​that​ ​feature​ ​to​ ​your​ ​service​ ​by​ ​connecting​ ​to​ ​​Google’s​ ​Geocoding​ ​API​.
+
+-- Please refer to source code
+

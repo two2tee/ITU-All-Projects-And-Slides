@@ -1,0 +1,39 @@
+
+Assignment 3 : Functional Java, Streams and Parallel Programming
+
+Authors : Thor Olesen, Nicoline Scheel and Dennis Nguyen (group 42)
+
+Exercise 3.1 : See FunList.java and TestFunList.java
+
+Exercise 3.2 : See Exercise32.java
+
+Exercise 3.3 : See TestWordStream.java
+- 3.3.6 : Parallel palindrome version is faster (consult comments in code)
+- 3.3.11 : Notice that printing takes a long time (consider commenting it out)
+- 3.3.12 : As explained, the parallel version is slower - speeds up with groupingByConcurrent though.
+
+Non parallel version:
+  real 0m13.494s
+  user 0m0.015s
+  sys  0m0.015s
+
+Parallel version:
+  real 1m19.059s
+  user 0m0.000s
+  sys 0m0.015s
+
+Exercise 3.4 : See Exercise34.java
+- 3.4.2 : 90000ms for normal sum and 15000ms for parallel sum
+- 3.4.3 : 50000ms for sequential for-loop sum
+- 3.4.4 : 18000 ms for imperative stream sum using AtomicInteger
+- 3.4.5 : What happens with result?
+          Firstly, we tried using a double "sum" as mutable state but the stream disallowed this.
+          Specifically, it would only accept final values, which makes perfect sense if the stream should behave in a correct and consistent manner when used parallel.
+          What happens if run multiple times?
+          Assuming we were able to use a non-atomic double to accumulate the sum, we believe the result would vary for each run.
+          What does this say about using mutable state (in generate) in parallel streams?
+          In general, one should stick with immutable data in parallel streams to avoid inconsistent and incorrect results (due to e.g. visibility and lost updates).
+
+NB: a Utility.java file has been created to measure the time performance,
+in addition to using the built-in "time" command in the terminal. Consult the *.java files for measured times.
+

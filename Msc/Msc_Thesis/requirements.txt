@@ -1,0 +1,6 @@
+gym[all]
+box2d
+tqdm
+numpy
+matplotlib
+tensorboard
